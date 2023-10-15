@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 
 import { GoBackButton } from "@/components/navigation/go-back-button";
-import { ArrowRight, User, Users } from "lucide-react";
+import { Apple, ArrowRight, User, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const DashboardPage = () => {
   return (
@@ -31,8 +31,19 @@ const DashboardPage = () => {
             <Card className="md:p-6 p-4">
               <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
                 <div className="flex flex-row gap-2">
-                  <User className="w-8 h-8 text-slate-900" strokeWidth={2} />
-                  <h2>Alunos</h2>
+                  <Users className="w-8 h-8 text-slate-900" strokeWidth={2} />
+                  <h2>Turmas</h2>
+                </div>
+                <Button size={"icon"}>
+                  <ArrowRight className="text-white h-4 w-4" strokeWidth={3} />
+                </Button>
+              </div>
+            </Card>
+            <Card className="md:p-6 p-4">
+              <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
+                <div className="flex flex-row gap-2">
+                  <Apple className="w-8 h-8 text-slate-900" strokeWidth={2} />
+                  <h2>Professores</h2>
                 </div>
                 <Button size={"icon"}>
                   <ArrowRight className="text-white h-4 w-4" strokeWidth={3} />
@@ -43,8 +54,8 @@ const DashboardPage = () => {
         </div>
         <div className="flex flex-col md:gap-6 gap-4">
           <h2>Dados</h2>
-          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar">
-            <Card className="p-6 gap-2">
+          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
+            <Card className="md:p-6 p-4 gap-2 md:min-w-[256px] min-w-[230px]">
               <div className="flex flex-row justify-between">
                 <span className="font-medium text-[14px] leading-5 text-slate-900">
                   Total de Turmas
@@ -58,7 +69,7 @@ const DashboardPage = () => {
                 </span>
               </div>
             </Card>
-            <Card className="p-6 gap-2">
+            <Card className="md:p-6 p-4 gap-2 md:min-w-[256px] min-w-[230px]">
               <div className="flex flex-row justify-between">
                 <span className="font-medium text-[14px] leading-5 text-slate-900">
                   Total de Turmas
@@ -72,7 +83,7 @@ const DashboardPage = () => {
                 </span>
               </div>
             </Card>
-            <Card className="p-6 gap-2">
+            <Card className="md:p-6 p-4 gap-2 md:min-w-[256px] min-w-[230px]">
               <div className="flex flex-row justify-between">
                 <span className="font-medium text-[14px] leading-5 text-slate-900">
                   Total de Turmas
@@ -86,7 +97,7 @@ const DashboardPage = () => {
                 </span>
               </div>
             </Card>
-            <Card className="p-6 gap-2">
+            <Card className="md:p-6 p-4 gap-2 md:min-w-[256px] min-w-[230px]">
               <div className="flex flex-row justify-between">
                 <span className="font-medium text-[14px] leading-5 text-slate-900">
                   Total de Turmas
