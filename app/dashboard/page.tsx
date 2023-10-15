@@ -43,7 +43,7 @@ const DashboardPage = () => {
         </div>
         <div className="flex flex-col md:gap-6 gap-4">
           <h2>Dados</h2>
-          <div className="flex flex-row md:gap-6 gap-4">
+          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar">
             <Card className="p-6 gap-2">
               <div className="flex flex-row justify-between">
                 <span className="font-medium text-[14px] leading-5 text-slate-900">
