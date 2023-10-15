@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SidebarProvider } from "@/components/providers/sidebar-provider";
 
-const font = Inter({ subsets: ["latin"] as const });
+const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Escola Vôlei",
