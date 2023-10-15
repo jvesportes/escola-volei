@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export const LoginPage = () => {
   return (
-    <div className="flex flex-col gap-8 w-full items-center justify-center h-full p-4">
+    <div className="flex flex-col gap-8 w-full items-center justify-center h-full p-4 bg-white">
       <div className="flex flex-col gap-6 items-center">
         <Image
           src="/logo.png"
