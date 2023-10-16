@@ -17,6 +17,26 @@
     }
 }
 
+@layer texts {
+  @media (max-width: 640px) {
+    .subtle {
+        color: var(--slate-500, #64748B);
+        text-align: center;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+      }
+  }
+  .subtle {
+    color: var(--slate-500, #64748B);
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+  }
+}
 @media (max-width: 640px) {
   h1 {
       @apply text-4xl;
