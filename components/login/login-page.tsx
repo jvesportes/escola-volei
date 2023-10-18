@@ -1,9 +1,34 @@
+"use client";
+
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/lib/database.types";
+
 export const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const supabase = createClientComponentClient<Database>();
+
+  const handleSignIn = async () => {
+    await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    router.refresh();
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+  };
+
   return (
     <div className="flex flex-col gap-8 w-full items-center justify-center h-full p-4 bg-white">
       <div className="flex flex-col gap-6 items-center">
@@ -26,14 +51,28 @@ export const LoginPage = () => {
         <div className="flex flex-col gap-4 w-full items-center justify-center">
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="username">Usuário</Label>
-            <Input type="username" id="username" placeholder="Usuário" />
+            <Input
+              type="username"
+              id="username"
+              placeholder="Usuário"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="senha">Senha</Label>
-            <Input type="password" id="password" placeholder="Senha" />
+            <Input
+              type="password"
+              id="password"
+              placeholder="Senha"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
           </div>
         </div>
-        <Button className="w-full max-w-sm">Entrar</Button>
+        <Button className="w-full max-w-sm" onClick={handleSignIn}>
+          Entrar
+        </Button>
       </div>
     </div>
   );

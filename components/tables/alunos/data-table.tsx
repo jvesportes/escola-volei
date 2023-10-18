@@ -31,7 +31,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Settings } from "lucide-react";
+import { Settings, UserPlus } from "lucide-react";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -68,13 +69,14 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+  const { onOpen } = useModal();
 
   return (
     <div>
-      <div className="flex flex-row items-center w-full justify-between pb-4">
+      <div className="flex flex-row items-center w-full justify-between pb-4 gap-2">
         <div className="flex flex-row items-center">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Pesquisar por nome"
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
@@ -83,7 +85,15 @@ export function DataTable<TData, TValue>({
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
-          <Button>Adicionar Aluno</Button>
+          <Button
+            size={"sm"}
+            onClick={() => {
+              onOpen("addAluno");
+            }}
+          >
+            <span className="md:flex hidden">Adicionar Aluno</span>
+            <UserPlus className="text-white md:hidden w-5 h-5" />
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -170,7 +180,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          Anterior
         </Button>
         <Button
           variant="outline"
@@ -178,7 +188,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          Próxima
         </Button>
       </div>
     </div>

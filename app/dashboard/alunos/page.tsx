@@ -1,9 +1,8 @@
 import { GoBackButton } from "@/components/navigation/go-back-button";
-import { columns } from "@/components/tables/columns";
-import { DataTable } from "@/components/tables/data-table";
-import { Button } from "@/components/ui/button";
+import { columns } from "@/components/tables/alunos/columns";
+import { DataTable } from "@/components/tables/alunos/data-table";
 import { Card } from "@/components/ui/card";
-import { payments } from "@/utils/types";
+import { alunos } from "@/utils/types";
 
 const AlunosPage = () => {
   return (
@@ -19,7 +18,7 @@ const AlunosPage = () => {
         <div className="flex flex-col md:gap-6 gap-4 w-full">
           <h1>Alunos</h1>
           <div className="flex flex-col md:gap-4 gap-2">
-            <DataTable columns={columns} data={payments} />
+            <DataTable columns={columns} data={alunos} />
           </div>
         </div>
       </Card>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,17 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Aluno } from "@/utils/types";
+import { EditAlunoMenuItem } from "./edit-aluno-menu-item";
+import { ExcluirAlunoMenuItem } from "./delete-aluno-menu-item";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Aluno>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -44,8 +38,8 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "nome",
+    header: "Nome",
   },
   {
     accessorKey: "email",
@@ -62,12 +56,28 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "telefone",
+    header: "Telefone",
   },
   {
-    id: "actions",
-    accessorKey: "actions",
+    accessorKey: "cpf",
+    header: "CPF",
+  },
+  {
+    accessorKey: "responsavel",
+    header: "Responsável",
+  },
+  {
+    accessorKey: "plano",
+    header: "Plano",
+  },
+  {
+    accessorKey: "pagamento",
+    header: "Pagamento",
+  },
+  {
+    id: "ações",
+    accessorKey: "Ações",
     header: "Ações",
     cell: ({ row }) => {
       const payment = row.original;
@@ -81,15 +91,10 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
+            <EditAlunoMenuItem />
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <ExcluirAlunoMenuItem />
           </DropdownMenuContent>
         </DropdownMenu>
       );

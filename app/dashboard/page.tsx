@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
 const DashboardPage = () => {
   return (
     <div className="flex w-full h-full md:px-16 md:py-6 md:gap-12 gap-6 p-4 flex-col overflow-y-scroll pb-32 scroll-smooth">
@@ -25,7 +26,7 @@ const DashboardPage = () => {
       <div className="flex flex-col md:gap-8 gap-6">
         <div className="flex flex-col md:gap-6 gap-4">
           <h1>Olá Júlio Soares!</h1>
-          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar">
+          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
             <Card className="md:p-6 p-4">
               <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
                 <div className="flex flex-row gap-2">
