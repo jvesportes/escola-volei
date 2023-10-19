@@ -16,6 +16,13 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Label } from "../../ui/label";
 import { Input } from "../../ui/input";
 import { Separator } from "../../ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const EditAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -45,7 +52,20 @@ export const EditAlunoModal = () => {
             </div>
             <div className="grid w-full  items-center gap-1.5">
               <Label htmlFor="plano">Plano</Label>
-              <Input type="text" id="plano" placeholder="Plano" />
+              <Select>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder="Selecione um plano"
+                    className="text-slate-500"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="mensal">Mensal</SelectItem>
+                  <SelectItem value="trimestral">Trimestral</SelectItem>
+                  <SelectItem value="semestral">Semestral</SelectItem>
+                  <SelectItem value="anual">Anual</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid w-full  items-center gap-1.5">
               <Label htmlFor="telefone">Telefone</Label>
@@ -57,7 +77,20 @@ export const EditAlunoModal = () => {
             </div>
             <div className="grid w-full  items-center gap-1.5">
               <Label htmlFor="unidade">Unidade</Label>
-              <Input type="text" id="unidade" placeholder="Unidade" />
+              <Select>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder="Selecione uma unidade"
+                    className="text-slate-500"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="mensal">Zona Sul</SelectItem>
+                  <SelectItem value="trimestral">Zona Leste</SelectItem>
+                  <SelectItem value="semestral">Zona Norte</SelectItem>
+                  <SelectItem value="anual">Zona Oeste</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <Separator className="md:my-8 my-2" />

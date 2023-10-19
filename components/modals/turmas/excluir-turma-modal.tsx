@@ -14,11 +14,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export const ExcluirAlunoModal = () => {
+export const ExcluirTurmaModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "excluirAluno";
+  const isModalOpen = isOpen && type === "excluirTurma";
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export const ExcluirAlunoModal = () => {
           <AlertDialogTitle>Você tem absoluta certeza?</AlertDialogTitle>
           <AlertDialogDescription>
             Você tem absoluta certeza? Esta ação não pode ser desfeita. Isso
-            excluirá permanentemente este aluno de nossos servidores.
+            excluirá permanentemente esta turma de nossos servidores.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

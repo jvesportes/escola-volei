@@ -24,11 +24,6 @@ export const LoginPage = () => {
     router.refresh();
   };
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-  };
-
   return (
     <div className="flex flex-col gap-8 w-full items-center justify-center h-full p-4 bg-white">
       <div className="flex flex-col gap-6 items-center">

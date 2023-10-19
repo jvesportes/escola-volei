@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useSidebar } from "@/hooks/use-sidebar-store";
 import { cn } from "@/lib/utils";
+import image from "@/public/logo.png";
 
 // melhorias --> adicionar tooltip, aumentar o padding dos icones quando fechada e animação de abrir e fechar.
 export const NavigationSidebar = () => {
@@ -23,7 +24,7 @@ export const NavigationSidebar = () => {
       )}
     >
       <Avatar className="w-[105px] h-[105px] border">
-        <AvatarImage src="logo.png" />
+        <AvatarImage src={image.src} />
         <AvatarFallback className="text-5xl font-extrabold bg-white">
           EV
         </AvatarFallback>

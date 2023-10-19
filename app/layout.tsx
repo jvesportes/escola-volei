@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { SidebarProvider } from "@/components/providers/sidebar-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
 
 const font = Inter({ subsets: ["latin"] });
@@ -20,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(font.className)}>
-        <SidebarProvider />
         <ModalProvider />
         {children}
       </body>

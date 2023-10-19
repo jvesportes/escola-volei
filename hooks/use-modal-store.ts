@@ -1,5 +1,12 @@
 import { create } from "zustand";
-export type ModalType = "addAluno" | "editAluno" | "excluirAluno";
+export type ModalType =
+  | "addAluno"
+  | "editAluno"
+  | "excluirAluno"
+  | "addTurma"
+  | "editTurma"
+  | "excluirTurma"
+  | "excluirAlunoTurma";
 
 interface ModalData {}
 
