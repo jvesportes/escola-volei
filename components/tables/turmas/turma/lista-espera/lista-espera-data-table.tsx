@@ -31,16 +31,17 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Settings, UserPlus, Users } from "lucide-react";
+import { ArrowLeft, FileText, Settings, UserPlus, Users } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
 import { useRouter } from "next/navigation";
+import { AlunoEspera } from "@/utils/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function TurmaDataTable<TData, TValue>({
+export function ListaEsperaDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -87,15 +88,6 @@ export function TurmaDataTable<TData, TValue>({
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
-          <Button
-            size={"sm"}
-            onClick={() => {
-              onOpen("addTurma");
-            }}
-          >
-            <span className="md:flex hidden">Adicionar Turma</span>
-            <Users className="text-white md:hidden w-5 h-5" />
-          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -150,14 +142,6 @@ export function TurmaDataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="cursor-pointer"
-                  onClick={() => {
-                    router.push(
-                      `/dashboard/turmas/${
-                        (data[row.id as unknown as number] as { id: string }).id
-                      }`
-                    );
-                  }}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (

@@ -5,6 +5,15 @@ export interface Turma {
   alunos: AlunoTurma[];
   local: "Zona Norte" | "Zona Leste" | "Zona Sul";
   id: string;
+  listaEspera: AlunoEspera[];
+}
+
+export interface AlunoEspera {
+  posicao: number;
+  nome: string;
+  telefone: string;
+  cpf: string;
+  email: string;
 }
 
 export interface AlunoTurma {
@@ -42,9 +51,41 @@ export const turmas: Turma[] = [
     professor: "João",
     horario: "19:00",
     local: "Zona Norte",
+    listaEspera: [
+      {
+        cpf: "123.456.789-00",
+        email: "maria@gmail.com",
+        nome: "Maria",
+        posicao: 1,
+        telefone: "(011) 99512-0214",
+      },
+      {
+        cpf: "987.654.321-00",
+        email: "joao@gmail.com",
+        nome: "João",
+        posicao: 2,
+        telefone: "(011) 99512-0214",
+      },
+    ],
   },
   {
     id: "2",
+    listaEspera: [
+      {
+        cpf: "123.456.789-00",
+        email: "maria@gmail.com",
+        nome: "Maria",
+        posicao: 1,
+        telefone: "(011) 99512-0214",
+      },
+      {
+        cpf: "987.654.321-00",
+        email: "joao@gmail.com",
+        nome: "João",
+        posicao: 2,
+        telefone: "(011) 99512-0214",
+      },
+    ],
     alunos: [
       {
         aluno: {
@@ -71,6 +112,22 @@ export const turmas: Turma[] = [
   },
   {
     id: "3",
+    listaEspera: [
+      {
+        cpf: "123.456.789-00",
+        email: "maria@gmail.com",
+        nome: "Maria",
+        posicao: 1,
+        telefone: "(011) 99512-0214",
+      },
+      {
+        cpf: "987.654.321-00",
+        email: "joao@gmail.com",
+        nome: "João",
+        posicao: 2,
+        telefone: "(011) 99512-0214",
+      },
+    ],
     alunos: [
       {
         aluno: {

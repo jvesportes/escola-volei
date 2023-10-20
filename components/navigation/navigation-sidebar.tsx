@@ -12,10 +12,12 @@ import {
 import { useSidebar } from "@/hooks/use-sidebar-store";
 import { cn } from "@/lib/utils";
 import image from "@/public/logo.png";
+import { useRouter } from "next/navigation";
 
 // melhorias --> adicionar tooltip, aumentar o padding dos icones quando fechada e animação de abrir e fechar.
 export const NavigationSidebar = () => {
   const { isOpen, onOpen } = useSidebar();
+  const router = useRouter();
   return (
     <div
       className={cn(
@@ -43,21 +45,41 @@ export const NavigationSidebar = () => {
         >
           <ChevronsLeftRight className="w-4 h-4" />
         </div>
-        <div className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer">
+        <div
+          onClick={() => {
+            router.push("/dashboard");
+          }}
+          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
+        >
           <Home className="w-6 h-6 text-slate-900" />
           {isOpen && (
             <span className="text-slate-900 leading-6 text-xl">Início</span>
           )}
         </div>
-        <div className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer">
+        <div
+          onClick={() => {
+            router.push("/dashboard/alunos");
+          }}
+          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
+        >
           <User className="w-6 h-6 " />
           {isOpen && <span className=" leading-6 text-xl">Alunos</span>}
         </div>
-        <div className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer">
+        <div
+          onClick={() => {
+            router.push("/dashboard/turmas");
+          }}
+          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
+        >
           <Users className="w-6 h-6 " />
           {isOpen && <span className="leading-6 text-xl">Turmas</span>}
         </div>
-        <div className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer">
+        <div
+          onClick={() => {
+            router.push("/dashboard/professores");
+          }}
+          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
+        >
           <Apple className="w-6 h-6 " />
           {isOpen && <span className=" leading-6 text-xl">Professores</span>}
         </div>

@@ -9,6 +9,8 @@ import { AddTurmaModal } from "../modals/turmas/add-turma-modal";
 import { EditTurmaModal } from "../modals/turmas/edit-turma-modal";
 import { ExcluirTurmaModal } from "../modals/turmas/excluir-turma-modal";
 import { ExcluirAlunoTurmaModal } from "../modals/turmas/turma/excluir-turma-modal";
+import { AddAlunoTurma } from "../modals/turmas/turma/add-aluno-turma";
+import { ListaEsperaModal } from "../modals/turmas/turma/lista-espera/lista-espera-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -30,6 +32,8 @@ export const ModalProvider = () => {
       <EditTurmaModal />
       <ExcluirTurmaModal />
       <ExcluirAlunoTurmaModal />
+      <AddAlunoTurma />
+      <ListaEsperaModal />
     </>
   );
 };

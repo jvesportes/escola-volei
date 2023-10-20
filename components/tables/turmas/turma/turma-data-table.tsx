@@ -31,8 +31,10 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Settings, UserPlus, Users } from "lucide-react";
+import { ArrowLeft, FileText, Settings, UserPlus, Users } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
+import { useRouter } from "next/navigation";
+import { AlunoEspera } from "@/utils/types";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -70,6 +72,8 @@ export function SingleTurmaDataTable<TData, TValue>({
     },
   });
   const { onOpen } = useModal();
+  const router = useRouter();
+  console.log("[CONSOLE AQUI]", data);
 
   return (
     <div>
@@ -87,12 +91,24 @@ export function SingleTurmaDataTable<TData, TValue>({
         <div className="flex flex-row gap-2 items-center">
           <Button
             size={"sm"}
+            variant={"outline"}
             onClick={() => {
-              onOpen("addTurma");
+              router.back();
+            }}
+            className="gap-2"
+          >
+            <ArrowLeft className="text-slate-900 w-5 h-5" />
+            <span className="md:flex hidden">Voltar</span>
+          </Button>
+
+          <Button
+            size={"sm"}
+            onClick={() => {
+              onOpen("addAlunoTurma");
             }}
           >
-            <span className="md:flex hidden">Adicionar Turma</span>
-            <Users className="text-white md:hidden w-5 h-5" />
+            <span className="md:flex hidden">Adicionar Aluno</span>
+            <UserPlus className="text-white md:hidden w-5 h-5" />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -166,7 +182,7 @@ export function SingleTurmaDataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Sem resultados.
                 </TableCell>
               </TableRow>
             )}

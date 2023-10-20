@@ -1,3 +1,4 @@
+import { AlunoEspera, Turma } from "@/utils/types";
 import { create } from "zustand";
 export type ModalType =
   | "addAluno"
@@ -6,10 +7,13 @@ export type ModalType =
   | "addTurma"
   | "editTurma"
   | "excluirTurma"
-  | "excluirAlunoTurma";
+  | "excluirAlunoTurma"
+  | "listaEspera"
+  | "addAlunoTurma";
 
-interface ModalData {}
-
+interface ModalData {
+  turma?: Turma;
+}
 interface ModalStore {
   type: ModalType | null;
   data: ModalData;
