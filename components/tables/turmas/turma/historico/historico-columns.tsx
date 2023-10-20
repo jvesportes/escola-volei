@@ -12,12 +12,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Aluno, AlunoPresenca, AlunoTurma, Turma } from "@/utils/types";
-import { ExcluirAlunoTurmaMenuItem } from "./delete-turma-aluno-menu-item";
-import { Separator } from "@/components/ui/separator";
-import { HistoricoAlunoTurmaMenuItem } from "./historico-turma-aluno-menu-item";
+import {
+  Aluno,
+  AlunoEspera,
+  AlunoPresenca,
+  AlunoTurma,
+  Turma,
+} from "@/utils/types";
 
-export const turmaColumns: ColumnDef<AlunoTurma>[] = [
+export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -37,34 +40,44 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
-    accessorKey: "aluno",
+    accessorKey: "date",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Nome
+          Data
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const aluno: Aluno = row.getValue("aluno");
-      return <>{aluno.nome}</>;
+      const date = row.getValue("date") as Date;
+      console.log(date);
+      return (
+        <>
+          {date.getDay()}/{date.getMonth()}/{date.getFullYear()}
+        </>
+      );
     },
   },
-
   {
     accessorKey: "presenca",
-    header: "Presença",
+    header: "Status",
+  },
+  {
+    id: "ações",
+    accessorKey: "Ações",
+    header: "Ações",
     cell: ({ row }) => {
-      const presenca: AlunoPresenca[] = row.getValue("presenca");
       return (
         <div className="items-top flex space-x-2">
-          <Checkbox id="terms1" checked={presenca[0].presenca} />
-          <div className="grid gap-1.5 leading-none">
+          {/* <Checkbox id="terms1" checked={presenca[0].presenca} /> */}
+          <Checkbox id="terms1" />
+          <div className="grid gap-1.5 leading-none pr-2">
             <label
               htmlFor="terms1"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -73,30 +86,6 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
             </label>
           </div>
         </div>
-      );
-    },
-  },
-  {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
-    cell: ({ row }) => {
-      const aluno = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <HistoricoAlunoTurmaMenuItem aluno={aluno} />
-            <Separator />
-            <ExcluirAlunoTurmaMenuItem />
-          </DropdownMenuContent>
-        </DropdownMenu>
       );
     },
   },
