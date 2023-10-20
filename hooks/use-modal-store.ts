@@ -12,6 +12,7 @@ export type ModalType =
   | "addProfessor"
   | "editProfessor"
   | "excluirProfessor"
+  | "logout"
   | "addAlunoTurma";
 
 interface ModalData {

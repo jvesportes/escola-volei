@@ -12,11 +12,20 @@ import {
 import { useSidebar } from "@/hooks/use-sidebar-store";
 import { cn } from "@/lib/utils";
 import image from "@/public/logo.png";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useModal } from "@/hooks/use-modal-store";
 
 // melhorias --> adicionar tooltip, aumentar o padding dos icones quando fechada e animação de abrir e fechar.
 export const NavigationSidebar = () => {
   const { isOpen, onOpen } = useSidebar();
+  const { onOpen: abrirModal } = useModal();
+  const pathname = usePathname();
+
+  const isDashboardPage = pathname == "/dashboard";
+  const isAlunosPage = pathname == "/dashboard/alunos";
+  const isTurmasPage = pathname == "/dashboard/turmas";
+  const isProfessoresPage = pathname == "/dashboard/professores";
+
   const router = useRouter();
   return (
     <div
@@ -51,9 +60,21 @@ export const NavigationSidebar = () => {
           }}
           className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
         >
-          <Home className="w-6 h-6 text-slate-900" />
+          <Home
+            className={cn(
+              isDashboardPage ? "text-slate-900" : "text-slate-500",
+              "w-6 h-6"
+            )}
+          />
           {isOpen && (
-            <span className="text-slate-900 leading-6 text-xl">Início</span>
+            <span
+              className={cn(
+                isDashboardPage ? "text-slate-900" : "text-slate-500",
+                "leading-6 text-xl"
+              )}
+            >
+              Início
+            </span>
           )}
         </div>
         <div
@@ -62,8 +83,22 @@ export const NavigationSidebar = () => {
           }}
           className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
         >
-          <User className="w-6 h-6 " />
-          {isOpen && <span className=" leading-6 text-xl">Alunos</span>}
+          <User
+            className={cn(
+              isAlunosPage ? "text-slate-900" : "text-slate-500",
+              "w-6 h-6"
+            )}
+          />
+          {isOpen && (
+            <span
+              className={cn(
+                isAlunosPage ? "text-slate-900" : "text-slate-500",
+                "leading-6 text-xl"
+              )}
+            >
+              Alunos
+            </span>
+          )}
         </div>
         <div
           onClick={() => {
@@ -71,8 +106,22 @@ export const NavigationSidebar = () => {
           }}
           className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
         >
-          <Users className="w-6 h-6 " />
-          {isOpen && <span className="leading-6 text-xl">Turmas</span>}
+          <Users
+            className={cn(
+              isTurmasPage ? "text-slate-900" : "text-slate-500",
+              "w-6 h-6"
+            )}
+          />
+          {isOpen && (
+            <span
+              className={cn(
+                isTurmasPage ? "text-slate-900" : "text-slate-500",
+                "leading-6 text-xl"
+              )}
+            >
+              Turmas
+            </span>
+          )}
         </div>
         <div
           onClick={() => {
@@ -80,12 +129,29 @@ export const NavigationSidebar = () => {
           }}
           className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
         >
-          <Apple className="w-6 h-6 " />
-          {isOpen && <span className=" leading-6 text-xl">Professores</span>}
+          <Apple
+            className={cn(
+              isProfessoresPage ? "text-slate-900" : "text-slate-500",
+              "w-6 h-6"
+            )}
+          />
+          {isOpen && (
+            <span
+              className={cn(
+                isProfessoresPage ? "text-slate-900" : "text-slate-500",
+                "leading-6 text-xl"
+              )}
+            >
+              Professores
+            </span>
+          )}
         </div>
       </div>
       <Separator />
       <div
+        onClick={() => {
+          abrirModal("logout");
+        }}
         className={cn(
           isOpen && "w-full",
           "flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"

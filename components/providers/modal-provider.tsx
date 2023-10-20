@@ -14,6 +14,7 @@ import { ListaEsperaModal } from "../modals/turmas/turma/lista-espera/lista-espe
 import { AddProfessorModal } from "../modals/professor/add-professor-modal";
 import { EditProfessorModal } from "../modals/professor/edit-professor-modal";
 import { ExcluirProfessorModal } from "../modals/professor/excluir-professor-modal";
+import { SairModal } from "../modals/sair-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -40,6 +41,7 @@ export const ModalProvider = () => {
       <AddProfessorModal />
       <EditProfessorModal />
       <ExcluirProfessorModal />
+      <SairModal />
     </>
   );
 };
