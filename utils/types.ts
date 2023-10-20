@@ -72,7 +72,22 @@ export const turmas: Turma[] = [
           cpf: "042.014.015-12",
           responsavel: false,
           plano: "Mensal",
-          pagamento: "Em dia",
+          pagamentos: [
+            {
+              pagamentoDate: new Date("2021-09-01"),
+              vencimentoDate: new Date("2021-10-01"),
+              valor: 100,
+              plano: "Mensal",
+              situacao: "Em dia",
+            },
+            {
+              pagamentoDate: new Date("2021-08-01"),
+              vencimentoDate: new Date("2021-12-01"),
+              valor: 228,
+              plano: "Trimestral",
+              situacao: "Em dia",
+            },
+          ],
         },
         presenca: [
           {
@@ -146,7 +161,22 @@ export const turmas: Turma[] = [
           cpf: "042.014.015-12",
           responsavel: false,
           plano: "Mensal",
-          pagamento: "Em dia",
+          pagamentos: [
+            {
+              pagamentoDate: new Date("2021-09-01"),
+              vencimentoDate: new Date("2021-10-01"),
+              valor: 100,
+              plano: "Mensal",
+              situacao: "Em dia",
+            },
+            {
+              pagamentoDate: new Date("2021-08-01"),
+              vencimentoDate: new Date("2021-12-01"),
+              valor: 228,
+              plano: "Trimestral",
+              situacao: "Em dia",
+            },
+          ],
         },
         presenca: [
           {
@@ -188,7 +218,22 @@ export const turmas: Turma[] = [
           cpf: "042.014.015-12",
           responsavel: false,
           plano: "Mensal",
-          pagamento: "Em dia",
+          pagamentos: [
+            {
+              pagamentoDate: new Date("2021-09-01"),
+              vencimentoDate: new Date("2021-10-01"),
+              valor: 100,
+              plano: "Mensal",
+              situacao: "Em dia",
+            },
+            {
+              pagamentoDate: new Date("2021-08-01"),
+              vencimentoDate: new Date("2021-12-01"),
+              valor: 228,
+              plano: "Trimestral",
+              situacao: "Em dia",
+            },
+          ],
         },
         presenca: [
           {
@@ -212,7 +257,14 @@ export interface Aluno {
   cpf: string;
   responsavel: boolean;
   plano: "Mensal" | "Trimestral" | "Anual";
-  pagamento: "Atrasado" | "Em dia";
+  pagamentos: Pagamento[];
+}
+export interface Pagamento {
+  pagamentoDate: Date;
+  vencimentoDate: Date;
+  valor: number;
+  plano: "Mensal" | "Trimestral" | "Anual";
+  situacao: "Atrasado" | "Em dia";
 }
 
 export const alunos: Aluno[] = [
@@ -223,7 +275,22 @@ export const alunos: Aluno[] = [
     cpf: "042.014.015-12",
     responsavel: false,
     plano: "Mensal",
-    pagamento: "Em dia",
+    pagamentos: [
+      {
+        pagamentoDate: new Date("2021-09-01"),
+        vencimentoDate: new Date("2021-10-01"),
+        valor: 100,
+        plano: "Mensal",
+        situacao: "Atrasado",
+      },
+      {
+        pagamentoDate: new Date("2021-08-01"),
+        vencimentoDate: new Date("2021-12-01"),
+        valor: 228,
+        plano: "Trimestral",
+        situacao: "Em dia",
+      },
+    ],
   },
   {
     nome: "João",
@@ -232,7 +299,22 @@ export const alunos: Aluno[] = [
     cpf: "123.456.789-00",
     responsavel: true,
     plano: "Anual",
-    pagamento: "Atrasado",
+    pagamentos: [
+      {
+        pagamentoDate: new Date("2021-09-01"),
+        vencimentoDate: new Date("2021-10-01"),
+        valor: 100,
+        plano: "Mensal",
+        situacao: "Em dia",
+      },
+      {
+        pagamentoDate: new Date("2021-08-01"),
+        vencimentoDate: new Date("2021-12-01"),
+        valor: 228,
+        plano: "Trimestral",
+        situacao: "Em dia",
+      },
+    ],
   },
   {
     nome: "Ana",
@@ -241,7 +323,22 @@ export const alunos: Aluno[] = [
     cpf: "987.654.321-00",
     responsavel: false,
     plano: "Trimestral",
-    pagamento: "Em dia",
+    pagamentos: [
+      {
+        pagamentoDate: new Date("2021-09-01"),
+        vencimentoDate: new Date("2021-10-01"),
+        valor: 100,
+        plano: "Mensal",
+        situacao: "Em dia",
+      },
+      {
+        pagamentoDate: new Date("2021-08-01"),
+        vencimentoDate: new Date("2021-12-01"),
+        valor: 228,
+        plano: "Trimestral",
+        situacao: "Em dia",
+      },
+    ],
   },
   {
     nome: "Pedro",
@@ -250,6 +347,21 @@ export const alunos: Aluno[] = [
     cpf: "111.222.333-44",
     responsavel: true,
     plano: "Mensal",
-    pagamento: "Atrasado",
+    pagamentos: [
+      {
+        pagamentoDate: new Date("2021-09-01"),
+        vencimentoDate: new Date("2021-10-01"),
+        valor: 100,
+        plano: "Mensal",
+        situacao: "Em dia",
+      },
+      {
+        pagamentoDate: new Date("2021-08-01"),
+        vencimentoDate: new Date("2021-12-01"),
+        valor: 228,
+        plano: "Trimestral",
+        situacao: "Em dia",
+      },
+    ],
   },
 ];

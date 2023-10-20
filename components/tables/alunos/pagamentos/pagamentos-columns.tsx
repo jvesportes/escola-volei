@@ -14,11 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Aluno, Pagamento } from "@/utils/types";
-import { EditAlunoMenuItem } from "./edit-aluno-menu-item";
-import { ExcluirAlunoMenuItem } from "./delete-aluno-menu-item";
-import { PagamentoAlunoButton } from "./pagamentos-aluno-menu-item";
+import { DeletePagmaentoAlunoMenuItem } from "./delete-pagamento-aluno-menu-item";
+import { Badge } from "@/components/ui/badge";
 
-export const columns: ColumnDef<Aluno>[] = [
+export const pagamentosColumns: ColumnDef<Pagamento>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -39,47 +38,62 @@ export const columns: ColumnDef<Aluno>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nome",
-    header: "Nome",
+    accessorKey: "pagamentoDate",
+    header: "Data de Pagamento",
+    cell: ({ row }) => {
+      const pagamentoDate: Date = row.getValue("pagamentoDate");
+
+      return (
+        <>
+          {pagamentoDate.getDay()}/{pagamentoDate.getMonth()}/
+          {pagamentoDate.getFullYear()}
+        </>
+      );
+    },
   },
   {
-    accessorKey: "email",
+    accessorKey: "vencimentoDate",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Data de Vencimento
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const vencimentoDate: Date = row.getValue("vencimentoDate");
+
+      return (
+        <>
+          {vencimentoDate.getDay()}/{vencimentoDate.getMonth()}/
+          {vencimentoDate.getFullYear()}
+        </>
+      );
+    },
   },
   {
-    accessorKey: "telefone",
-    header: "Telefone",
-  },
-  {
-    accessorKey: "cpf",
-    header: "CPF",
-  },
-  {
-    accessorKey: "responsavel",
-    header: "Responsável",
+    accessorKey: "valor",
+    header: "Valor",
   },
   {
     accessorKey: "plano",
     header: "Plano",
   },
   {
-    accessorKey: "pagamentos",
-    header: "Pagamento",
+    accessorKey: "situacao",
+    header: "Situação",
     cell: ({ row }) => {
-      const payment: Pagamento[] = row.getValue("pagamentos");
-      const aluno = row.original;
+      const situacao: string = row.getValue("situacao");
 
-      return <PagamentoAlunoButton pagamento={payment} alunoNormal={aluno} />;
+      return (
+        <Badge variant={situacao == "Em dia" ? "green" : "destructive"}>
+          {situacao}
+        </Badge>
+      );
     },
   },
   {
@@ -99,9 +113,7 @@ export const columns: ColumnDef<Aluno>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditAlunoMenuItem />
-            <DropdownMenuSeparator />
-            <ExcluirAlunoMenuItem />
+            <DeletePagmaentoAlunoMenuItem />
           </DropdownMenuContent>
         </DropdownMenu>
       );

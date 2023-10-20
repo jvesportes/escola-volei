@@ -16,6 +16,7 @@ import { EditProfessorModal } from "../modals/professor/edit-professor-modal";
 import { ExcluirProfessorModal } from "../modals/professor/excluir-professor-modal";
 import { SairModal } from "../modals/sair-modal";
 import { HistoricoModal } from "../modals/turmas/turma/historico/historico-modal";
+import { PagamentoAlunoModal } from "../modals/alunos/pagamentos/pagamento-aluno-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -44,6 +45,7 @@ export const ModalProvider = () => {
       <ExcluirProfessorModal />
       <SairModal />
       <HistoricoModal />
+      <PagamentoAlunoModal />
     </>
   );
 };

@@ -1,4 +1,10 @@
-import { AlunoEspera, AlunoPresenca, AlunoTurma, Turma } from "@/utils/types";
+import {
+  Aluno,
+  AlunoEspera,
+  AlunoPresenca,
+  AlunoTurma,
+  Turma,
+} from "@/utils/types";
 import { create } from "zustand";
 export type ModalType =
   | "addAluno"
@@ -14,11 +20,13 @@ export type ModalType =
   | "excluirProfessor"
   | "logout"
   | "historicoAlunoTurma"
+  | "pagamentoAluno"
   | "addAlunoTurma";
 
 interface ModalData {
   turma?: Turma;
   aluno?: AlunoTurma;
+  alunoNormal?: Aluno;
 }
 interface ModalStore {
   type: ModalType | null;
