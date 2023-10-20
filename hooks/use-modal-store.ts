@@ -9,6 +9,9 @@ export type ModalType =
   | "excluirTurma"
   | "excluirAlunoTurma"
   | "listaEspera"
+  | "addProfessor"
+  | "editProfessor"
+  | "excluirProfessor"
   | "addAlunoTurma";
 
 interface ModalData {

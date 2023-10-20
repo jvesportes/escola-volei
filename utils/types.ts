@@ -7,6 +7,14 @@ export interface Turma {
   id: string;
   listaEspera: AlunoEspera[];
 }
+export interface Professor {
+  id: string;
+  nome: string;
+  email: string;
+  telefone: string;
+  cpf: string;
+  senha: string;
+}
 
 export interface AlunoEspera {
   posicao: number;
@@ -24,6 +32,33 @@ export interface AlunoPresenca {
   date: Date;
   presenca: boolean;
 }
+
+export const professores: Professor[] = [
+  {
+    id: "1",
+    nome: "João",
+    email: "juliojose@gmail.com",
+    telefone: "(011) 99512-0214",
+    cpf: "042.014.015-12",
+    senha: "123456",
+  },
+  {
+    id: "2",
+    nome: "Juca",
+    email: "jucaojose@gmail.com",
+    telefone: "(011) 99512-0214",
+    cpf: "042.014.015-12",
+    senha: "123456",
+  },
+  {
+    id: "3",
+    nome: "Maria",
+    email: "mariajose@gmail.com",
+    telefone: "(011) 99512-0214",
+    cpf: "042.014.015-12",
+    senha: "123456",
+  },
+];
 
 export const turmas: Turma[] = [
   {
