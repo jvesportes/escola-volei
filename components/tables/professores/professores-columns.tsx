@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +12,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Aluno, Professor } from "@/utils/types";
-import { EditProfessorMenuItem } from "./edit-professor-menu-item";
-import { ExcluirProfessorMenuItem } from "./delete-professor-menu-item";
+} from '@/components/ui/dropdown-menu';
+import { Aluno, Professor } from '@/utils/types';
+import { EditProfessorMenuItem } from './edit-professor-menu-item';
+import { ExcluirProfessorMenuItem } from './delete-professor-menu-item';
 
 export const professoresColumns: ColumnDef<Professor>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -38,16 +38,16 @@ export const professoresColumns: ColumnDef<Professor>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nome",
-    header: "Nome",
+    accessorKey: 'nome',
+    header: 'Nome',
   },
   {
-    accessorKey: "email",
+    accessorKey: 'email',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -56,24 +56,24 @@ export const professoresColumns: ColumnDef<Professor>[] = [
     },
   },
   {
-    accessorKey: "senha",
-    header: "Senha",
+    accessorKey: 'senha',
+    header: 'Senha',
   },
   {
-    accessorKey: "telefone",
-    header: "Telefone",
+    accessorKey: 'telefone',
+    header: 'Telefone',
   },
   {
-    accessorKey: "cpf",
-    header: "CPF",
+    accessorKey: 'cpf',
+    header: 'CPF',
   },
 
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
-      const payment = row.original;
+      const professor = row.original;
 
       return (
         <DropdownMenu>
@@ -85,9 +85,9 @@ export const professoresColumns: ColumnDef<Professor>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditProfessorMenuItem />
+            <EditProfessorMenuItem professor={professor} />
             <DropdownMenuSeparator />
-            <ExcluirProfessorMenuItem />
+            <ExcluirProfessorMenuItem professor={professor} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
