@@ -1,6 +1,6 @@
 "use client";
 import { Separator } from "../ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar } from "../ui/avatar";
 import {
   Apple,
   Home,
@@ -12,49 +12,49 @@ import {
 import { useSidebar } from "@/hooks/use-sidebar-store";
 import { cn } from "@/lib/utils";
 import image from "@/public/logo.png";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import Image from "next/image";
+import { useRouterActiveness } from "@/hooks";
 
 // melhorias --> adicionar tooltip, aumentar o padding dos icones quando fechada e animação de abrir e fechar.
 export const NavigationSidebar = () => {
   const { isOpen, onOpen } = useSidebar();
   const { onOpen: abrirModal } = useModal();
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
-  const isDashboardPage = pathname == "/dashboard";
-  const isAlunosPage = pathname == "/dashboard/alunos";
-  const isTurmasPage = pathname == "/dashboard/turmas";
-  const isProfessoresPage = pathname == "/dashboard/professores";
+  const [isDashboardPage, isAlunosPage,
+
+    isTurmasPage, isProfessoresPage
+  ] = useRouterActiveness(["dashboard", "alunos", "turmas", "professores"]);
+
 
   const router = useRouter();
   return (
-    <div
+    <aside
       className={cn(
         isOpen && "w-64",
         "flex flex-col h-full items-center z-50 gap-8 border-r bg-background px-4 pt-16 pb-8 shadow-lg transition"
       )}
     >
       <Avatar className="w-[105px] h-[105px] border">
-        <AvatarImage src={image.src} />
-        <AvatarFallback className="text-5xl font-extrabold bg-white">
-          EV
-        </AvatarFallback>
+        <Image src={image} alt="logo" />
       </Avatar>
       <Separator />
 
-      <div
+      <nav
         className={cn(
           isOpen && "w-full",
           "flex flex-col gap-2 h-full transition"
         )}
       >
-        <div
+        <button
           onClick={() => onOpen()}
           className="absolute top-[187px] right-[-14px] bg-white p-[6px] border rounded-lg text-slate-500 cursor-pointer"
         >
           <ChevronsLeftRight className="w-4 h-4" />
-        </div>
-        <div
+        </button>
+        <a
           onClick={() => {
             router.push("/dashboard");
           }}
@@ -76,8 +76,8 @@ export const NavigationSidebar = () => {
               Início
             </span>
           )}
-        </div>
-        <div
+        </a>
+        <a
           onClick={() => {
             router.push("/dashboard/alunos");
           }}
@@ -99,8 +99,8 @@ export const NavigationSidebar = () => {
               Alunos
             </span>
           )}
-        </div>
-        <div
+        </a>
+        <a
           onClick={() => {
             router.push("/dashboard/turmas");
           }}
@@ -122,8 +122,8 @@ export const NavigationSidebar = () => {
               Turmas
             </span>
           )}
-        </div>
-        <div
+        </a>
+        <a
           onClick={() => {
             router.push("/dashboard/professores");
           }}
@@ -145,10 +145,10 @@ export const NavigationSidebar = () => {
               Professores
             </span>
           )}
-        </div>
-      </div>
+        </a>
+      </nav>
       <Separator />
-      <div
+      <button
         onClick={() => {
           abrirModal("logout");
         }}
@@ -159,7 +159,7 @@ export const NavigationSidebar = () => {
       >
         <LogOut className="w-6 h-6 " />
         {isOpen && <span className=" leading-6 text-xl">Sair</span>}
-      </div>
-    </div>
+      </button>
+    </aside>
   );
 };
