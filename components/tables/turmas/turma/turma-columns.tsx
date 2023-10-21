@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Aluno, AlunoPresenca, AlunoTurma, Turma } from "@/utils/types";
-import { ExcluirAlunoTurmaMenuItem } from "./delete-turma-aluno-menu-item";
-import { Separator } from "@/components/ui/separator";
-import { HistoricoAlunoTurmaMenuItem } from "./historico-turma-aluno-menu-item";
+} from '@/components/ui/dropdown-menu';
+import { Aluno, AlunoPresenca, AlunoTurma, Turma } from '@/utils/types';
+import { ExcluirAlunoTurmaMenuItem } from './delete-turma-aluno-menu-item';
+import { Separator } from '@/components/ui/separator';
+import { HistoricoAlunoTurmaMenuItem } from './historico-turma-aluno-menu-item';
 
 export const turmaColumns: ColumnDef<AlunoTurma>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -38,12 +38,12 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "aluno",
+    accessorKey: 'aluno',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nome
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -51,16 +51,16 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
       );
     },
     cell: ({ row }) => {
-      const aluno: Aluno = row.getValue("aluno");
+      const aluno: Aluno = row.getValue('aluno');
       return <>{aluno.nome}</>;
     },
   },
 
   {
-    accessorKey: "presenca",
-    header: "Presença",
+    accessorKey: 'presenca',
+    header: 'Presença',
     cell: ({ row }) => {
-      const presenca: AlunoPresenca[] = row.getValue("presenca");
+      const presenca: AlunoPresenca[] = row.getValue('presenca');
       return (
         <div className="items-top flex space-x-2">
           <Checkbox id="terms1" checked={presenca[0].presenca} />
@@ -77,9 +77,9 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
     },
   },
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
       const aluno = row.original;
       return (
@@ -94,7 +94,7 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <HistoricoAlunoTurmaMenuItem aluno={aluno} />
             <Separator />
-            <ExcluirAlunoTurmaMenuItem />
+            <ExcluirAlunoTurmaMenuItem aluno={aluno} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

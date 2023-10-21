@@ -1,14 +1,18 @@
-"use client";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useModal } from "@/hooks/use-modal-store";
-import { Trash2Icon } from "lucide-react";
+'use client';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { useModal } from '@/hooks/use-modal-store';
+import { Turma } from '@/utils/types';
+import { Trash2Icon } from 'lucide-react';
+interface Props {
+  turma: Turma;
+}
 
-export const ExcluirTurmaMenuItem = () => {
+export const ExcluirTurmaMenuItem = ({ turma }: Props) => {
   const { onOpen } = useModal();
   return (
     <DropdownMenuItem
       onClick={() => {
-        onOpen("excluirTurma");
+        onOpen('excluirTurma', { turma });
       }}
       className="gap-2 text-red-500"
     >

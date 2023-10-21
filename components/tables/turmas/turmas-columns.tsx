@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Aluno, Turma } from "@/utils/types";
-import { EditTurmaMenuItem } from "./edit-turma-menu-item";
-import { ExcluirTurmaMenuItem } from "./delete-turma-menu-item";
+} from '@/components/ui/dropdown-menu';
+import { Aluno, Turma } from '@/utils/types';
+import { EditTurmaMenuItem } from './edit-turma-menu-item';
+import { ExcluirTurmaMenuItem } from './delete-turma-menu-item';
 
 export const turmasColumns: ColumnDef<Turma>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -37,12 +37,12 @@ export const turmasColumns: ColumnDef<Turma>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nome",
+    accessorKey: 'nome',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nome
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -52,32 +52,33 @@ export const turmasColumns: ColumnDef<Turma>[] = [
   },
 
   {
-    accessorKey: "professor",
-    header: "Professor",
+    accessorKey: 'professor',
+    header: 'Professor',
   },
   {
-    accessorKey: "horario",
-    header: "Horário",
+    accessorKey: 'horario',
+    header: 'Horário',
   },
   {
-    accessorKey: "alunos",
-    header: "Alunos",
+    accessorKey: 'alunos',
+    header: 'Alunos',
     cell: ({ row }) => {
-      const alunos: Aluno[] = row.getValue("alunos");
+      const alunos: Aluno[] = row.getValue('alunos');
 
       return <>{alunos.length}</>;
     },
   },
   {
-    accessorKey: "local",
-    header: "Local",
+    accessorKey: 'local',
+    header: 'Local',
   },
 
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
+      const turma = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -88,9 +89,9 @@ export const turmasColumns: ColumnDef<Turma>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditTurmaMenuItem />
+            <EditTurmaMenuItem turma={turma} />
             <DropdownMenuSeparator />
-            <ExcluirTurmaMenuItem />
+            <ExcluirTurmaMenuItem turma={turma} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
