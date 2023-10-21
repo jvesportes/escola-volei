@@ -3,6 +3,7 @@ import {
   AlunoEspera,
   AlunoPresenca,
   AlunoTurma,
+  Pagamento,
   Professor,
   Turma,
 } from '@/utils/types';
@@ -22,6 +23,7 @@ export type ModalType =
   | 'logout'
   | 'historicoAlunoTurma'
   | 'pagamentoAluno'
+  | 'excluirPagamentoAluno'
   | 'addAlunoTurma';
 
 interface ModalData {
@@ -29,6 +31,7 @@ interface ModalData {
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;
   professor?: Professor;
+  pagamento?: Pagamento;
 }
 interface ModalStore {
   type: ModalType | null;

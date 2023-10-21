@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +12,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Aluno, Pagamento } from "@/utils/types";
-import { DeletePagmaentoAlunoMenuItem } from "./delete-pagamento-aluno-menu-item";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/dropdown-menu';
+import { Aluno, Pagamento } from '@/utils/types';
+import { DeletePagmaentoAlunoMenuItem } from './delete-pagamento-aluno-menu-item';
+import { Badge } from '@/components/ui/badge';
 
 export const pagamentosColumns: ColumnDef<Pagamento>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -38,10 +38,10 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "pagamentoDate",
-    header: "Data de Pagamento",
+    accessorKey: 'pagamentoDate',
+    header: 'Data de Pagamento',
     cell: ({ row }) => {
-      const pagamentoDate: Date = row.getValue("pagamentoDate");
+      const pagamentoDate: Date = row.getValue('pagamentoDate');
 
       return (
         <>
@@ -52,12 +52,12 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
     },
   },
   {
-    accessorKey: "vencimentoDate",
+    accessorKey: 'vencimentoDate',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Data de Vencimento
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -65,7 +65,7 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
       );
     },
     cell: ({ row }) => {
-      const vencimentoDate: Date = row.getValue("vencimentoDate");
+      const vencimentoDate: Date = row.getValue('vencimentoDate');
 
       return (
         <>
@@ -76,30 +76,30 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
     },
   },
   {
-    accessorKey: "valor",
-    header: "Valor",
+    accessorKey: 'valor',
+    header: 'Valor',
   },
   {
-    accessorKey: "plano",
-    header: "Plano",
+    accessorKey: 'plano',
+    header: 'Plano',
   },
   {
-    accessorKey: "situacao",
-    header: "Situação",
+    accessorKey: 'situacao',
+    header: 'Situação',
     cell: ({ row }) => {
-      const situacao: string = row.getValue("situacao");
+      const situacao: string = row.getValue('situacao');
 
       return (
-        <Badge variant={situacao == "Em dia" ? "green" : "destructive"}>
+        <Badge variant={situacao == 'Em dia' ? 'green' : 'destructive'}>
           {situacao}
         </Badge>
       );
     },
   },
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
       const payment = row.original;
 
@@ -113,7 +113,7 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DeletePagmaentoAlunoMenuItem />
+            <DeletePagmaentoAlunoMenuItem pagamento={payment} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
