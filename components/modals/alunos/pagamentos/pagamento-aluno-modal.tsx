@@ -37,13 +37,13 @@ export const PagamentoAlunoModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white overflow-scroll md:p-6 p-4 rounded-lg no-scrollbar md:w-[80%] w-[95%]">
-        <div className="flex flex-col md:w-full w-[50%] box-border">
+        <div className="flex flex-col md:w-full box-border">
           <DialogHeader className="justify-center items-center md:py-6 py-4 w-full">
             <DialogTitle className="text-slate-900 font-extrabold md:text-5xl text-2xl">
               Informações De Pagamentos
             </DialogTitle>
           </DialogHeader>
-          <div className="flex w-full">
+          <div className="w-100">
             <div className="flex flex-col w-full items-center">
               <h3 className="pb-2 w-full">{data?.alunoNormal?.nome}</h3>
               <div className="flex gap-1.5 w-full items-center">

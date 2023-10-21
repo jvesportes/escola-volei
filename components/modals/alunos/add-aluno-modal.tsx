@@ -32,6 +32,11 @@ export const AddAlunoModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const addStudent = () => {
+    //preparar form para enviar
+    console.log('entrou aqui')
+  }
+
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white overflow-scroll md:p-6 p-4 rounded-lg no-scrollbar">
@@ -127,7 +132,7 @@ export const AddAlunoModal = () => {
             <Button disabled={isLoading} onClick={onClose} variant="ghost">
               Cancelar
             </Button>
-            <Button disabled={isLoading}>Adicionar</Button>
+            <Button disabled={isLoading} onClick={addStudent}>Adicionar</Button>
           </div>
         </DialogFooter>
       </DialogContent>

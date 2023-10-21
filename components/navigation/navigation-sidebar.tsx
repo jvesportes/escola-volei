@@ -23,10 +23,21 @@ export const NavigationSidebar = () => {
   const { onOpen: abrirModal } = useModal();
   // const pathname = usePathname();
 
-  const [isDashboardPage, isAlunosPage,
-
-    isTurmasPage, isProfessoresPage
-  ] = useRouterActiveness(["dashboard", "alunos", "turmas", "professores"]);
+  const [isDashboardPage, isAlunosPage, isTurmasPage, isProfessoresPage] = useRouterActiveness([
+    {
+      expected:"/dashboard",
+      mode: "exact",
+    },
+    {
+      expected: "alunos"
+    },
+    {
+      expected: "turmas"
+    },
+    {
+      expected: "professores"
+    }
+  ]);
 
 
   const router = useRouter();
@@ -34,7 +45,7 @@ export const NavigationSidebar = () => {
     <aside
       className={cn(
         isOpen && "w-64",
-        "flex flex-col h-full items-center z-50 gap-8 border-r bg-background px-4 pt-16 pb-8 shadow-lg transition"
+        "flex flex-col h-full items-center z-50 gap-8 border-r bg-background px-4 pt-16 pb-8 shadow-lg transition-all"
       )}
     >
       <Avatar className="w-[105px] h-[105px] border">
@@ -58,7 +69,7 @@ export const NavigationSidebar = () => {
           onClick={() => {
             router.push("/dashboard");
           }}
-          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
+          className={cn(isDashboardPage && "text-slate-900 bg-slate-100" ,"flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer")}
         >
           <Home
             className={cn(
@@ -81,7 +92,7 @@ export const NavigationSidebar = () => {
           onClick={() => {
             router.push("/dashboard/alunos");
           }}
-          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
+          className={cn(isAlunosPage && "text-slate-900 bg-slate-100" ,"flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer")}
         >
           <User
             className={cn(
@@ -104,7 +115,7 @@ export const NavigationSidebar = () => {
           onClick={() => {
             router.push("/dashboard/turmas");
           }}
-          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900  rounded-full transition cursor-pointer"
+          className={cn(isTurmasPage && "text-slate-900 bg-slate-100" ,"flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer")}
         >
           <Users
             className={cn(
@@ -127,7 +138,7 @@ export const NavigationSidebar = () => {
           onClick={() => {
             router.push("/dashboard/professores");
           }}
-          className="flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer"
+          className={cn(isProfessoresPage && "text-slate-900 bg-slate-100" ,"flex flex-row gap-2 p-2 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-full transition cursor-pointer")}
         >
           <Apple
             className={cn(
