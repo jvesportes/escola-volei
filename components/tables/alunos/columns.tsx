@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,15 +12,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Aluno, Pagamento } from "@/utils/types";
-import { EditAlunoMenuItem } from "./edit-aluno-menu-item";
-import { ExcluirAlunoMenuItem } from "./delete-aluno-menu-item";
-import { PagamentoAlunoButton } from "./pagamentos-aluno-menu-item";
+} from '@/components/ui/dropdown-menu';
+import { Aluno, Pagamento } from '@/utils/types';
+import { EditAlunoMenuItem } from './edit-aluno-menu-item';
+import { ExcluirAlunoMenuItem } from './delete-aluno-menu-item';
+import { PagamentoAlunoButton } from './pagamentos-aluno-menu-item';
 
 export const columns: ColumnDef<Aluno>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -39,16 +39,16 @@ export const columns: ColumnDef<Aluno>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nome",
-    header: "Nome",
+    accessorKey: 'nome',
+    header: 'Nome',
   },
   {
-    accessorKey: "email",
+    accessorKey: 'email',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -57,37 +57,38 @@ export const columns: ColumnDef<Aluno>[] = [
     },
   },
   {
-    accessorKey: "telefone",
-    header: "Telefone",
+    accessorKey: 'telefone',
+    header: 'Telefone',
   },
   {
-    accessorKey: "cpf",
-    header: "CPF",
+    accessorKey: 'cpf',
+    header: 'CPF',
   },
   {
-    accessorKey: "responsavel",
-    header: "Responsável",
+    accessorKey: 'responsavel',
+    header: 'Responsável',
   },
   {
-    accessorKey: "plano",
-    header: "Plano",
+    accessorKey: 'plano',
+    header: 'Plano',
   },
   {
-    accessorKey: "pagamentos",
-    header: "Pagamento",
+    accessorKey: 'pagamentos',
+    header: 'Pagamento',
     cell: ({ row }) => {
-      const payment: Pagamento[] = row.getValue("pagamentos");
+      const payment: Pagamento[] = row.getValue('pagamentos');
       const aluno = row.original;
 
       return <PagamentoAlunoButton pagamento={payment} alunoNormal={aluno} />;
     },
   },
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
       const payment = row.original;
+      const aluno = row.original;
 
       return (
         <DropdownMenu>
@@ -99,9 +100,9 @@ export const columns: ColumnDef<Aluno>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditAlunoMenuItem />
+            <EditAlunoMenuItem alunoNormal={aluno} />
             <DropdownMenuSeparator />
-            <ExcluirAlunoMenuItem />
+            <ExcluirAlunoMenuItem alunoNormal={aluno} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

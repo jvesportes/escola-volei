@@ -55,14 +55,13 @@ const formSchema = z.object({
   responsavelNome: z.string().optional(),
   responsavelTelefone: z.string().optional(),
   responsavelCpf: z.string().optional(),
-  responsavelEmail: z.string().email().optional(),
+  responsavelEmail: z.string().optional(),
 });
 
 export const AddAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,12 +76,16 @@ export const AddAlunoModal = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsLoading(true);
+      console.log(values);
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const isModalOpen = isOpen && type === 'addAluno';
@@ -304,7 +307,7 @@ export const AddAlunoModal = () => {
                   Cancelar
                 </Button>
                 <Button disabled={isLoading} type="submit">
-                  Adicionar
+                  {!isLoading ? 'Adicionar' : 'Adicionando...'}
                 </Button>
               </div>
             </DialogFooter>

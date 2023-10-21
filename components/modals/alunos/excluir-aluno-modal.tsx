@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/hooks/use-modal-store';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,15 +12,24 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export const ExcluirAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useRouter();
 
-  const isModalOpen = isOpen && type === "excluirAluno";
+  const isModalOpen = isOpen && type === 'excluirAluno';
 
   const [isLoading, setIsLoading] = useState(false);
+  const handleDelete = async () => {
+    try {
+      setIsLoading(true);
+      console.log('DELETANDO O USUARIO DE NOME:', data?.alunoNormal?.nome);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <AlertDialog open={isModalOpen} onOpenChange={onClose}>
@@ -34,7 +43,9 @@ export const ExcluirAlunoModal = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction>Continuar</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
+            {isLoading ? 'Excluindo...' : 'Excluir'}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
