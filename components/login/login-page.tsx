@@ -1,22 +1,28 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Button } from "../ui/button";
+import Image from 'next/image';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Button } from '../ui/button';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/database.types";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/lib/database.types';
+import { useToast } from '../ui/use-toast';
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+  const { toast } = useToast();
 
   const handleSignIn = async () => {
+    toast({
+      title: 'Luquinhas',
+      description: 'Luquinhas',
+    });
     await supabase.auth.signInWithPassword({
       email,
       password,
@@ -29,10 +35,10 @@ export const LoginPage = () => {
       <div className="flex flex-col gap-6 items-center">
         <Image
           src="/logo.png"
-          className={"flex border border-slate-200 rounded-full"}
+          className={'flex border border-slate-200 rounded-full'}
           width={100}
           height={100}
-          alt={"logo"}
+          alt={'logo'}
         />
         <div className="flex flex-col gap-2">
           <h1 className="text-center">Bem-Vindo de Volta!</h1>

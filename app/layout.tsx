@@ -1,14 +1,15 @@
-import { cn } from "@/lib/utils";
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ModalProvider } from "@/components/providers/modal-provider";
+import { cn } from '@/lib/utils';
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { ModalProvider } from '@/components/providers/modal-provider';
+import { Toaster } from '@/components/ui/toaster';
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Escola Vôlei",
-  description: "Escolinha Vôlei",
+  title: 'Escola Vôlei',
+  description: 'Escolinha Vôlei',
 };
 
 export default function RootLayout({
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(font.className)}>
         <ModalProvider />
+        <Toaster />
         {children}
       </body>
     </html>
