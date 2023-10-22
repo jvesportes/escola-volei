@@ -14,21 +14,39 @@ import { useToast } from '../ui/use-toast';
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const { toast } = useToast();
 
   const handleSignIn = async () => {
-    toast({
-      title: 'Luquinhas',
-      description: 'Luquinhas',
-      variant: 'success',
-    });
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    router.refresh();
+    try {
+      setIsLoading(true);
+      const result = await supabase.auth.signInWithPassword({
+          email,
+          password,
+      });
+
+      if (result.error) {
+        toast({
+          title: 'Erro ao fazer login',
+          description: result.error.message,
+          variant: 'destructive',
+        })
+      }
+
+      const tokens = {
+        access_token: result.data?.session?.access_token,
+        refresh_token: result.data?.session?.refresh_token,
+      };
+
+      localStorage.setItem('@tokens', JSON.stringify(tokens))
+      localStorage.setItem('@user', JSON.stringify(result.data?.user))
+
+      router.refresh();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,8 +90,8 @@ export const LoginPage = () => {
             />
           </div>
         </div>
-        <Button className="w-full max-w-sm" onClick={handleSignIn}>
-          Entrar
+        <Button className="w-full max-w-sm" onClick={handleSignIn} disabled={isLoading}>
+          {isLoading ? 'Carregando...' : 'Entrar'}
         </Button>
       </div>
     </div>

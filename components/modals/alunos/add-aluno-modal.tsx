@@ -36,6 +36,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { api } from '@/services';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -79,10 +80,12 @@ export const AddAlunoModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+      // await api.user.create(values);
+      console.log('deu bom')
       form.reset();
     } catch (error) {
-      console.log(error);
+      console.log('deu ruim',error);
+
     } finally {
       setIsLoading(false);
     }
