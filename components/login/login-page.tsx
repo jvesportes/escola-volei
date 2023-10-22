@@ -22,6 +22,7 @@ export const LoginPage = () => {
     toast({
       title: 'Luquinhas',
       description: 'Luquinhas',
+      variant: 'success',
     });
     await supabase.auth.signInWithPassword({
       email,
