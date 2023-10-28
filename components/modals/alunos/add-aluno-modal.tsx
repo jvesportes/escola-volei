@@ -38,6 +38,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { Insert } from '@/services/api/student/type';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -63,6 +64,7 @@ const formSchema = z.object({
 export const AddAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -98,10 +100,18 @@ export const AddAlunoModal = () => {
         };
       }
       await api.student.create(aluno);
-      console.log('deu bom');
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao criar aluno!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log('deu ruim', error);
+      toast({
+        title: 'Erro ao criar aluno.',
+        variant: 'destructive',
+      });
+      console.log('[CRIAR ALUNO ERRO]', error);
     } finally {
       setIsLoading(false);
     }
