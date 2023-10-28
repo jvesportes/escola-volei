@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';
+import { Insert } from '@/services/api/student/type';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -80,12 +81,27 @@ export const AddAlunoModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      // await api.user.create(values);
-      console.log('deu bom')
+      let aluno: Insert = {
+        cpf: values.cpf,
+        email: values.email,
+        nome: values.nome,
+        telefone: values.telefone,
+        id_plano: values.plano,
+        tem_responsavel: values.responsavelNome ? true : false,
+      } as Insert;
+      if (aluno.tem_responsavel) {
+        aluno.responsavel = {
+          cpf: values.responsavelCpf!,
+          email: values.responsavelEmail,
+          nome: values.responsavelNome!,
+          telefone: values.responsavelTelefone,
+        };
+      }
+      await api.student.create(aluno);
+      console.log('deu bom');
       form.reset();
     } catch (error) {
-      console.log('deu ruim',error);
-
+      console.log('deu ruim', error);
     } finally {
       setIsLoading(false);
     }
