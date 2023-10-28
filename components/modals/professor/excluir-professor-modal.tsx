@@ -13,24 +13,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useToast } from '@/components/ui/use-toast';
+import { api } from '@/services';
 
 export const ExcluirProfessorModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const isModalOpen = isOpen && type === 'excluirProfessor';
 
   const [isLoading, setIsLoading] = useState(false);
-  const handleDelete = async () => {
+  async function handleDelete() {
     try {
       setIsLoading(true);
-      console.log('DELETANDO O PROFESSOR DE NOME:', data?.professor?.nome);
+      await api.teacher.delete('');
+      router.refresh();
+      toast({
+        title: 'Sucesso ao excluir professor!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao excluir professor.',
+        variant: 'destructive',
+      });
+      console.log('[EXCLUIR PROFESSOR ERROR]', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <AlertDialog open={isModalOpen} onOpenChange={onClose}>

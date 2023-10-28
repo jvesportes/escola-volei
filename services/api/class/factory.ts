@@ -24,6 +24,15 @@ function ClassFactory() {
     async get() {
       // impleme,ntar
     },
+    async addStudent(id: string, studentId: string) {
+      // impleme,ntar
+    },
+    async addStudentWaitList(id: string, studentId: string) {
+      // impleme,ntar
+    },
+    async deleteStudent(id: string, studentId: string) {
+      // impleme,ntar
+    },
     async list() {
       // implementar
     },

@@ -36,6 +36,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { api } from '@/services';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   nome: z.string().min(5, {
@@ -51,6 +53,7 @@ const formSchema = z.object({
 export const EditTurmaModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,10 +66,24 @@ export const EditTurmaModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+
+      await api.class.edit({
+        horario: values.horario,
+        id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
+        unidade: values.unidade,
+      });
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao editar turma!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao editar turma.',
+        variant: 'destructive',
+      });
+      console.log('[EDITAR TURMA ERROR]', error);
     } finally {
       setIsLoading(false);
     }

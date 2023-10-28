@@ -45,6 +45,8 @@ import { cn } from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { ptBR } from 'date-fns/locale';
+import { useToast } from '@/components/ui/use-toast';
+import { api } from '@/services';
 
 const formSchema = z.object({
   datePagamento: z.date(),
@@ -55,19 +57,31 @@ const formSchema = z.object({
 export const PagamentoAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
-
+  const aluno = {
+    id: '',
+  };
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+      await api.student.addPayment(aluno.id, values);
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao adicionar pagamento do aluno!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao excluir pagamento do aluno.',
+        variant: 'destructive',
+      });
+      console.log('[CRIAR PAGAMENTO ALUNO ERRO]', error);
     } finally {
       setIsLoading(false);
     }

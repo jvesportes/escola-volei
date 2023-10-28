@@ -13,23 +13,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { api } from '@/services';
+import { useToast } from '@/components/ui/use-toast';
 
 export const ExcluirPagamentoAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
 
   const isModalOpen = isOpen && type === 'excluirPagamentoAluno';
+  const router = useRouter();
+  const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState(false);
-  const handleDelete = async () => {
+  async function handleDelete() {
     try {
       setIsLoading(true);
-      console.log('DELETANDO O PAGAMENTO DO USUARIO DE NOME:', data?.pagamento);
+      await api.student.deletePayment('', '');
+      router.refresh();
+      toast({
+        title: 'Sucesso ao excluir pagamento do aluno!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao excluir pagamento do aluno.',
+        variant: 'destructive',
+      });
+      console.log('[EXCLUIR PAGAMENTO DO ALUNO ERROR]', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <AlertDialog open={isModalOpen} onOpenChange={onClose}>

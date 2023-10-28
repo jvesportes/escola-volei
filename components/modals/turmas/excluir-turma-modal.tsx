@@ -13,24 +13,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { api } from '@/services';
+import { useToast } from '@/components/ui/use-toast';
 
 export const ExcluirTurmaModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const isModalOpen = isOpen && type === 'excluirTurma';
 
   const [isLoading, setIsLoading] = useState(false);
-  const handleDelete = async () => {
+  async function handleDelete() {
     try {
       setIsLoading(true);
-      console.log('DELETANDO A TURMA DE NOME:', data?.turma?.nome);
+      await api.class.delete('');
+      router.refresh();
+      toast({
+        title: 'Sucesso ao excluir turma!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao excluir turma.',
+        variant: 'destructive',
+      });
+      console.log('[EXCLUIR TURMA ERROR]', error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }
 
   return (
     <AlertDialog open={isModalOpen} onOpenChange={onClose}>

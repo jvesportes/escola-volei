@@ -36,6 +36,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/components/ui/use-toast';
+import { api } from '@/services';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -57,7 +59,8 @@ const formSchema = z.object({
 
 export const EditProfessorModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-
+  const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,10 +75,25 @@ export const EditProfessorModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+
+      // E senha?
+      await api.teacher.edit({
+        cpf: values.cpf,
+        email: values.email,
+        nome: values.nome,
+      });
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao criar professor!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao criar professor.',
+        variant: 'destructive',
+      });
+      console.log('[CRIAR PROFESSOR ERROR]', error);
     } finally {
       setIsLoading(false);
     }

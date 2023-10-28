@@ -1,6 +1,5 @@
-import { supabase } from "@/lib/supabae";
-import * as Student from './type'
-
+import { supabase } from '@/lib/supabae';
+import * as Student from './type';
 
 function StudentFactory() {
   return {
@@ -26,14 +25,19 @@ function StudentFactory() {
     async delete(id: string) {
       // implementar
     },
+    async addPayment(id: string, payment: Student.Payment) {
+      // implementar
+    },
+    async deletePayment(id: string, paymentId: string) {
+      // implementar
+    },
     async get() {
       // implementar
     },
     async list() {
       // implementar
-    }
-  }
+    },
+  };
 }
-
 
 export const student = StudentFactory();

@@ -49,6 +49,8 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
+import { api } from '@/services';
+import { useToast } from '@/components/ui/use-toast';
 
 const FormSchema = z.object({
   aluno: z.string(),
@@ -57,6 +59,7 @@ const FormSchema = z.object({
 export const AddAlunoTurma = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -65,10 +68,20 @@ export const AddAlunoTurma = () => {
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+
+      await api.class.addStudent('', '');
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao adicionar aluno à turma!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao adicionar aluno à turma.',
+        variant: 'destructive',
+      });
+      console.log('[ADICIONAR ALUNO TURMA ERROR]', error);
     } finally {
       setIsLoading(false);
     }

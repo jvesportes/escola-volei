@@ -36,6 +36,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { api } from '@/services';
+import { Insert } from '@/services/api/student/type';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   email: z.string().email().min(5),
@@ -53,6 +56,7 @@ const formSchema = z.object({
 export const EditAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,10 +71,35 @@ export const EditAlunoModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(values);
+      let aluno: Insert = {
+        cpf: values.cpf,
+        email: values.email,
+        nome: values.nome,
+        telefone: values.telefone,
+        id_plano: values.plano,
+        tem_responsavel: values.responsavelNome ? true : false,
+      } as Insert;
+      if (aluno.tem_responsavel) {
+        aluno.responsavel = {
+          cpf: values.responsavelCpf!,
+          email: values.responsavelEmail,
+          nome: values.responsavelNome!,
+          telefone: values.responsavelTelefone,
+        };
+      }
+      await api.student.edit(aluno);
       form.reset();
+      router.refresh();
+      toast({
+        title: 'Sucesso ao editar aluno!',
+        variant: 'success',
+      });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: 'Erro ao editar aluno.',
+        variant: 'destructive',
+      });
+      console.log('[EDITAR ALUNO ERRO]', error);
     } finally {
       setIsLoading(false);
     }
