@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Aluno,
   AlunoEspera,
   AlunoPresenca,
   AlunoTurma,
   Turma,
-} from "@/utils/types";
+} from '@/utils/types';
 
 export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -42,12 +42,12 @@ export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
   },
 
   {
-    accessorKey: "date",
+    accessorKey: 'date',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Data
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -55,7 +55,7 @@ export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = row.getValue("date") as Date;
+      const date = row.getValue('date') as Date;
       console.log(date);
       return (
         <>
@@ -65,13 +65,17 @@ export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
     },
   },
   {
-    accessorKey: "presenca",
-    header: "Status",
+    accessorKey: 'presenca',
+    header: 'Status',
+    cell: ({ row }) => {
+      const presenca = row.getValue('presenca') as boolean;
+      return <>{presenca ? 'Presente' : 'Ausente'}</>;
+    },
   },
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
       return (
         <div className="items-top flex space-x-2">

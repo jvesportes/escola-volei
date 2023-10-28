@@ -128,13 +128,6 @@ export const LoginPage = ({ session }: { session: Session | null }) => {
         >
           {isLoading ? 'Carregando...' : 'Entrar'}
         </Button>
-        <Button
-          className="w-full max-w-sm"
-          onClick={handleTest}
-          disabled={isLoading}
-        >
-          TESTE
-        </Button>
       </div>
     </div>
   );
