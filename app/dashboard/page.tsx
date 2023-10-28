@@ -1,6 +1,7 @@
-import { Card } from "@/components/ui/card";
+'use client';
+import { Card } from '@/components/ui/card';
 
-import { GoBackButton } from "@/components/navigation/go-back-button";
+import { GoBackButton } from '@/components/navigation/go-back-button';
 import {
   Apple,
   ArrowRight,
@@ -9,10 +10,14 @@ import {
   ShieldCheck,
   User,
   Users,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { hasRoleAccess } from '@/utils';
 const DashboardPage = () => {
+  const router = useRouter();
+  const user = {};
   return (
     <div className="flex w-full h-full md:px-16 md:py-6 md:gap-12 gap-6 p-4 flex-col overflow-y-scroll pb-32 scroll-smooth">
       <div className="flex flex-col">
@@ -25,43 +30,69 @@ const DashboardPage = () => {
       <div className="flex flex-col md:gap-8 gap-6">
         <div className="flex flex-col md:gap-6 gap-4">
           <h1>Olá Júlio Soares!</h1>
-          <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
-            <Card className="md:p-6 p-4">
-              <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
-                <div className="flex flex-row gap-2">
-                  <User className="w-8 h-8 text-slate-900" strokeWidth={2} />
-                  <h2>Alunos</h2>
+          {hasRoleAccess('admin', user) && (
+            <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
+              <Card className="md:p-6 p-4">
+                <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
+                  <div className="flex flex-row gap-2">
+                    <User className="w-8 h-8 text-slate-900" strokeWidth={2} />
+                    <h2>Alunos</h2>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      router.push('/dashboard/alunos');
+                    }}
+                    size={'icon'}
+                  >
+                    <ArrowRight
+                      className="text-white h-4 w-4"
+                      strokeWidth={3}
+                    />
+                  </Button>
                 </div>
-                <Button size={"icon"}>
-                  <ArrowRight className="text-white h-4 w-4" strokeWidth={3} />
-                </Button>
-              </div>
-            </Card>
-            <Card className="md:p-6 p-4">
-              <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
-                <div className="flex flex-row gap-2">
-                  <Users className="w-8 h-8 text-slate-900" strokeWidth={2} />
-                  <h2>Turmas</h2>
+              </Card>
+              <Card className="md:p-6 p-4">
+                <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
+                  <div className="flex flex-row gap-2">
+                    <Users className="w-8 h-8 text-slate-900" strokeWidth={2} />
+                    <h2>Turmas</h2>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      router.push('/dashboard/turmas');
+                    }}
+                    size={'icon'}
+                  >
+                    <ArrowRight
+                      className="text-white h-4 w-4"
+                      strokeWidth={3}
+                    />
+                  </Button>
                 </div>
-                <Button size={"icon"}>
-                  <ArrowRight className="text-white h-4 w-4" strokeWidth={3} />
-                </Button>
-              </div>
-            </Card>
-            <Card className="md:p-6 p-4">
-              <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
-                <div className="flex flex-row gap-2">
-                  <Apple className="w-8 h-8 text-slate-900" strokeWidth={2} />
-                  <h2>Professores</h2>
+              </Card>
+              <Card className="md:p-6 p-4">
+                <div className="flex flex-row justify-between md:gap-6 gap-4 items-center">
+                  <div className="flex flex-row gap-2">
+                    <Apple className="w-8 h-8 text-slate-900" strokeWidth={2} />
+                    <h2>Professores</h2>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      router.push('/dashboard/professores');
+                    }}
+                    size={'icon'}
+                  >
+                    <ArrowRight
+                      className="text-white h-4 w-4"
+                      strokeWidth={3}
+                    />
+                  </Button>
                 </div>
-                <Button size={"icon"}>
-                  <ArrowRight className="text-white h-4 w-4" strokeWidth={3} />
-                </Button>
-              </div>
-            </Card>
-          </div>
+              </Card>
+            </div>
+          )}
         </div>
-        <div className="flex flex-col md:gap-6 gap-4">
+        {/* <div className="flex flex-col md:gap-6 gap-4">
           <h2>Dados</h2>
           <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
             <Card className="md:p-6 p-4 gap-2 md:min-w-[256px] min-w-[230px]">
@@ -121,7 +152,7 @@ const DashboardPage = () => {
               </div>
             </Card>
           </div>
-        </div>
+        </div> */}
         <div className="flex flex-col md:gap-6 gap-4">
           <h2>Nossos Valores</h2>
           <div className="flex flex-row md:gap-6 gap-4 overflow-y-scroll no-scrollbar ">
@@ -174,7 +205,7 @@ const DashboardPage = () => {
             <div className="flex flex-row gap-2 md:gap-6 overflow-x-scroll no-scrollbar">
               <div className="relative w-full rounded-lg aspect-square min-h-[280px]">
                 <Image
-                  src={"/professores1.png"}
+                  src={'/professores1.png'}
                   fill
                   className=" rounded-lg"
                   alt="Imagens de torneios."
@@ -182,7 +213,7 @@ const DashboardPage = () => {
               </div>
               <div className="relative w-full rounded-lg aspect-square min-h-[280px] ">
                 <Image
-                  src={"/torneio.png"}
+                  src={'/torneio.png'}
                   fill
                   className=" rounded-lg"
                   alt="Imagens de torneios."
@@ -190,7 +221,7 @@ const DashboardPage = () => {
               </div>
               <div className="relative w-full rounded-lg aspect-square min-h-[280px]">
                 <Image
-                  src={"/torneio2.png"}
+                  src={'/torneio2.png'}
                   fill
                   className=" rounded-lg"
                   alt="Imagens de torneios."

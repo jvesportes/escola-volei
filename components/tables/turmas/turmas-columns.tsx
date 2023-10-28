@@ -15,6 +15,7 @@ import {
 import { Aluno, Turma } from '@/utils/types';
 import { EditTurmaMenuItem } from './edit-turma-menu-item';
 import { ExcluirTurmaMenuItem } from './delete-turma-menu-item';
+import { hasRoleAccess } from '@/utils';
 
 export const turmasColumns: ColumnDef<Turma>[] = [
   {
@@ -71,30 +72,5 @@ export const turmasColumns: ColumnDef<Turma>[] = [
   {
     accessorKey: 'local',
     header: 'Local',
-  },
-
-  {
-    id: 'ações',
-    accessorKey: 'Ações',
-    header: 'Ações',
-    cell: ({ row }) => {
-      const turma = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditTurmaMenuItem turma={turma} />
-            <DropdownMenuSeparator />
-            <ExcluirTurmaMenuItem turma={turma} />
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
   },
 ];

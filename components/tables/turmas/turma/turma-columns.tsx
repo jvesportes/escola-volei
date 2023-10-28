@@ -76,28 +76,4 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
       );
     },
   },
-  {
-    id: 'ações',
-    accessorKey: 'Ações',
-    header: 'Ações',
-    cell: ({ row }) => {
-      const aluno = row.original;
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <HistoricoAlunoTurmaMenuItem aluno={aluno} />
-            <Separator />
-            <ExcluirAlunoTurmaMenuItem aluno={aluno} />
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
 ];

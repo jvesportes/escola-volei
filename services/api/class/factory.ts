@@ -1,11 +1,19 @@
-import { supabase } from "@/lib/supabae";
-import * as Class from './type'
-
+import { supabase } from '@/lib/supabae';
+import * as Class from './type';
 
 function ClassFactory() {
   return {
     async create(data: Class.Insert) {
-      // supabase.from('cla').insert(data)
+      await supabase
+        .from('turmas')
+        .insert([
+          {
+            horario: data.horario,
+            id_professor: data.id_professor,
+            unidade: data.unidade,
+          },
+        ])
+        .select();
     },
     async edit(data: Class.Update) {
       // supabase.from('alunos').update(data)
@@ -18,9 +26,8 @@ function ClassFactory() {
     },
     async list() {
       // implementar
-    }
-  }
+    },
+  };
 }
-
 
 export const classService = ClassFactory();

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/hooks/use-modal-store';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,15 +12,29 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/lib/database.types';
+import { useToast } from '../ui/use-toast';
 
 export const SairModal = () => {
+  const supabase = createClientComponentClient<Database>();
   const { isOpen, onClose, type, data } = useModal();
+  const { toast } = useToast();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "logout";
+  const isModalOpen = isOpen && type === 'logout';
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleSignOut = () => {
+    supabase.auth.signOut();
+    toast({
+      title: 'Deslogado com sucesso!',
+      variant: 'success',
+    });
+    router.push('/');
+  };
 
   return (
     <AlertDialog open={isModalOpen} onOpenChange={onClose}>
@@ -34,7 +48,9 @@ export const SairModal = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction>Continuar</AlertDialogAction>
+          <AlertDialogAction onClick={handleSignOut}>
+            Continuar
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

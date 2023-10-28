@@ -1,11 +1,14 @@
-import { LoginPage } from "@/components/login/login-page";
-import { redirect } from "next/navigation";
+import { LoginPage } from '@/components/login/login-page';
+import { Database } from '@/lib/database.types';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const user = false;
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  if (user) {
-    return redirect("/dashboard");
-  }
-  return <LoginPage />;
+  return <LoginPage session={session} />;
 }
