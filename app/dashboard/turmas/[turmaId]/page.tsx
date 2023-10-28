@@ -102,16 +102,18 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
         <div className="flex flex-col md:gap-6 gap-4 w-full">
           <div className="flex flex-row justify-between">
             <h1>{turma?.nome}</h1>
-            <Button
-              size={'sm'}
-              variant={'secondary'}
-              onClick={() => {
-                onOpen('listaEspera', { turma });
-              }}
-            >
-              <span className="md:flex hidden">Lista de Espera</span>
-              <FileText className="text-slate-900 md:hidden w-5 h-5" />
-            </Button>
+            {hasRoleAccess('admin', user) && (
+              <Button
+                size={'sm'}
+                variant={'secondary'}
+                onClick={() => {
+                  onOpen('listaEspera', { turma });
+                }}
+              >
+                <span className="md:flex hidden">Lista de Espera</span>
+                <FileText className="text-slate-900 md:hidden w-5 h-5" />
+              </Button>
+            )}
           </div>
           <div className="flex flex-col md:gap-4 gap-2">
             <SingleTurmaDataTable

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -21,19 +21,20 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Settings, UserPlus, Users } from "lucide-react";
-import { useModal } from "@/hooks/use-modal-store";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/dropdown-menu';
+import { Settings, UserPlus, Users } from 'lucide-react';
+import { useModal } from '@/hooks/use-modal-store';
+import { useRouter } from 'next/navigation';
+import { hasRoleAccess } from '@/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -72,6 +73,7 @@ export function TurmaDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
+  const user = {};
 
   return (
     <div>
@@ -79,23 +81,25 @@ export function TurmaDataTable<TData, TValue>({
         <div className="flex flex-row items-center">
           <Input
             placeholder="Pesquisar por nome"
-            value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
-              table.getColumn("nome")?.setFilterValue(event.target.value)
+              table.getColumn('nome')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
-          <Button
-            size={"sm"}
-            onClick={() => {
-              onOpen("addTurma");
-            }}
-          >
-            <span className="md:flex hidden">Adicionar Turma</span>
-            <Users className="text-white md:hidden w-5 h-5" />
-          </Button>
+          {hasRoleAccess('admin', user) && (
+            <Button
+              size={'sm'}
+              onClick={() => {
+                onOpen('addTurma');
+              }}
+            >
+              <span className="md:flex hidden">Adicionar Turma</span>
+              <Users className="text-white md:hidden w-5 h-5" />
+            </Button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -158,7 +162,7 @@ export function TurmaDataTable<TData, TValue>({
                       }`
                     );
                   }}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
