@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -21,20 +21,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ArrowLeft, FileText, Settings, UserPlus, Users } from "lucide-react";
-import { useModal } from "@/hooks/use-modal-store";
-import { useRouter } from "next/navigation";
-import { AlunoEspera } from "@/utils/types";
+} from '@/components/ui/dropdown-menu';
+import { ArrowLeft, FileText, Settings, UserPlus, Users } from 'lucide-react';
+import { useModal } from '@/hooks/use-modal-store';
+import { useRouter } from 'next/navigation';
+import { AlunoEspera } from '@/utils/types';
+import { hasRoleAccess } from '@/utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -73,7 +74,7 @@ export function SingleTurmaDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
-  console.log("[CONSOLE AQUI]", data);
+  const user = {};
 
   return (
     <div>
@@ -81,17 +82,17 @@ export function SingleTurmaDataTable<TData, TValue>({
         <div className="flex flex-row items-center">
           <Input
             placeholder="Pesquisar por nome"
-            value={(table.getColumn("nome")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
-              table.getColumn("nome")?.setFilterValue(event.target.value)
+              table.getColumn('nome')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
           <Button
-            size={"sm"}
-            variant={"outline"}
+            size={'sm'}
+            variant={'outline'}
             onClick={() => {
               router.back();
             }}
@@ -100,16 +101,17 @@ export function SingleTurmaDataTable<TData, TValue>({
             <ArrowLeft className="text-slate-900 w-5 h-5" />
             <span className="md:flex hidden">Voltar</span>
           </Button>
-
-          <Button
-            size={"sm"}
-            onClick={() => {
-              onOpen("addAlunoTurma");
-            }}
-          >
-            <span className="md:flex hidden">Adicionar Aluno</span>
-            <UserPlus className="text-white md:hidden w-5 h-5" />
-          </Button>
+          {hasRoleAccess('admin', user) && (
+            <Button
+              size={'sm'}
+              onClick={() => {
+                onOpen('addAlunoTurma');
+              }}
+            >
+              <span className="md:flex hidden">Adicionar Aluno</span>
+              <UserPlus className="text-white md:hidden w-5 h-5" />
+            </Button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -164,7 +166,7 @@ export function SingleTurmaDataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
