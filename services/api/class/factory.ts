@@ -1,10 +1,10 @@
-import { supabase } from '@/lib/supabae';
+import { supabase } from '@/lib';
 import * as Class from './type';
 
 function ClassFactory() {
   return {
     async create(data: Class.Insert) {
-      await supabase
+      const result = await supabase
         .from('turmas')
         .insert([
           {
@@ -14,6 +14,8 @@ function ClassFactory() {
           },
         ])
         .select();
+
+      return result;
     },
     async edit(data: Class.Update) {
       // supabase.from('alunos').update(data)
@@ -34,7 +36,8 @@ function ClassFactory() {
       // impleme,ntar
     },
     async list() {
-      // implementar
+      const result = await supabase.from('turmas').select();
+      return result.data;
     },
   };
 }

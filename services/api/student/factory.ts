@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabae';
+import { supabase } from '@/lib';
 import * as Student from './type';
 
 function StudentFactory() {
@@ -32,7 +32,8 @@ function StudentFactory() {
       // implementar
     },
     async get() {
-      // implementar
+      // const result = supabase.from('alunos').select('*')
+      // return result
     },
     async list() {
       // implementar

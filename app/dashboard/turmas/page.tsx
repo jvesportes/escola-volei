@@ -13,13 +13,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useClass } from '@/hooks';
 import { hasRoleAccess } from '@/utils';
-import { Turma, turmas } from '@/utils/types';
+import { Turma } from '@/utils/types';
 import { MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const TurmasPage = () => {
   const [isMounted, setIsMounted] = useState(false);
+
+  const { data: turmas } = useClass();
 
   useEffect(() => {
     setIsMounted(true);

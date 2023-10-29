@@ -1,11 +1,12 @@
-import { supabase } from "@/lib/supabae";
+import { supabase } from "@/lib";
 import * as Teacher from './type'
 
 
 function TeacherFactory() {
   return {
     async create(data: Teacher.Insert) {
-      // supabase.from('cla').insert(data)
+      const result = await supabase.from('perfis').insert([data]).select()
+      return result.data;
     },
     async edit(data: Teacher.Update) {
       // supabase.from('alunos').update(data)
@@ -13,8 +14,14 @@ function TeacherFactory() {
     async delete(id: string) {
       // implementar
     },
-    async get() {
-      // implementar
+    async get(id: string) {
+      const result = await supabase
+      .from('perfis')
+      .select()
+      // .eq('id', id)
+      // .eq('tipo', 'professor')
+      return result.data;
+
     },
     async list() {
       // implementar

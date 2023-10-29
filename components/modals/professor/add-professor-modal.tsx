@@ -78,14 +78,15 @@ export const AddProfessorModal = () => {
       setIsLoading(true);
 
       // E senha?
-      await api.teacher.create({
+      const a = await api.teacher.create({
         cpf: values.cpf,
         email: values.email,
         nome: values.nome,
         tipo: 'professor',
       });
-      form.reset();
-      router.refresh();
+      console.log('------->', a)
+      // form.reset();
+      // router.refresh();
       toast({
         title: 'Sucesso ao criar professor!',
         variant: 'success',

@@ -38,6 +38,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib';
 
 const formSchema = z.object({
   nome: z.string().min(5, {
@@ -67,11 +68,13 @@ export const AddTurmaModal = () => {
     try {
       setIsLoading(true);
 
+      console.log('entrou aqui')
       await api.class.create({
-        horario: values.horario,
+        horario: '09:00:00',
         id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
         unidade: values.unidade,
       });
+
       form.reset();
       router.refresh();
       toast({

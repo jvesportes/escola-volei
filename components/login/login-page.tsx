@@ -13,10 +13,10 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/lib/database.types';
 import { useToast } from '../ui/use-toast';
-import { classService } from '@/services/api/class';
+import { supabase } from '@/lib';
 
 export const LoginPage = ({ session }: { session: Session | null }) => {
-  const supabase = createClientComponentClient<Database>();
+  // const supabase = createClientComponentClient<Database>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +38,7 @@ export const LoginPage = ({ session }: { session: Session | null }) => {
           description: result.error.message,
           variant: 'destructive',
         });
+        return;
       }
 
       const tokens = {
@@ -53,32 +54,6 @@ export const LoginPage = ({ session }: { session: Session | null }) => {
       setIsLoading(false);
     }
   };
-
-  async function handleTest() {
-    const turmaData = {
-      created_at: '2023-10-24',
-      horario: '08:00 AM',
-      id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
-      unidade: 'Unidade Aaaaaa',
-    };
-
-    try {
-      // const result = await supabase
-      //   .from('turmas')
-      //   .insert([
-      //     {
-      //       horario: '13:00',
-      //       id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
-      //       unidade: 'unidade teste',
-      //     },
-      //   ])
-      //   .select();
-      classService.create(turmaData);
-      console.log('Dados de turma inseridos com sucesso:');
-    } catch (error) {
-      console.error('Erro ao inserir dados de turma:', error);
-    }
-  }
 
   return (
     <div className="flex flex-col gap-8 w-full items-center justify-center h-full p-4 bg-white">
