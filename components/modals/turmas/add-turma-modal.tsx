@@ -66,7 +66,7 @@ export const AddTurmaModal = () => {
     try {
       setIsLoading(true);
 
-      console.log(values.horario);
+      //Falta Nome da turma
       await api.class.create({
         horario: values.horario,
         id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
