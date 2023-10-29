@@ -86,7 +86,7 @@ export const ListaEsperaModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white overflow-scroll md:p-6 p-4 rounded-lg no-scrollbar">
+      <DialogContent className="bg-white overflow-scroll md:p-6 p-4 rounded-lg no-scrollbar md:w-[80%] w-[95%]">
         <DialogHeader className="justify-center items-center md:py-6 py-4">
           <DialogTitle className="text-slate-900 font-extrabold md:text-5xl text-2xl">
             Lista de Espera

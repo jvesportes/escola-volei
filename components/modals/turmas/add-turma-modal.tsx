@@ -46,7 +46,7 @@ const formSchema = z.object({
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
   horario: z.string(),
-  professor: z.enum(['joao', 'joao', 'julio']),
+  professor: z.string(),
   unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
 });
 
@@ -139,6 +139,7 @@ export const AddTurmaModal = () => {
                                 className="text-slate-500"
                               />
                             </SelectTrigger>
+                            {/* hook chamando os profesosres e dando opção, no value o id e o nome do professor */}
                             <SelectContent>
                               <SelectItem value="joao">João</SelectItem>
                               <SelectItem value="julio">Júlio</SelectItem>
