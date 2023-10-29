@@ -68,7 +68,7 @@ export const AddTurmaModal = () => {
 
       console.log(values.horario);
       await api.class.create({
-        horario: '09:00:00',
+        horario: values.horario,
         id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
         unidade: values.unidade,
       });
