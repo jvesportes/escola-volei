@@ -39,14 +39,13 @@ import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib';
+import { format } from 'date-fns';
 
 const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  horario: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
+  horario: z.string(),
   professor: z.enum(['joao', 'joao', 'julio']),
   unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
 });
@@ -60,7 +59,6 @@ export const AddTurmaModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: '',
-      horario: '',
     },
   });
 
@@ -68,7 +66,7 @@ export const AddTurmaModal = () => {
     try {
       setIsLoading(true);
 
-      console.log('entrou aqui')
+      console.log(values.horario);
       await api.class.create({
         horario: '09:00:00',
         id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
@@ -160,7 +158,7 @@ export const AddTurmaModal = () => {
                       <FormItem>
                         <FormLabel>Horário</FormLabel>
                         <FormControl>
-                          <Input placeholder="Horário" {...field} />
+                          <Input placeholder="Horário" {...field} type="time" />
                         </FormControl>
                       </FormItem>
                     )}

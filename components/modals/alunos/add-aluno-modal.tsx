@@ -2,6 +2,7 @@
 
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { formatToCPF, formatToPhone, isCPF, isPhone } from 'brazilian-values';
 
 import {
   Dialog,
@@ -47,12 +48,8 @@ const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  telefone: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
-  cpf: z.string().min(5, {
-    message: 'O cpf deve ter pelo menos 5 caracteres',
-  }),
+  telefone: z.string().refine((telefone) => isPhone(telefone)),
+  cpf: z.string().refine((cpf) => isCPF(cpf)),
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
   unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
   responsavelNome: z.string().optional(),
@@ -204,7 +201,16 @@ export const AddAlunoModal = () => {
                       <FormItem>
                         <FormLabel>Telefone</FormLabel>
                         <FormControl>
-                          <Input placeholder="Telefone" {...field} />
+                          <Input
+                            placeholder="Telefone"
+                            {...field}
+                            onChange={(e) =>
+                              form.setValue(
+                                'telefone',
+                                formatToPhone(e.target.value)
+                              )
+                            }
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -218,7 +224,13 @@ export const AddAlunoModal = () => {
                       <FormItem>
                         <FormLabel>CPF</FormLabel>
                         <FormControl>
-                          <Input placeholder="CPF" {...field} />
+                          <Input
+                            placeholder="CPF"
+                            {...field}
+                            onChange={(e) =>
+                              form.setValue('cpf', formatToCPF(e.target.value))
+                            }
+                          />
                         </FormControl>
                       </FormItem>
                     )}
