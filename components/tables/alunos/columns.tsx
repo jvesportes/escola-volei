@@ -17,8 +17,9 @@ import { Aluno, Pagamento } from '@/utils/types';
 import { EditAlunoMenuItem } from './edit-aluno-menu-item';
 import { ExcluirAlunoMenuItem } from './delete-aluno-menu-item';
 import { PagamentoAlunoButton } from './pagamentos-aluno-menu-item';
+import { Insert } from '@/services/api/student/type';
 
-export const columns: ColumnDef<Aluno>[] = [
+export const columns: ColumnDef<Insert>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -65,23 +66,31 @@ export const columns: ColumnDef<Aluno>[] = [
     header: 'CPF',
   },
   {
-    accessorKey: 'responsavel',
+    accessorKey: 'tem_responsavel',
     header: 'Responsável',
+    cell: ({ row }) => {
+      const responsavel = row.getValue('tem_responsavel');
+      return <>{responsavel == true ? 'Possui' : 'Não Possuí'}</>;
+    },
   },
   {
     accessorKey: 'plano',
     header: 'Plano',
-  },
-  {
-    accessorKey: 'pagamentos',
-    header: 'Pagamento',
     cell: ({ row }) => {
-      const payment: Pagamento[] = row.getValue('pagamentos');
-      const aluno = row.original;
-
-      return <PagamentoAlunoButton pagamento={payment} alunoNormal={aluno} />;
+      const plano: string = row.getValue('plano');
+      return <>{plano.charAt(0).toUpperCase() + plano.slice(1)}</>;
     },
   },
+  // {
+  //   accessorKey: 'pagamentos',
+  //   header: 'Pagamento',
+  //   cell: ({ row }) => {
+  //     const payment: Pagamento[] = row.getValue('pagamentos');
+  //     const aluno = row.original;
+
+  //     return <PagamentoAlunoButton pagamento={payment} alunoNormal={aluno} />;
+  //   },
+  // },
   {
     id: 'ações',
     accessorKey: 'Ações',
@@ -100,9 +109,9 @@ export const columns: ColumnDef<Aluno>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditAlunoMenuItem alunoNormal={aluno} />
+            {/* <EditAlunoMenuItem alunoNormal={aluno} /> */}
             <DropdownMenuSeparator />
-            <ExcluirAlunoMenuItem alunoNormal={aluno} />
+            {/* <ExcluirAlunoMenuItem alunoNormal={aluno} /> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );

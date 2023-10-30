@@ -39,7 +39,7 @@ import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { Insert } from '@/services/api/student/type';
 import { useToast } from '@/components/ui/use-toast';
-import { useStudent } from '@/hooks/useStudent';
+import { useStudent } from '@/hooks/student/useStudent';
 
 const formSchema = z.object({
   email: z.string().email().min(5),

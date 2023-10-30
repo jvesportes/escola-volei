@@ -97,7 +97,27 @@ function StudentFactory() {
       return { data: { ...data[0] }, error };
     },
     async list() {
-      // implementar
+      // precisa popular também os pagamentos deste aluno, em caso de ser nulo, retornar um array vazio
+      let { data: alunos, error } = await supabase.from('alunos').select('*');
+      if (!alunos) throw new Error('Erro ao buscar alunos');
+      const mapping = alunos.map(async (aluno) => {
+        if (aluno.tem_responsavel && aluno.id_responsavel) {
+          const { data: responsavel, error: responsavelError } = await supabase
+            .from('responsaveis')
+            .select('*')
+            .eq('id', aluno.id_responsavel);
+          if (responsavelError) throw responsavelError;
+          return {
+            ...aluno,
+            responsavel: responsavel![0],
+          } as Student.Update & { responsavel?: Student.Responsable };
+        }
+        return { ...aluno, responsavel: '' } as Student.Update & {
+          responsavel?: Student.Responsable;
+        };
+      });
+      const awaitedMap = await Promise.all(mapping);
+      return { data: awaitedMap, error };
     },
   };
 }
