@@ -53,15 +53,9 @@ const formSchema = z.object({
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
   // unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
   responsavelNome: z.string().optional(),
-  responsavelTelefone: z
-    .string()
-    .refine((telefone) => isPhone(telefone))
-    .optional(),
-  responsavelCpf: z
-    .string()
-    .refine((cpf) => isCPF(cpf))
-    .optional(),
-  responsavelEmail: z.string().email().optional(),
+  responsavelTelefone: z.string().optional(),
+  responsavelCpf: z.string().optional(),
+  responsavelEmail: z.string().optional(),
 });
 
 export const AddAlunoModal = () => {
@@ -91,7 +85,7 @@ export const AddAlunoModal = () => {
         email: values.email,
         nome: values.nome,
         telefone: values.telefone,
-        id_plano: values.plano,
+        plano: values.plano,
         tem_responsavel: values.responsavelNome ? true : false,
       } as Insert;
       if (aluno.tem_responsavel) {
@@ -102,8 +96,8 @@ export const AddAlunoModal = () => {
           telefone: values.responsavelTelefone,
         };
       }
+      console.log(aluno);
       const result = await api.student.create(aluno);
-      console.log(result);
       if (result)
         // form.reset();
         // router.refresh();

@@ -50,7 +50,7 @@ export interface Database {
           {
             foreignKeyName: 'alunos_id_responsavel_fkey';
             columns: ['id_responsavel'];
-            referencedRelation: 'pagamentos';
+            referencedRelation: 'responsaveis';
             referencedColumns: ['id'];
           },
         ];

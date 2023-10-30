@@ -86,7 +86,7 @@ export const EditAlunoModal = () => {
         email: values.email,
         nome: values.nome,
         telefone: values.telefone,
-        id_plano: values.plano,
+        plano: values.plano,
         tem_responsavel: values.responsavelNome ? true : false,
       } as Insert;
       if (aluno.tem_responsavel) {

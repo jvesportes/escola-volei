@@ -28,7 +28,14 @@ function StudentFactory() {
           });
           return aluno;
         }
-        return await supabase.from('alunos').insert(data).select();
+        return await supabase.from('alunos').insert({
+          cpf: data.cpf,
+          nome: data.nome,
+          email: data.email,
+          plano: data.plano,
+          tem_responsavel: data.tem_responsavel,
+          telefone: data.telefone,
+        });
       } catch (error) {
         console.log(error);
         return new Error('Erro ao cadastrar aluno');
@@ -36,7 +43,7 @@ function StudentFactory() {
     },
     async edit(
       id: string,
-      data: Student.Update & { responsavel: Student.Responsable }
+      data: Student.Update & { responsavel?: Student.Responsable }
     ) {
       const { data: student, error } = await supabase
         .from('alunos')
@@ -50,7 +57,7 @@ function StudentFactory() {
         .eq('id', id)
         .select();
       if (!student) throw new Error('Aluno não encontrado');
-      if (student[0].id_responsavel) {
+      if (student[0].id_responsavel && data.responsavel) {
         const { data: responsavel, error: responsavelError } = await supabase
           .from('responsaveis')
           .update({
