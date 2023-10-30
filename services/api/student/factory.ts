@@ -34,8 +34,34 @@ function StudentFactory() {
         return new Error('Erro ao cadastrar aluno');
       }
     },
-    async edit(data: Student.Update) {
-      // supabase.from('alunos').update(data)
+    async edit(
+      id: string,
+      data: Student.Update & { responsavel: Student.Responsable }
+    ) {
+      const { data: student, error } = await supabase
+        .from('alunos')
+        .update({
+          cpf: data.cpf,
+          email: data.email,
+          nome: data.nome,
+          plano: data.plano,
+          telefone: data.telefone,
+        })
+        .eq('id', id)
+        .select();
+      if (!student) throw new Error('Aluno não encontrado');
+      if (student[0].id_responsavel) {
+        const { data: responsavel, error: responsavelError } = await supabase
+          .from('responsaveis')
+          .update({
+            cpf: data.responsavel.cpf,
+            email: data.responsavel.email,
+            nome: data.responsavel.nome,
+            telefone: data.responsavel.telefone,
+          })
+          .eq('id', student[0].id_responsavel)
+          .select();
+      }
     },
     async delete(id: string) {
       // implementar

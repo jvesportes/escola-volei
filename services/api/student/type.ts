@@ -13,6 +13,8 @@ type NoResponsable = Database['public']['Tables']['alunos']['Insert'] & {
 export type Insert = HasResponsable | NoResponsable;
 
 export type Update = Database['public']['Tables']['alunos']['Update'];
+export type Responsable =
+  Database['public']['Tables']['responsaveis']['Update'];
 export type Payment = {
   datePagamento: Date;
   valor: number;

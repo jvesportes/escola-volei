@@ -97,7 +97,8 @@ export const EditAlunoModal = () => {
           telefone: values.responsavelTelefone,
         };
       }
-      await api.student.edit(aluno);
+      await api.student.edit('8ee20b3c-52cf-414b-85e7-0f73441db38a', aluno);
+      //refetch aluno.
       form.reset();
       router.refresh();
       toast({
