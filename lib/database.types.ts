@@ -15,9 +15,10 @@ export interface Database {
           created_at: string;
           email: string | null;
           id: string;
-          id_plano: string;
+          id_pagamentos: string[] | null;
           id_responsavel: string | null;
           nome: string;
+          plano: Database['public']['Enums']['planos'] | null;
           telefone: string | null;
           tem_responsavel: boolean;
         };
@@ -26,9 +27,10 @@ export interface Database {
           created_at?: string;
           email?: string | null;
           id?: string;
-          id_plano: string;
+          id_pagamentos?: string[] | null;
           id_responsavel?: string | null;
           nome: string;
+          plano?: Database['public']['Enums']['planos'] | null;
           telefone?: string | null;
           tem_responsavel: boolean;
         };
@@ -37,25 +39,20 @@ export interface Database {
           created_at?: string;
           email?: string | null;
           id?: string;
-          id_plano?: string;
+          id_pagamentos?: string[] | null;
           id_responsavel?: string | null;
           nome?: string;
+          plano?: Database['public']['Enums']['planos'] | null;
           telefone?: string | null;
           tem_responsavel?: boolean;
         };
         Relationships: [
           {
-            foreignKeyName: "alunos_id_plano_fkey";
-            columns: ["id_plano"];
-            referencedRelation: "planos";
-            referencedColumns: ["id"];
+            foreignKeyName: 'alunos_id_responsavel_fkey';
+            columns: ['id_responsavel'];
+            referencedRelation: 'pagamentos';
+            referencedColumns: ['id'];
           },
-          {
-            foreignKeyName: "alunos_id_responsavel_fkey";
-            columns: ["id_responsavel"];
-            referencedRelation: "planos";
-            referencedColumns: ["id"];
-          }
         ];
       };
       alunos_turmas: {
@@ -79,18 +76,45 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "alunos_turmas_id_aluno_fkey";
-            columns: ["id_aluno"];
-            referencedRelation: "alunos";
-            referencedColumns: ["id"];
+            foreignKeyName: 'alunos_turmas_id_aluno_fkey';
+            columns: ['id_aluno'];
+            referencedRelation: 'alunos';
+            referencedColumns: ['id'];
           },
           {
-            foreignKeyName: "alunos_turmas_id_turma_fkey";
-            columns: ["id_turma"];
-            referencedRelation: "turmas";
-            referencedColumns: ["id"];
-          }
+            foreignKeyName: 'alunos_turmas_id_turma_fkey';
+            columns: ['id_turma'];
+            referencedRelation: 'turmas';
+            referencedColumns: ['id'];
+          },
         ];
+      };
+      pagamentos: {
+        Row: {
+          created_at: string;
+          id: string;
+          preco: number | null;
+          tipo: string;
+          unidade: string;
+          vigencia: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          preco?: number | null;
+          tipo: string;
+          unidade: string;
+          vigencia: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          preco?: number | null;
+          tipo?: string;
+          unidade?: string;
+          vigencia?: string;
+        };
+        Relationships: [];
       };
       perfis: {
         Row: {
@@ -116,33 +140,6 @@ export interface Database {
           id?: string;
           nome?: string;
           tipo?: string;
-        };
-        Relationships: [];
-      };
-      planos: {
-        Row: {
-          created_at: string;
-          id: string;
-          preco: number | null;
-          tipo: string;
-          unidade: string;
-          vigencia: string;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          preco?: number | null;
-          tipo: string;
-          unidade: string;
-          vigencia: string;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          preco?: number | null;
-          tipo?: string;
-          unidade?: string;
-          vigencia?: string;
         };
         Relationships: [];
       };
@@ -173,17 +170,17 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "presenca_alunos_id_aluno_fkey";
-            columns: ["id_aluno"];
-            referencedRelation: "alunos";
-            referencedColumns: ["id"];
+            foreignKeyName: 'presenca_alunos_id_aluno_fkey';
+            columns: ['id_aluno'];
+            referencedRelation: 'alunos';
+            referencedColumns: ['id'];
           },
           {
-            foreignKeyName: "presenca_alunos_id_turma_fkey";
-            columns: ["id_turma"];
-            referencedRelation: "turmas";
-            referencedColumns: ["id"];
-          }
+            foreignKeyName: 'presenca_alunos_id_turma_fkey';
+            columns: ['id_turma'];
+            referencedRelation: 'turmas';
+            referencedColumns: ['id'];
+          },
         ];
       };
       responsaveis: {
@@ -213,6 +210,37 @@ export interface Database {
         };
         Relationships: [];
       };
+      turma_lista_de_espera: {
+        Row: {
+          contato: string;
+          created_at: string;
+          id: number;
+          id_turma: string;
+          nome: string;
+        };
+        Insert: {
+          contato: string;
+          created_at?: string;
+          id?: number;
+          id_turma: string;
+          nome: string;
+        };
+        Update: {
+          contato?: string;
+          created_at?: string;
+          id?: number;
+          id_turma?: string;
+          nome?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'turma_lista_de_espera_id_turma_fkey';
+            columns: ['id_turma'];
+            referencedRelation: 'turmas';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       turmas: {
         Row: {
           created_at: string;
@@ -237,11 +265,11 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "turmas_id_professor_fkey";
-            columns: ["id_professor"];
-            referencedRelation: "perfis";
-            referencedColumns: ["id"];
-          }
+            foreignKeyName: 'turmas_id_professor_fkey';
+            columns: ['id_professor'];
+            referencedRelation: 'perfis';
+            referencedColumns: ['id'];
+          },
         ];
       };
     };
@@ -263,7 +291,7 @@ export interface Database {
       };
     };
     Enums: {
-      [_ in never]: never;
+      planos: 'mensal' | 'trimestral' | 'semestral' | 'anual';
     };
     CompositeTypes: {
       [_ in never]: never;

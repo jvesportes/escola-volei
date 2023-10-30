@@ -53,9 +53,15 @@ const formSchema = z.object({
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
   unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
   responsavelNome: z.string().optional(),
-  responsavelTelefone: z.string().optional(),
-  responsavelCpf: z.string().optional(),
-  responsavelEmail: z.string().optional(),
+  responsavelTelefone: z
+    .string()
+    .refine((telefone) => isPhone(telefone))
+    .optional(),
+  responsavelCpf: z
+    .string()
+    .refine((cpf) => isCPF(cpf))
+    .optional(),
+  responsavelEmail: z.string().email().optional(),
 });
 
 export const AddAlunoModal = () => {
@@ -96,13 +102,15 @@ export const AddAlunoModal = () => {
           telefone: values.responsavelTelefone,
         };
       }
-      await api.student.create(aluno);
-      form.reset();
-      router.refresh();
-      toast({
-        title: 'Sucesso ao criar aluno!',
-        variant: 'success',
-      });
+      const result = await api.student.create(aluno);
+      console.log(result);
+      if (result)
+        // form.reset();
+        // router.refresh();
+        toast({
+          title: 'Sucesso ao criar aluno!',
+          variant: 'success',
+        });
     } catch (error) {
       toast({
         title: 'Erro ao criar aluno.',
@@ -319,7 +327,16 @@ export const AddAlunoModal = () => {
                         <FormItem>
                           <FormLabel>Telefone</FormLabel>
                           <FormControl>
-                            <Input placeholder="Telefone" {...field} />
+                            <Input
+                              placeholder="Telefone"
+                              {...field}
+                              onChange={(e) =>
+                                form.setValue(
+                                  'responsavelTelefone',
+                                  formatToPhone(e.target.value)
+                                )
+                              }
+                            />
                           </FormControl>
                         </FormItem>
                       )}
@@ -333,7 +350,16 @@ export const AddAlunoModal = () => {
                         <FormItem>
                           <FormLabel>CPF</FormLabel>
                           <FormControl>
-                            <Input placeholder="CPF" {...field} />
+                            <Input
+                              placeholder="CPF"
+                              {...field}
+                              onChange={(e) =>
+                                form.setValue(
+                                  'responsavelCpf',
+                                  formatToCPF(e.target.value)
+                                )
+                              }
+                            />
                           </FormControl>
                         </FormItem>
                       )}
