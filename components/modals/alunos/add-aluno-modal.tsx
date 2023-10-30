@@ -51,7 +51,7 @@ const formSchema = z.object({
   telefone: z.string().refine((telefone) => isPhone(telefone)),
   cpf: z.string().refine((cpf) => isCPF(cpf)),
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
-  unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
+  // unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
   responsavelNome: z.string().optional(),
   responsavelTelefone: z
     .string()
@@ -244,7 +244,7 @@ export const AddAlunoModal = () => {
                     )}
                   />
                 </div>
-                <div className="grid w-full  items-center gap-1.5">
+                {/* <div className="grid w-full  items-center gap-1.5">
                   <FormField
                     control={form.control}
                     name="unidade"
@@ -280,7 +280,7 @@ export const AddAlunoModal = () => {
                       </FormItem>
                     )}
                   />
-                </div>
+                </div> */}
               </div>
               <Separator className="md:my-8 my-2" />
               <div className="flex flex-col md:gap-6 gap-4">

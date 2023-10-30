@@ -46,9 +46,22 @@ function StudentFactory() {
     async deletePayment(id: string, paymentId: string) {
       // implementar
     },
-    async get() {
-      // const result = supabase.from('alunos').select('*')
-      // return result
+    async get(id: string) {
+      // formatar os dados e se tiver responsável trazer junto
+      const { data, error } = await supabase
+        .from('alunos')
+        .select('*')
+        .eq('id', id);
+      if (!data) throw new Error('Aluno não encontrado');
+      if (data[0].tem_responsavel && data[0].id_responsavel) {
+        const { data: responsavel, error: responsavelError } = await supabase
+          .from('responsaveis')
+          .select('*')
+          .eq('id', data[0].id_responsavel);
+        if (responsavelError) throw responsavelError;
+        return { data: { ...data[0], responsavel: responsavel![0] }, error };
+      }
+      return { data: { ...data[0] }, error };
     },
     async list() {
       // implementar
