@@ -299,6 +299,7 @@ export interface Database {
     };
     Enums: {
       planos: 'mensal' | 'trimestral' | 'semestral' | 'anual';
+      role: 'admin' | 'teacher';
     };
     CompositeTypes: {
       [_ in never]: never;

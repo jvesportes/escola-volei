@@ -38,6 +38,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
+import { formatToCPF, formatToPhone, isCPF, isPhone } from 'brazilian-values';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -46,12 +47,8 @@ const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  telefone: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
-  cpf: z.string().min(5, {
-    message: 'O cpf deve ter pelo menos 5 caracteres',
-  }),
+  telefone: z.string().refine((telefone) => isPhone(telefone)),
+  cpf: z.string().refine((cpf) => isCPF(cpf)),
   senha: z.string().min(5, {
     message: 'A senha deve ter pelo menos 5 caracteres',
   }),
@@ -77,16 +74,16 @@ export const AddProfessorModal = () => {
     try {
       setIsLoading(true);
 
-      // E senha?
-      const a = await api.teacher.create({
+      const result = await api.teacher.create({
         cpf: values.cpf,
         email: values.email,
         nome: values.nome,
-        tipo: 'professor',
+        password: values.senha,
       });
-      console.log('------->', a)
-      // form.reset();
-      // router.refresh();
+      if (result.error) throw new Error('Erro ao criar professor.');
+      form.reset();
+      router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao criar professor!',
         variant: 'success',
@@ -113,6 +110,10 @@ export const AddProfessorModal = () => {
           <DialogTitle className="text-slate-900 font-extrabold md:text-5xl text-2xl">
             Adicionar Professor
           </DialogTitle>
+          <DialogDescription>
+            Após criar um professor, o professor receberá um email, contendo um
+            link para ele confirmar o email.
+          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -155,7 +156,16 @@ export const AddProfessorModal = () => {
                       <FormItem>
                         <FormLabel>Telefone</FormLabel>
                         <FormControl>
-                          <Input placeholder="Telefone" {...field} />
+                          <Input
+                            placeholder="Telefone"
+                            {...field}
+                            onChange={(e) =>
+                              form.setValue(
+                                'telefone',
+                                formatToPhone(e.target.value)
+                              )
+                            }
+                          />
                         </FormControl>
                       </FormItem>
                     )}
@@ -169,7 +179,13 @@ export const AddProfessorModal = () => {
                       <FormItem>
                         <FormLabel>CPF</FormLabel>
                         <FormControl>
-                          <Input placeholder="CPF" {...field} />
+                          <Input
+                            placeholder="CPF"
+                            {...field}
+                            onChange={(e) =>
+                              form.setValue('cpf', formatToCPF(e.target.value))
+                            }
+                          />
                         </FormControl>
                       </FormItem>
                     )}
