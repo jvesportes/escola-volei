@@ -27,8 +27,9 @@ export const ExcluirProfessorModal = () => {
   async function handleDelete() {
     try {
       setIsLoading(true);
-      await api.teacher.delete('');
-      router.refresh();
+      const result = await api.teacher.delete(data?.teacher?.id!);
+      if (result.error) throw new Error('Erro ao excluir professor.');
+      window.location.reload();
       toast({
         title: 'Sucesso ao excluir professor!',
         variant: 'success',

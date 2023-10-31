@@ -1,21 +1,21 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Professor } from '@/utils/types';
+import { Professor, Teacher } from '@/utils/types';
 import { Edit } from 'lucide-react';
 
 interface EditProfessorMenuItemProps {
-  professor: Professor;
+  teacher: Teacher;
 }
 
 export const EditProfessorMenuItem = ({
-  professor,
+  teacher,
 }: EditProfessorMenuItemProps) => {
   const { onOpen } = useModal();
   return (
     <DropdownMenuItem
       onClick={() => {
-        onOpen('editProfessor', { professor });
+        onOpen('editProfessor', { teacher });
       }}
       className="gap-2"
     >

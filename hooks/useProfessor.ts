@@ -1,33 +1,31 @@
-import { Professor, professores } from '@/utils/types';
-import { useState, useEffect } from 'react';
+import { api } from '@/services';
+import { Teacher } from '@/utils/types';
+import { useEffect, useState } from 'react';
 
-export const useProfessor = () => {
-  const [professors, setProfessors] = useState<Professor[]>([]);
+export function useProfessor() {
+  const [data, setData] = useState<Teacher[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<unknown>();
 
   useEffect(() => {
-    const fetchProfessors = async () => {
+    (async () => {
       try {
         setIsLoading(true);
-
-        // const response = await fetch('https://example.com/api/professors');
-        // const data = await response.json();
-
-        setProfessors(professores);
+        const { mappedData, error } = await api.teacher.list();
+        if (error) throw new Error(error.message);
+        setData(mappedData! as unknown as Teacher[]);
       } catch (error) {
-        setError(true);
-        console.error(error);
+        setError(error);
       } finally {
         setIsLoading(false);
+        setError(error);
       }
-    };
-
-    fetchProfessors();
-  }, []);
+    })();
+  }, [setData, setError, setIsLoading]);
 
   return {
-    professores: professors,
-    isLoading: isLoading,
+    data,
+    error,
+    isLoading,
   };
-};
+}

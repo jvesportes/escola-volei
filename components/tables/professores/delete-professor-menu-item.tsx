@@ -1,21 +1,21 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Professor } from '@/utils/types';
+import { Professor, Teacher } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 
 interface ExcluirProfessorMenuItemProps {
-  professor: Professor;
+  teacher: Teacher;
 }
 
 export const ExcluirProfessorMenuItem = ({
-  professor,
+  teacher,
 }: ExcluirProfessorMenuItemProps) => {
   const { onOpen } = useModal();
   return (
     <DropdownMenuItem
       onClick={() => {
-        onOpen('excluirProfessor', { professor });
+        onOpen('excluirProfessor', { teacher });
       }}
       className="gap-2 text-red-500"
     >

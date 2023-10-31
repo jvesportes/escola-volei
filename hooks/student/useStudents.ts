@@ -12,7 +12,7 @@ export function useStudents() {
       try {
         setIsLoading(true);
         const { data: student, error } = await api.student.list();
-        if (error) throw error;
+        if (error) throw new Error(error.message);
         setData(student! as unknown as Student[]);
       } catch (error) {
         setError(error);

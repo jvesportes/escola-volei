@@ -38,6 +38,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
 import { api } from '@/services';
+import { formatToCPF, formatToPhone, isCPF, isPhone } from 'brazilian-values';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -46,15 +47,9 @@ const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  telefone: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
-  cpf: z.string().min(5, {
-    message: 'O cpf deve ter pelo menos 5 caracteres',
-  }),
-  senha: z.string().min(5, {
-    message: 'A senha deve ter pelo menos 5 caracteres',
-  }),
+  telefone: z.string().refine((telefone) => isPhone(telefone)),
+  cpf: z.string().refine((cpf) => isCPF(cpf)),
+  senha: z.string().optional(),
 });
 
 export const EditProfessorModal = () => {
@@ -63,12 +58,18 @@ export const EditProfessorModal = () => {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    values: {
+      email: data?.teacher?.email!,
+      cpf: data?.teacher?.cpf!,
+      nome: data?.teacher?.nome!,
+      telefone: data?.teacher?.telefone!,
+      senha: '',
+    },
     defaultValues: {
-      email: data?.professor?.email,
-      cpf: data?.professor?.cpf,
-      nome: data?.professor?.nome,
-      telefone: data?.professor?.telefone,
-      senha: data?.professor?.senha,
+      email: data?.teacher?.email,
+      cpf: data?.teacher?.cpf,
+      nome: data?.teacher?.nome,
+      telefone: data?.teacher?.telefone,
     },
   });
 
@@ -76,14 +77,17 @@ export const EditProfessorModal = () => {
     try {
       setIsLoading(true);
 
-      // E senha?
-      await api.teacher.edit({
+      const result = await api.teacher.edit(data?.teacher?.id!, {
         cpf: values.cpf,
         email: values.email,
         nome: values.nome,
+        password: values.senha,
+        telefone: values.telefone,
       });
+      if (result.error) throw new Error('Erro ao criar professor.');
       form.reset();
-      router.refresh();
+      window.location.reload();
+
       toast({
         title: 'Sucesso ao criar professor!',
         variant: 'success',
@@ -126,7 +130,7 @@ export const EditProfessorModal = () => {
                           <Input
                             placeholder="Nome"
                             {...field}
-                            defaultValue={data?.professor?.nome}
+                            defaultValue={data?.teacher?.nome}
                           />
                         </FormControl>
                       </FormItem>
@@ -144,7 +148,7 @@ export const EditProfessorModal = () => {
                           <Input
                             placeholder="Email"
                             {...field}
-                            defaultValue={data?.professor?.email}
+                            defaultValue={data?.teacher?.email}
                           />
                         </FormControl>
                       </FormItem>
@@ -163,7 +167,13 @@ export const EditProfessorModal = () => {
                           <Input
                             placeholder="Telefone"
                             {...field}
-                            defaultValue={data?.professor?.telefone}
+                            defaultValue={data?.teacher?.telefone}
+                            onChange={(e) =>
+                              form.setValue(
+                                'telefone',
+                                formatToPhone(e.target.value)
+                              )
+                            }
                           />
                         </FormControl>
                       </FormItem>
@@ -181,7 +191,10 @@ export const EditProfessorModal = () => {
                           <Input
                             placeholder="CPF"
                             {...field}
-                            defaultValue={data?.professor?.cpf}
+                            defaultValue={data?.teacher?.cpf}
+                            onChange={(e) =>
+                              form.setValue('cpf', formatToCPF(e.target.value))
+                            }
                           />
                         </FormControl>
                       </FormItem>
@@ -200,7 +213,6 @@ export const EditProfessorModal = () => {
                             placeholder="Senha"
                             {...field}
                             type="password"
-                            defaultValue={data?.professor?.senha}
                           />
                         </FormControl>
                       </FormItem>

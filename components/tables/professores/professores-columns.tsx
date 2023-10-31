@@ -13,11 +13,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, Professor } from '@/utils/types';
+import { Aluno, Professor, Teacher } from '@/utils/types';
 import { EditProfessorMenuItem } from './edit-professor-menu-item';
 import { ExcluirProfessorMenuItem } from './delete-professor-menu-item';
 
-export const professoresColumns: ColumnDef<Professor>[] = [
+export const professoresColumns: ColumnDef<Teacher>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -56,10 +56,6 @@ export const professoresColumns: ColumnDef<Professor>[] = [
     },
   },
   {
-    accessorKey: 'senha',
-    header: 'Senha',
-  },
-  {
     accessorKey: 'telefone',
     header: 'Telefone',
   },
@@ -85,9 +81,9 @@ export const professoresColumns: ColumnDef<Professor>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <EditProfessorMenuItem professor={professor} />
+            <EditProfessorMenuItem teacher={professor} />
             <DropdownMenuSeparator />
-            <ExcluirProfessorMenuItem professor={professor} />
+            <ExcluirProfessorMenuItem teacher={professor} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

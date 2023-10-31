@@ -9,7 +9,7 @@ import { useProfessor } from '@/hooks/useProfessor';
 import { alunos, professores } from '@/utils/types';
 
 const ProfessoresPage = () => {
-  const { professores } = useProfessor();
+  const { data, isLoading, error } = useProfessor();
   return (
     <div className="flex w-full h-full md:px-16 md:py-6 md:gap-12 gap-6 p-4 flex-col overflow-y-scroll pb-32 scroll-smooth">
       <div className="flex flex-col">
@@ -23,10 +23,11 @@ const ProfessoresPage = () => {
         <div className="flex flex-col md:gap-6 gap-4 w-full">
           <h1>Professores</h1>
           <div className="flex flex-col md:gap-4 gap-2">
-            <ProfessoresDataTable
-              columns={professoresColumns}
-              data={professores}
-            />
+            {isLoading ? (
+              <></>
+            ) : (
+              <ProfessoresDataTable columns={professoresColumns} data={data} />
+            )}
           </div>
         </div>
       </Card>

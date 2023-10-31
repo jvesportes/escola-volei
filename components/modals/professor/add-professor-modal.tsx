@@ -79,6 +79,7 @@ export const AddProfessorModal = () => {
         email: values.email,
         nome: values.nome,
         password: values.senha,
+        telefone: values.telefone,
       });
       if (result.error) throw new Error('Erro ao criar professor.');
       form.reset();
@@ -110,10 +111,7 @@ export const AddProfessorModal = () => {
           <DialogTitle className="text-slate-900 font-extrabold md:text-5xl text-2xl">
             Adicionar Professor
           </DialogTitle>
-          <DialogDescription>
-            Após criar um professor, o professor receberá um email, contendo um
-            link para ele confirmar o email.
-          </DialogDescription>
+          {/* <DialogDescription>Adicione um novo professor.</DialogDescription> */}
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

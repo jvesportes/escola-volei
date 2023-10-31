@@ -40,6 +40,7 @@ import { api } from '@/services';
 import { Insert } from '@/services/api/student/type';
 import { useToast } from '@/components/ui/use-toast';
 import { useStudent } from '@/hooks/student/useStudent';
+import { formatToCPF, formatToPhone } from 'brazilian-values';
 
 const formSchema = z.object({
   email: z.string().email().min(5),
@@ -213,6 +214,12 @@ export const EditAlunoModal = () => {
                             placeholder="Telefone"
                             {...field}
                             defaultValue={data?.student?.telefone!}
+                            onChange={(e) =>
+                              form.setValue(
+                                'telefone',
+                                formatToPhone(e.target.value)
+                              )
+                            }
                           />
                         </FormControl>
                       </FormItem>
@@ -231,6 +238,9 @@ export const EditAlunoModal = () => {
                             placeholder="CPF"
                             {...field}
                             defaultValue={data?.student?.cpf!}
+                            onChange={(e) =>
+                              form.setValue('cpf', formatToCPF(e.target.value))
+                            }
                           />
                         </FormControl>
                       </FormItem>

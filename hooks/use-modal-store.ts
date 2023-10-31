@@ -7,6 +7,7 @@ import {
   Payment,
   Professor,
   Student,
+  Teacher,
   Turma,
 } from '@/utils/types';
 import { create } from 'zustand';
@@ -31,6 +32,7 @@ export type ModalType =
 interface ModalData {
   student?: Student;
   payment?: Payment;
+  teacher?: Teacher;
   turma?: Turma;
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;

@@ -8,6 +8,14 @@ export interface Student {
   responsavel?: Responsable;
   pagamentos?: Payment[];
 }
+export interface Teacher {
+  id?: string;
+  nome: string;
+  email: string;
+  telefone: string;
+  cpf: string;
+  tipo: 'teacher' | 'admin';
+}
 export interface Responsable {
   id?: string;
   nome: string;
