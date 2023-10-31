@@ -15,14 +15,15 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useClass } from '@/hooks';
 import { hasRoleAccess } from '@/utils';
-import { Turma } from '@/utils/types';
+import { ClassType, Turma } from '@/utils/types';
 import { MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const TurmasPage = () => {
   const [isMounted, setIsMounted] = useState(false);
 
-  const { data: turmas } = useClass();
+  const { data: turmas, isLoading, error } = useClass();
+  console.log(turmas);
 
   useEffect(() => {
     setIsMounted(true);
@@ -38,7 +39,7 @@ const TurmasPage = () => {
       id: 'actions',
       header: 'Ações',
       cell: ({ row }) => {
-        const turma: Turma = row.original;
+        const turma: ClassType = row.original;
 
         return (
           <DropdownMenu>
@@ -71,7 +72,11 @@ const TurmasPage = () => {
         <div className="flex flex-col md:gap-6 gap-4 w-full">
           <h1>Turmas</h1>
           <div className="flex flex-col md:gap-4 gap-2">
-            <TurmaDataTable columns={newTurmasColumns} data={turmas} />
+            {isLoading ? (
+              <></>
+            ) : (
+              <TurmaDataTable columns={newTurmasColumns} data={turmas} />
+            )}
           </div>
         </div>
       </Card>

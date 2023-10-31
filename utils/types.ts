@@ -8,6 +8,14 @@ export interface Student {
   responsavel?: Responsable;
   pagamentos?: Payment[];
 }
+export interface ClassType {
+  id?: string;
+  nome: string;
+  professor: Teacher;
+  horario: string;
+  alunosTurmas: Student[];
+  unidade: 'zonasul' | 'zonanorte' | 'zonaleste' | 'zonaoeste';
+}
 export interface Teacher {
   id?: string;
   nome: string;

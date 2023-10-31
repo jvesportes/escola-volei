@@ -1,28 +1,31 @@
 import { api } from '@/services';
-import { turmas } from '@/utils/types';
+import { ClassType, Teacher } from '@/utils/types';
 import { useEffect, useState } from 'react';
 
 export function useClass() {
-  const [data, setData] = useState(turmas);
+  const [data, setData] = useState<ClassType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<unknown>();
 
-  // useEffect(() => {
-  //   (async () => {
-
-  //       const result = await api.class.list()
-  //       if (!result) return;
-  //       setData(data.map((turma, index) => {
-  //         return {
-  //           ...turma,
-  //           horario: result[index].horario,
-  //           id: result[index].id,
-  //           local: result[index].unidade,
-  //           professor: teacher,
-  //         }
-  //       }))
-  //   })()
-  // }, [])
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await api.class.list();
+        if (error) throw new Error(error.message);
+        setData(data! as unknown as ClassType[]);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+        setError(error);
+      }
+    })();
+  }, [setData, setError, setIsLoading]);
 
   return {
-    data: turmas,
+    data,
+    error,
+    isLoading,
   };
 }

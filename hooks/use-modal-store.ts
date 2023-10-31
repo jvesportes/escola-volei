@@ -3,6 +3,7 @@ import {
   AlunoEspera,
   AlunoPresenca,
   AlunoTurma,
+  ClassType,
   Pagamento,
   Payment,
   Professor,
@@ -33,7 +34,7 @@ interface ModalData {
   student?: Student;
   payment?: Payment;
   teacher?: Teacher;
-  turma?: Turma;
+  turma?: ClassType;
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;
   professor?: Professor;

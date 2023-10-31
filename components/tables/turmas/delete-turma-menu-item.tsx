@@ -1,10 +1,10 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Turma } from '@/utils/types';
+import { ClassType, Turma } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 interface Props {
-  turma: Turma;
+  turma: ClassType;
 }
 
 export const ExcluirTurmaMenuItem = ({ turma }: Props) => {

@@ -12,12 +12,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, Turma } from '@/utils/types';
+import { Aluno, ClassType, Student, Teacher, Turma } from '@/utils/types';
 import { EditTurmaMenuItem } from './edit-turma-menu-item';
 import { ExcluirTurmaMenuItem } from './delete-turma-menu-item';
 import { hasRoleAccess } from '@/utils';
+import { formatToDateTime } from 'brazilian-values';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
-export const turmasColumns: ColumnDef<Turma>[] = [
+export const turmasColumns: ColumnDef<ClassType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -55,22 +58,43 @@ export const turmasColumns: ColumnDef<Turma>[] = [
   {
     accessorKey: 'professor',
     header: 'Professor',
+    cell: ({ row }) => {
+      const professor: Teacher = row.getValue('professor');
+
+      return <>{professor.nome}</>;
+    },
   },
   {
     accessorKey: 'horario',
     header: 'Horário',
-  },
-  {
-    accessorKey: 'alunos',
-    header: 'Alunos',
     cell: ({ row }) => {
-      const alunos: Aluno[] = row.getValue('alunos');
+      const horario: string = row.getValue('horario');
+      const today = new Date();
+      const [hour, minute, second] = horario.split(':');
+      today.setHours(Number(hour), Number(minute), Number(second));
 
-      return <>{alunos.length}</>;
+      return <>{format(today, 'p', { locale: ptBR })}</>;
     },
   },
   {
-    accessorKey: 'local',
-    header: 'Local',
+    accessorKey: 'alunosTurma',
+    header: 'Alunos',
+    cell: ({ row }) => {
+      const turma: ClassType = row.original;
+
+      return <>{turma.alunosTurmas ? turma.alunosTurmas.length : 0}</>;
+    },
+  },
+  {
+    accessorKey: 'unidade',
+    header: 'Unidade',
+    cell: ({ row }) => {
+      const unidade: string = row.getValue('unidade');
+
+      if (unidade === 'zonasul') return <>{'Zona Sul'}</>;
+      if (unidade === 'zonanorte') return <>{'Zona Norte'}</>;
+      if (unidade === 'zonaoeste') return <>{'Zona Oeste'}</>;
+      if (unidade === 'zonaleste') return <>{'Zona Leste'}</>;
+    },
   },
 ];

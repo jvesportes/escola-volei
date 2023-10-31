@@ -37,8 +37,12 @@ function ClassFactory() {
       // impleme,ntar
     },
     async list() {
-      const result = await supabase.from('turmas').select();
-      return result.data;
+      const result = await supabase
+        .from('turmas')
+        .select(
+          `id, unidade, horario, nome, alunosTurmas:alunos_turmas(alunos(*)), professor:perfis(*)`
+        );
+      return result;
     },
   };
 }
