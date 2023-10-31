@@ -1,5 +1,6 @@
 import { supabase } from '@/lib';
 import * as Student from './type';
+import { Payment, Responsable, Student as StudentType } from '@/utils/types';
 
 function StudentFactory() {
   return {
@@ -73,14 +74,29 @@ function StudentFactory() {
     async delete(id: string) {
       // implementar
     },
-    async addPayment(id: string, payment: Student.Payment) {
+    async addPayment(id: string, payment: Payment) {
+      let { data, error } = await supabase
+        .from('pagamentos')
+        .insert({
+          aluno_id: id,
+          tipo: payment.plano,
+          data_pagamento: payment.dataPagamento.toDateString(),
+          vigencia: payment.vigencia.toDateString(),
+          preco: payment.preco,
+        })
+        .select();
       // implementar
     },
-    async deletePayment(id: string, paymentId: string) {
-      // implementar
+    async deletePayment(paymentId: string) {
+      let { data, error } = await supabase
+        .from('pagamentos')
+        .delete()
+        .eq('id', paymentId)
+        .select();
     },
     async get(id: string) {
-      // formatar os dados e se tiver responsável trazer junto
+      // Arrumar isso aqui seguindo a lógica do list.
+
       const { data, error } = await supabase
         .from('alunos')
         .select('*')
@@ -97,27 +113,43 @@ function StudentFactory() {
       return { data: { ...data[0] }, error };
     },
     async list() {
-      // precisa popular também os pagamentos deste aluno, em caso de ser nulo, retornar um array vazio
-      let { data: alunos, error } = await supabase.from('alunos').select('*');
+      // Expected pattern:
+      // Retornará os dados do usuário, e pagamentos.
+      //   {
+      // "nome": "Manuel silva",
+      // "cpf": "403.847.880-76",
+      // "id": "8ee20b3c-52cf-414b-85e7-0f73441db38a",
+      // "email": "manuelsilva@gmail.com",
+      // "plano": "mensal",
+      // "telefone": "(11) 1111-1111",
+      // "pagamento": [
+      //     {
+      //         "dataPagamento": "2023-10-30",
+      //         "vigencia": "2023-11-01",
+      //         "preco": 60,
+      //         "id": "a3d05399-108f-4c67-a0a3-f70f410ea121",
+      //         "plano": "mensal"
+      //     }
+      // ],
+      // "responsavel": {
+      //     "id": "aad87316-ad5b-4614-95cc-63026687e733",
+      //     "nome": "Pai do Manuel",
+      //     "cpf": "403.847.880-76",
+      //     "email": "paimanuel@gmai.com",
+      //     "telefone": "(11) 1111-1111"
+      // }
+      let { data: alunos, error } = await supabase
+        .from('alunos')
+        .select(
+          `nome, cpf, id, email, plano, telefone, responsavel:responsaveis(id, nome, cpf, email, telefone), pagamentos(dataPagamento:data_pagamento, vigencia, valor:preco, id, plano:tipo)`
+        )
+        .order('data_pagamento', {
+          ascending: false,
+          foreignTable: 'pagamentos',
+        });
+
       if (!alunos) throw new Error('Erro ao buscar alunos');
-      const mapping = alunos.map(async (aluno) => {
-        if (aluno.tem_responsavel && aluno.id_responsavel) {
-          const { data: responsavel, error: responsavelError } = await supabase
-            .from('responsaveis')
-            .select('*')
-            .eq('id', aluno.id_responsavel);
-          if (responsavelError) throw responsavelError;
-          return {
-            ...aluno,
-            responsavel: responsavel![0],
-          } as Student.Update & { responsavel?: Student.Responsable };
-        }
-        return { ...aluno, responsavel: '' } as Student.Update & {
-          responsavel?: Student.Responsable;
-        };
-      });
-      const awaitedMap = await Promise.all(mapping);
-      return { data: awaitedMap, error };
+      return { data: alunos, error };
     },
   };
 }

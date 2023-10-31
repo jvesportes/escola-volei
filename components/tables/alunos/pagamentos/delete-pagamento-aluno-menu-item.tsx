@@ -1,20 +1,20 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Pagamento } from '@/utils/types';
+import { Pagamento, Payment } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 interface DeletePagmaentoAlunoMenuItemProps {
-  pagamento: Pagamento;
+  payment: Payment;
 }
 
 export const DeletePagmaentoAlunoMenuItem = ({
-  pagamento,
+  payment,
 }: DeletePagmaentoAlunoMenuItemProps) => {
   const { onOpen } = useModal();
   return (
     <DropdownMenuItem
       onClick={() => {
-        onOpen('excluirPagamentoAluno', { pagamento });
+        onOpen('excluirPagamentoAluno', { payment });
       }}
       className="gap-2 text-red-500"
     >

@@ -4,7 +4,9 @@ import {
   AlunoPresenca,
   AlunoTurma,
   Pagamento,
+  Payment,
   Professor,
+  Student,
   Turma,
 } from '@/utils/types';
 import { create } from 'zustand';
@@ -27,6 +29,8 @@ export type ModalType =
   | 'addAlunoTurma';
 
 interface ModalData {
+  student?: Student;
+  payment?: Payment;
   turma?: Turma;
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;

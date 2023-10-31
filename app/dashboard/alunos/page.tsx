@@ -26,10 +26,7 @@ const AlunosPage = () => {
             {isLoading ? (
               <></>
             ) : (
-              <DataTable
-                columns={columns}
-                data={students as unknown as Insert[]}
-              />
+              <DataTable columns={columns} data={students} />
             )}
           </div>
         </div>

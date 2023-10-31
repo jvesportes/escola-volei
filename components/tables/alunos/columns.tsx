@@ -13,13 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, Pagamento } from '@/utils/types';
+import { Aluno, Pagamento, Payment, Student } from '@/utils/types';
 import { EditAlunoMenuItem } from './edit-aluno-menu-item';
 import { ExcluirAlunoMenuItem } from './delete-aluno-menu-item';
 import { PagamentoAlunoButton } from './pagamentos-aluno-menu-item';
 import { Insert } from '@/services/api/student/type';
 
-export const columns: ColumnDef<Insert>[] = [
+export const columns: ColumnDef<Student>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -66,11 +66,11 @@ export const columns: ColumnDef<Insert>[] = [
     header: 'CPF',
   },
   {
-    accessorKey: 'tem_responsavel',
+    accessorKey: 'responsavel',
     header: 'Responsável',
     cell: ({ row }) => {
-      const responsavel = row.getValue('tem_responsavel');
-      return <>{responsavel == true ? 'Possui' : 'Não Possuí'}</>;
+      const responsavel = row.getValue('responsavel');
+      return <>{responsavel !== null ? 'Possui' : 'Não Possuí'}</>;
     },
   },
   {
@@ -81,16 +81,16 @@ export const columns: ColumnDef<Insert>[] = [
       return <>{plano.charAt(0).toUpperCase() + plano.slice(1)}</>;
     },
   },
-  // {
-  //   accessorKey: 'pagamentos',
-  //   header: 'Pagamento',
-  //   cell: ({ row }) => {
-  //     const payment: Pagamento[] = row.getValue('pagamentos');
-  //     const aluno = row.original;
+  {
+    accessorKey: 'pagamentos',
+    header: 'Pagamento',
+    cell: ({ row }) => {
+      const payment: Payment[] = row.getValue('pagamentos');
+      const aluno = row.original;
 
-  //     return <PagamentoAlunoButton pagamento={payment} alunoNormal={aluno} />;
-  //   },
-  // },
+      return <PagamentoAlunoButton pagamento={payment} student={aluno} />;
+    },
+  },
   {
     id: 'ações',
     accessorKey: 'Ações',

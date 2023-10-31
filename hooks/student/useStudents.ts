@@ -1,9 +1,9 @@
-import { Database } from '@/lib/database.types';
 import { api } from '@/services';
+import { Student } from '@/utils/types';
 import { useEffect, useState } from 'react';
 
 export function useStudents() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
@@ -13,7 +13,7 @@ export function useStudents() {
         setIsLoading(true);
         const { data: student, error } = await api.student.list();
         if (error) throw error;
-        setData(student!);
+        setData(student! as unknown as Student[]);
       } catch (error) {
         setError(error);
       } finally {

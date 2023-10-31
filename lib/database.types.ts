@@ -15,7 +15,6 @@ export interface Database {
           created_at: string;
           email: string | null;
           id: string;
-          id_pagamentos: string[] | null;
           id_responsavel: string | null;
           nome: string;
           plano: Database['public']['Enums']['planos'] | null;
@@ -27,7 +26,6 @@ export interface Database {
           created_at?: string;
           email?: string | null;
           id?: string;
-          id_pagamentos?: string[] | null;
           id_responsavel?: string | null;
           nome: string;
           plano?: Database['public']['Enums']['planos'] | null;
@@ -39,7 +37,6 @@ export interface Database {
           created_at?: string;
           email?: string | null;
           id?: string;
-          id_pagamentos?: string[] | null;
           id_responsavel?: string | null;
           nome?: string;
           plano?: Database['public']['Enums']['planos'] | null;
@@ -91,30 +88,40 @@ export interface Database {
       };
       pagamentos: {
         Row: {
+          aluno_id: string | null;
           created_at: string;
+          data_pagamento: string | null;
           id: string;
           preco: number | null;
-          tipo: string;
-          unidade: string;
+          tipo: Database['public']['Enums']['planos'];
           vigencia: string;
         };
         Insert: {
+          aluno_id?: string | null;
           created_at?: string;
+          data_pagamento?: string | null;
           id?: string;
           preco?: number | null;
-          tipo: string;
-          unidade: string;
+          tipo: Database['public']['Enums']['planos'];
           vigencia: string;
         };
         Update: {
+          aluno_id?: string | null;
           created_at?: string;
+          data_pagamento?: string | null;
           id?: string;
           preco?: number | null;
-          tipo?: string;
-          unidade?: string;
+          tipo?: Database['public']['Enums']['planos'];
           vigencia?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'pagamentos_aluno_id_fkey';
+            columns: ['aluno_id'];
+            referencedRelation: 'alunos';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       perfis: {
         Row: {

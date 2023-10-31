@@ -47,10 +47,11 @@ import { Calendar } from '@/components/ui/calendar';
 import { ptBR } from 'date-fns/locale';
 import { useToast } from '@/components/ui/use-toast';
 import { api } from '@/services';
+import { calcularDataVencimento } from '@/utils/calcularDataVencimento';
 
 const formSchema = z.object({
   datePagamento: z.date(),
-  valor: z.number(),
+  valor: z.string(),
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
 });
 
@@ -63,22 +64,26 @@ export const PagamentoAlunoModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
-  const aluno = {
-    id: '',
-  };
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      await api.student.addPayment(aluno.id, values);
+      const vigencia = calcularDataVencimento(values.plano);
+      await api.student.addPayment(data?.student?.id!, {
+        dataPagamento: values.datePagamento,
+        preco: Number.parseInt(values.valor),
+        plano: values.plano,
+        vigencia: vigencia!,
+      });
       form.reset();
       router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao adicionar pagamento do aluno!',
         variant: 'success',
       });
     } catch (error) {
       toast({
-        title: 'Erro ao excluir pagamento do aluno.',
+        title: 'Erro ao adicionar pagamento do aluno.',
         variant: 'destructive',
       });
       console.log('[CRIAR PAGAMENTO ALUNO ERRO]', error);
@@ -102,11 +107,11 @@ export const PagamentoAlunoModal = () => {
           </DialogHeader>
           <div className="w-100">
             <div className="flex flex-col w-full items-center">
-              <h3 className="pb-2 w-full">{data?.alunoNormal?.nome}</h3>
+              <h3 className="pb-2 w-full">{data?.student?.nome}</h3>
               <div className="flex gap-1.5 w-full items-center">
                 <PagamentosDataTable
                   columns={pagamentosColumns}
-                  data={data?.alunoNormal?.pagamentos || []}
+                  data={data?.student?.pagamentos || []}
                 />
               </div>
             </div>

@@ -13,11 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, Pagamento } from '@/utils/types';
+import { Aluno, Pagamento, Payment } from '@/utils/types';
 import { DeletePagmaentoAlunoMenuItem } from './delete-pagamento-aluno-menu-item';
 import { Badge } from '@/components/ui/badge';
+import { formatToDate } from 'brazilian-values';
 
-export const pagamentosColumns: ColumnDef<Pagamento>[] = [
+export const pagamentosColumns: ColumnDef<Payment>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -38,21 +39,16 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'pagamentoDate',
+    accessorKey: 'dataPagamento',
     header: 'Data de Pagamento',
     cell: ({ row }) => {
-      const pagamentoDate: Date = row.getValue('pagamentoDate');
+      const pagamentoDate: Date = new Date(row.getValue('dataPagamento'));
 
-      return (
-        <>
-          {pagamentoDate.getDay()}/{pagamentoDate.getMonth()}/
-          {pagamentoDate.getFullYear()}
-        </>
-      );
+      return <>{formatToDate(pagamentoDate)}</>;
     },
   },
   {
-    accessorKey: 'vencimentoDate',
+    accessorKey: 'vigencia',
     header: ({ column }) => {
       return (
         <Button
@@ -65,14 +61,9 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
       );
     },
     cell: ({ row }) => {
-      const vencimentoDate: Date = row.getValue('vencimentoDate');
+      const vencimentoDate = new Date(row.getValue('vigencia'));
 
-      return (
-        <>
-          {vencimentoDate.getDay()}/{vencimentoDate.getMonth()}/
-          {vencimentoDate.getFullYear()}
-        </>
-      );
+      return <>{formatToDate(vencimentoDate)}</>;
     },
   },
   {
@@ -84,13 +75,17 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
     header: 'Plano',
   },
   {
-    accessorKey: 'situacao',
+    accessorKey: 'vigencia',
     header: 'Situação',
     cell: ({ row }) => {
-      const situacao: string = row.getValue('situacao');
+      const vigencia: string = row.getValue('vigencia');
 
+      const situacao = new Date(vigencia) < new Date() ? 'Atrasado' : 'Em dia';
       return (
-        <Badge variant={situacao == 'Em dia' ? 'green' : 'destructive'}>
+        <Badge
+          className="w-20 justify-center"
+          variant={situacao === 'Atrasado' ? 'destructive' : 'green'}
+        >
           {situacao}
         </Badge>
       );
@@ -113,7 +108,7 @@ export const pagamentosColumns: ColumnDef<Pagamento>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DeletePagmaentoAlunoMenuItem pagamento={payment} />
+            <DeletePagmaentoAlunoMenuItem payment={payment} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
