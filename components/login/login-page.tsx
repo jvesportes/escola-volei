@@ -22,7 +22,6 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const user = session?.user;
 
   const handleSignIn = async () => {
     try {
