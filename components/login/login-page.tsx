@@ -15,7 +15,7 @@ import { Database } from '@/lib/database.types';
 import { useToast } from '../ui/use-toast';
 import { supabase } from '@/lib';
 
-export const LoginPage = ({ session }: { session: Session | null }) => {
+export const LoginPage = () => {
   // const supabase = createClientComponentClient<Database>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
