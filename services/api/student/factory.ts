@@ -72,7 +72,11 @@ function StudentFactory() {
       }
     },
     async delete(id: string) {
-      // implementar
+      let { data, error } = await supabase
+        .from('alunos')
+        .delete()
+        .eq('id', id)
+        .select();
     },
     async addPayment(id: string, payment: Payment) {
       let { data, error } = await supabase

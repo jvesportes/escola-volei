@@ -57,18 +57,15 @@ export const EditAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const { toast } = useToast();
-  const { data: aluno, isLoading: alunoIsLoading } = useStudent(
-    '8ee20b3c-52cf-414b-85e7-0f73441db38a'
-  );
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: {
-      cpf: aluno?.cpf!,
-      email: aluno?.email!,
-      nome: aluno?.nome!,
-      telefone: aluno?.telefone!,
-      plano: aluno?.plano!,
+      cpf: data?.student?.cpf!,
+      email: data?.student?.email!,
+      nome: data?.student?.nome!,
+      telefone: data?.student?.telefone!,
+      plano: data?.student?.plano!,
     },
     defaultValues: {
       email: data.alunoNormal?.email,
@@ -97,10 +94,11 @@ export const EditAlunoModal = () => {
           telefone: values.responsavelTelefone,
         };
       }
-      await api.student.edit('8ee20b3c-52cf-414b-85e7-0f73441db38a', aluno);
+      await api.student.edit(data?.student?.id!, aluno);
       //refetch aluno.
       form.reset();
       router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao editar aluno!',
         variant: 'success',
@@ -116,7 +114,7 @@ export const EditAlunoModal = () => {
     }
   }
 
-  const isModalOpen = isOpen && alunoIsLoading == false && type === 'editAluno';
+  const isModalOpen = isOpen && type === 'editAluno';
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -143,7 +141,7 @@ export const EditAlunoModal = () => {
                           <Input
                             placeholder="Email"
                             {...field}
-                            defaultValue={aluno?.email!}
+                            defaultValue={data?.student?.email!}
                           />
                         </FormControl>
                       </FormItem>
@@ -161,7 +159,7 @@ export const EditAlunoModal = () => {
                           <Input
                             placeholder="Nome"
                             {...field}
-                            defaultValue={aluno?.nome!}
+                            defaultValue={data?.student?.nome!}
                           />
                         </FormControl>
                       </FormItem>
@@ -214,7 +212,7 @@ export const EditAlunoModal = () => {
                           <Input
                             placeholder="Telefone"
                             {...field}
-                            defaultValue={aluno?.telefone!}
+                            defaultValue={data?.student?.telefone!}
                           />
                         </FormControl>
                       </FormItem>
@@ -232,7 +230,7 @@ export const EditAlunoModal = () => {
                           <Input
                             placeholder="CPF"
                             {...field}
-                            defaultValue={aluno?.cpf!}
+                            defaultValue={data?.student?.cpf!}
                           />
                         </FormControl>
                       </FormItem>
@@ -297,7 +295,7 @@ export const EditAlunoModal = () => {
                             <Input
                               placeholder="Nome"
                               {...field}
-                              defaultValue={aluno?.responsavel?.nome!}
+                              defaultValue={data?.student?.responsavel?.nome!}
                             />
                           </FormControl>
                         </FormItem>
@@ -315,7 +313,7 @@ export const EditAlunoModal = () => {
                             <Input
                               placeholder="Email"
                               {...field}
-                              defaultValue={aluno?.responsavel?.email!}
+                              defaultValue={data?.student?.responsavel?.email!}
                             />
                           </FormControl>
                         </FormItem>
@@ -333,7 +331,9 @@ export const EditAlunoModal = () => {
                             <Input
                               placeholder="Telefone"
                               {...field}
-                              defaultValue={aluno?.responsavel?.telefone!}
+                              defaultValue={
+                                data?.student?.responsavel?.telefone!
+                              }
                             />
                           </FormControl>
                         </FormItem>
@@ -351,7 +351,7 @@ export const EditAlunoModal = () => {
                             <Input
                               placeholder="CPF"
                               {...field}
-                              defaultValue={aluno?.responsavel?.cpf!}
+                              defaultValue={data?.student?.responsavel?.cpf!}
                             />
                           </FormControl>
                         </FormItem>

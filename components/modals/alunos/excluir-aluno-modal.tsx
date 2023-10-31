@@ -28,8 +28,9 @@ export const ExcluirAlunoModal = () => {
   async function handleDelete() {
     try {
       setIsLoading(true);
-      await api.student.delete('');
+      await api.student.delete(data?.student?.id!);
       router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao excluir aluno!',
         variant: 'success',

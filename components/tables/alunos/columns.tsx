@@ -20,25 +20,25 @@ import { PagamentoAlunoButton } from './pagamentos-aluno-menu-item';
 import { Insert } from '@/services/api/student/type';
 
 export const columns: ColumnDef<Student>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: 'select',
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={table.getIsAllPageRowsSelected()}
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'nome',
     header: 'Nome',
@@ -96,7 +96,6 @@ export const columns: ColumnDef<Student>[] = [
     accessorKey: 'Ações',
     header: 'Ações',
     cell: ({ row }) => {
-      const payment = row.original;
       const aluno = row.original;
 
       return (
@@ -109,9 +108,9 @@ export const columns: ColumnDef<Student>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            {/* <EditAlunoMenuItem alunoNormal={aluno} /> */}
+            <EditAlunoMenuItem student={aluno} />
             <DropdownMenuSeparator />
-            {/* <ExcluirAlunoMenuItem alunoNormal={aluno} /> */}
+            <ExcluirAlunoMenuItem student={aluno} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
