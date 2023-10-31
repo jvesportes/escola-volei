@@ -11,6 +11,7 @@ function ClassFactory() {
             horario: data.horario,
             id_professor: data.id_professor,
             unidade: data.unidade,
+            nome: data.nome,
           },
         ])
         .select();

@@ -40,6 +40,7 @@ import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib';
 import { format } from 'date-fns';
+import { useProfessor } from '@/hooks/useProfessor';
 
 const formSchema = z.object({
   nome: z.string().min(5, {
@@ -54,6 +55,11 @@ export const AddTurmaModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const { toast } = useToast();
+  const {
+    data: professores,
+    error,
+    isLoading: isProfessoresLoading,
+  } = useProfessor();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -65,16 +71,15 @@ export const AddTurmaModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-
-      //Falta Nome da turma
-      await api.class.create({
+      const result = await api.class.create({
         horario: values.horario,
-        id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
+        id_professor: values.professor,
         unidade: values.unidade,
+        nome: values.nome,
       });
-
+      if (result.error) throw new Error('Erro ao criar turma');
       form.reset();
-      router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao criar turma!',
         variant: 'success',
@@ -120,37 +125,46 @@ export const AddTurmaModal = () => {
                     )}
                   />
                 </div>
-                <div className="grid w-full  items-center gap-1.5">
-                  <FormField
-                    control={form.control}
-                    name="professor"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Professor</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue
-                                placeholder="Selecione um professor"
-                                className="text-slate-500"
-                              />
-                            </SelectTrigger>
-                            {/* hook chamando os profesosres e dando opção, no value o id e o nome do professor */}
-                            <SelectContent>
-                              <SelectItem value="joao">João</SelectItem>
-                              <SelectItem value="julio">Júlio</SelectItem>
-                              <SelectItem value="cesar">César</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                {isProfessoresLoading ? (
+                  <></>
+                ) : (
+                  <div className="grid w-full  items-center gap-1.5">
+                    <FormField
+                      control={form.control}
+                      name="professor"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Professor</FormLabel>
+                          <FormControl>
+                            <Select
+                              {...field}
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Selecione um professor"
+                                  className="text-slate-500"
+                                />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {professores.map((professor) => (
+                                  <SelectItem
+                                    value={professor.id!}
+                                    key={professor.id!}
+                                  >
+                                    {professor.nome}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
+
                 <div className="grid w-full  items-center gap-1.5">
                   <FormField
                     control={form.control}

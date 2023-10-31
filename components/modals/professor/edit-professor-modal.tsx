@@ -227,7 +227,7 @@ export const EditProfessorModal = () => {
                   Cancelar
                 </Button>
                 <Button disabled={isLoading} type="submit">
-                  {!isLoading ? 'Adicionar' : 'Adicionando...'}
+                  {!isLoading ? 'Editar' : 'Editando...'}
                 </Button>
               </div>
             </DialogFooter>

@@ -130,6 +130,7 @@ export interface Database {
           email: string;
           id: string;
           nome: string;
+          telefone: string | null;
           tipo: string;
         };
         Insert: {
@@ -138,6 +139,7 @@ export interface Database {
           email: string;
           id?: string;
           nome: string;
+          telefone?: string | null;
           tipo: string;
         };
         Update: {
@@ -146,6 +148,7 @@ export interface Database {
           email?: string;
           id?: string;
           nome?: string;
+          telefone?: string | null;
           tipo?: string;
         };
         Relationships: [];
@@ -254,6 +257,7 @@ export interface Database {
           horario: string;
           id: string;
           id_professor: string;
+          nome: string | null;
           unidade: string;
         };
         Insert: {
@@ -261,6 +265,7 @@ export interface Database {
           horario: string;
           id?: string;
           id_professor: string;
+          nome?: string | null;
           unidade: string;
         };
         Update: {
@@ -268,6 +273,7 @@ export interface Database {
           horario?: string;
           id?: string;
           id_professor?: string;
+          nome?: string | null;
           unidade?: string;
         };
         Relationships: [
