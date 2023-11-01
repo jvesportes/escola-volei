@@ -27,8 +27,13 @@ export const ExcluirAlunoTurmaModal = () => {
   async function handleDelete() {
     try {
       setIsLoading(true);
-      await api.class.deleteStudent('', '');
+      const result = await api.class.deleteStudent(
+        data?.turma?.id!,
+        data?.student?.id!
+      );
+      if (result.error) throw new Error('Erro ao excluir aluno da turma.');
       router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao excluir aluno da turma!',
         variant: 'success',

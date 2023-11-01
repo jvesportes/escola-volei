@@ -65,6 +65,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
               <Separator />
               <ExcluirAlunoTurmaMenuItem
                 student={aluno.aluno as unknown as Student}
+                turma={turma!}
               />
             </DropdownMenuContent>
           </DropdownMenu>

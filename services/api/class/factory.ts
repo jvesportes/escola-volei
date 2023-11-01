@@ -72,7 +72,17 @@ function ClassFactory() {
       // impleme,ntar
     },
     async deleteStudent(id: string, studentId: string) {
-      // impleme,ntar
+      const result = await supabase
+        .from('alunos_turmas')
+        .delete()
+        .eq('id_aluno', studentId)
+        .eq('id_turma', id);
+      await supabase
+        .from('presenca_alunos')
+        .delete()
+        .eq('id_aluno', studentId)
+        .eq('id_turma', id);
+      return result;
     },
     async list() {
       const result = await supabase
