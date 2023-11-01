@@ -2,7 +2,7 @@ import { api } from '@/services';
 import { ClassType, Teacher } from '@/utils/types';
 import { useEffect, useState } from 'react';
 
-export function useClass() {
+export function useClasses() {
   const [data, setData] = useState<ClassType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();

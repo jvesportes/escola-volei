@@ -1,17 +1,17 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { AlunoTurma } from '@/utils/types';
+import { AlunoTurma, Student } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 interface Props {
-  aluno: AlunoTurma;
+  student: Student;
 }
-export const ExcluirAlunoTurmaMenuItem = ({ aluno }: Props) => {
+export const ExcluirAlunoTurmaMenuItem = ({ student }: Props) => {
   const { onOpen } = useModal();
   return (
     <DropdownMenuItem
       onClick={() => {
-        onOpen('excluirAlunoTurma', { aluno });
+        onOpen('excluirAlunoTurma', { student });
       }}
       className="gap-2 text-red-500"
     >

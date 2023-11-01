@@ -15,6 +15,14 @@ export interface ClassType {
   horario: string;
   alunosTurmas: Student[];
   unidade: 'zonasul' | 'zonanorte' | 'zonaleste' | 'zonaoeste';
+  presenca?: PresenceType[];
+}
+export interface PresenceType {
+  aluno: {
+    id: string;
+    nome: string;
+  };
+  presencas: { data: Date; estaPresente: boolean }[];
 }
 export interface Teacher {
   id?: string;

@@ -12,12 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, AlunoPresenca, AlunoTurma, Turma } from '@/utils/types';
+import {
+  Aluno,
+  AlunoPresenca,
+  AlunoTurma,
+  PresenceType,
+  Turma,
+} from '@/utils/types';
 import { ExcluirAlunoTurmaMenuItem } from './delete-turma-aluno-menu-item';
 import { Separator } from '@/components/ui/separator';
 import { HistoricoAlunoTurmaMenuItem } from './historico-turma-aluno-menu-item';
 
-export const turmaColumns: ColumnDef<AlunoTurma>[] = [
+export const turmaColumns: ColumnDef<PresenceType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -38,7 +44,7 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'aluno',
+    accessorKey: 'aluno.nome',
     header: ({ column }) => {
       return (
         <Button
@@ -50,20 +56,18 @@ export const turmaColumns: ColumnDef<AlunoTurma>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const aluno: Aluno = row.getValue('aluno');
-      return <>{aluno.nome}</>;
-    },
   },
 
   {
-    accessorKey: 'presenca',
+    accessorKey: 'presencas',
     header: 'Presença',
     cell: ({ row }) => {
-      const presenca: AlunoPresenca[] = row.getValue('presenca');
+      const presenca: { data: Date; estaPresente: boolean }[] =
+        row.getValue('presencas');
+      console.log(presenca);
       return (
         <div className="items-top flex space-x-2">
-          <Checkbox id="terms1" checked={presenca[0].presenca} />
+          <Checkbox id="terms1" checked={presenca[0].estaPresente} />
           <div className="grid gap-1.5 leading-none">
             <label
               htmlFor="terms1"

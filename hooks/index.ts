@@ -1,2 +1,2 @@
-export * from './useRouterActiveness'
-export * from './useClass'
+export * from './useRouterActiveness';
+export * from './class/useClasses';
