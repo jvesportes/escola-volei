@@ -34,18 +34,20 @@ import {
 import { ArrowLeft, FileText, Settings, UserPlus, Users } from 'lucide-react';
 import { useModal } from '@/hooks/use-modal-store';
 import { useRouter } from 'next/navigation';
-import { AlunoEspera } from '@/utils/types';
+import { AlunoEspera, ClassType } from '@/utils/types';
 import { hasRoleAccess } from '@/utils';
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue, ClassType> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  turma: ClassType;
 }
 
-export function SingleTurmaDataTable<TData, TValue>({
+export function SingleTurmaDataTable<TData, TValue, ClassType>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  turma,
+}: DataTableProps<TData, TValue, ClassType>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -105,7 +107,7 @@ export function SingleTurmaDataTable<TData, TValue>({
             <Button
               size={'sm'}
               onClick={() => {
-                onOpen('addAlunoTurma');
+                onOpen('addAlunoTurma', { turma });
               }}
             >
               <span className="md:flex hidden">Adicionar Aluno</span>

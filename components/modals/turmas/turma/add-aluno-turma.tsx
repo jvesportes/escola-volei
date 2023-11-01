@@ -24,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { alunos } from '@/utils/types';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import {
   Popover,
@@ -51,6 +50,8 @@ import {
 } from '@/components/ui/form';
 import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
+import { useStudents } from '@/hooks/student/useStudents';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const FormSchema = z.object({
   aluno: z.string(),
@@ -60,6 +61,7 @@ export const AddAlunoTurma = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const { toast } = useToast();
+  const { data: alunos, isLoading: alunosIsLoading } = useStudents();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -69,9 +71,10 @@ export const AddAlunoTurma = () => {
     try {
       setIsLoading(true);
 
-      await api.class.addStudent('', '');
+      const result = await api.class.addStudent(data?.turma?.id!, values.aluno);
+      if (result.error) throw new Error('Erro ao adicionar aluno à turma.');
       form.reset();
-      router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao adicionar aluno à turma!',
         variant: 'success',
@@ -91,7 +94,6 @@ export const AddAlunoTurma = () => {
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState('');
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -123,9 +125,10 @@ export const AddAlunoTurma = () => {
                                 !field.value && 'text-muted-foreground'
                               )}
                             >
-                              {value
-                                ? alunos.find((aluno) => aluno.nome === value)
-                                    ?.nome
+                              {field.value
+                                ? alunos.find(
+                                    (aluno) => aluno.id === field.value
+                                  )?.nome
                                 : 'Selecione um aluno...'}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -138,25 +141,27 @@ export const AddAlunoTurma = () => {
                               Nenhum aluno encontrado.
                             </CommandEmpty>
                             <CommandGroup>
-                              {alunos.map((aluno) => (
-                                <CommandItem
-                                  key={aluno.nome}
-                                  value={aluno.nome}
-                                  onSelect={() => {
-                                    form.setValue('aluno', aluno.nome);
-                                  }}
-                                >
-                                  <Check
-                                    className={cn(
-                                      'mr-2 h-4 w-4',
-                                      value === aluno.nome
-                                        ? 'opacity-100'
-                                        : 'opacity-0'
-                                    )}
-                                  />
-                                  {aluno.nome}
-                                </CommandItem>
-                              ))}
+                              <ScrollArea>
+                                {alunos.map((aluno) => (
+                                  <CommandItem
+                                    key={aluno.id}
+                                    value={aluno.id}
+                                    onSelect={() => {
+                                      form.setValue('aluno', aluno.id);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        'mr-2 h-4 w-4',
+                                        form.getValues('aluno') === aluno.id
+                                          ? 'opacity-100'
+                                          : 'opacity-0'
+                                      )}
+                                    />
+                                    {aluno.nome}
+                                  </CommandItem>
+                                ))}
+                              </ScrollArea>
                             </CommandGroup>
                           </Command>
                         </PopoverContent>

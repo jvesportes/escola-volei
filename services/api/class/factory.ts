@@ -66,7 +66,11 @@ function ClassFactory() {
       return { turma, error };
     },
     async addStudent(id: string, studentId: string) {
-      // impleme,ntar
+      const result = await supabase.from('alunos_turmas').insert({
+        id_aluno: studentId,
+        id_turma: id,
+      });
+      return result;
     },
     async addStudentWaitList(id: string, studentId: string) {
       // impleme,ntar

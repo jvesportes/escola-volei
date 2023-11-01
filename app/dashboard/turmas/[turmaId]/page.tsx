@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { useClass } from '@/hooks/class/useClass';
+import { useStudents } from '@/hooks/student/useStudents';
 import { useModal } from '@/hooks/use-modal-store';
 import { hasRoleAccess } from '@/utils';
 import { AlunoTurma, Student, turmas } from '@/utils/types';
@@ -29,7 +30,6 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   const { turmaId } = params;
   const { data, isOpen, onClose, onOpen, type } = useModal();
   const { data: turma, error, isLoading } = useClass(turmaId);
-  console.log('TURMAAAAS ---->', turma);
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -133,6 +133,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
               <SingleTurmaDataTable
                 columns={newTurmaColumns}
                 data={turma?.presenca!}
+                turma={turma!}
               />
             </div>
           </div>
