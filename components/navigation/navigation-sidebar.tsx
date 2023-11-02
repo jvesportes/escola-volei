@@ -23,7 +23,6 @@ export const NavigationSidebar = () => {
   const { isOpen, onOpen } = useSidebar();
   const { onOpen: abrirModal } = useModal();
   const user = {};
-  // const pathname = usePathname();
 
   const [isDashboardPage, isAlunosPage, isTurmasPage, isProfessoresPage] =
     useRouterActiveness([

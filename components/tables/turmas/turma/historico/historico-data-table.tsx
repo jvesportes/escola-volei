@@ -24,17 +24,9 @@ import {
 } from '@/components/ui/table';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ArrowLeft, FileText, Settings, UserPlus, Users } from 'lucide-react';
+
 import { useModal } from '@/hooks/use-modal-store';
 import { useRouter } from 'next/navigation';
-import { AlunoEspera } from '@/utils/types';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

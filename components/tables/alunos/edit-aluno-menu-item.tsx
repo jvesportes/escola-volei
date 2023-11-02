@@ -1,7 +1,7 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Aluno, Student } from '@/utils/types';
+import { Student } from '@/utils/types';
 import { Edit } from 'lucide-react';
 
 interface Props {

@@ -14,7 +14,6 @@ export const NavigationTabbar = () => {
   const isAlunosPage = pathname == '/dashboard/alunos';
   const isTurmasPage = pathname == '/dashboard/turmas';
   const isProfessoresPage = pathname == '/dashboard/professores';
-  const user = {};
 
   return (
     <div className="bg-white flex flex-row p-4 rounded-tr-lg rounded-tl-lg w-full h-[92px] shadow-[0px_-2px_40px_0px_rgba(0,0,0,0.10)] justify-center items-center gap-6">

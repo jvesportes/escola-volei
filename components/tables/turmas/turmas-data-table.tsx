@@ -31,7 +31,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Settings, UserPlus, Users } from 'lucide-react';
+import { Settings, Users } from 'lucide-react';
 import { useModal } from '@/hooks/use-modal-store';
 import { useRouter } from 'next/navigation';
 import { hasRoleAccess } from '@/utils';
@@ -73,7 +73,6 @@ export function TurmaDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
-  const user = {};
 
   return (
     <div>

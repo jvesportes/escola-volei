@@ -7,11 +7,7 @@ import { Button } from '../ui/button';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  Session,
-  createClientComponentClient,
-} from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/lib/database.types';
+
 import { useToast } from '../ui/use-toast';
 import { supabase } from '@/lib';
 import { hasUser } from '@/utils';

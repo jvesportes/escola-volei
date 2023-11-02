@@ -6,22 +6,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
 
 import { Button } from '@/components/ui/button';
 import { HistoricoDataTable } from '@/components/tables/turmas/turma/historico/historico-data-table';
 import { historicoColumns } from '@/components/tables/turmas/turma/historico/historico-columns';
-import { usePresences } from '@/hooks/student/usePresences';
 import { Presence } from '@/utils/types';
 
 export const HistoricoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useRouter();
   const isModalOpen = isOpen && type === 'historicoAlunoTurma';
 
   const [isLoading, setIsLoading] = useState(false);

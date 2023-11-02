@@ -1,19 +1,18 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, Edit, MoreHorizontal, Trash2Icon } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Aluno, Professor, Teacher } from '@/utils/types';
+import { Teacher } from '@/utils/types';
 import { EditProfessorMenuItem } from './edit-professor-menu-item';
 import { ExcluirProfessorMenuItem } from './delete-professor-menu-item';
 
@@ -90,19 +89,3 @@ export const professoresColumns: ColumnDef<Teacher>[] = [
     },
   },
 ];
-
-// export const columns: ColumnDef<Payment>[] = [
-//   {
-//     accessorKey: "amount",
-//     header: () => <div className="text-right">Amount</div>,
-//     cell: ({ row }) => {
-//       const amount = parseFloat(row.getValue("amount"));
-//       const formatted = new Intl.NumberFormat("en-US", {
-//         style: "currency",
-//         currency: "USD",
-//       }).format(amount);
-
-//       return <div className="text-right font-medium">{formatted}</div>;
-//     },
-//   },
-// ];

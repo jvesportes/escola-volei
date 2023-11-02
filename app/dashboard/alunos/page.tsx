@@ -4,9 +4,7 @@ import { columns } from '@/components/tables/alunos/columns';
 import { DataTable } from '@/components/tables/alunos/data-table';
 import { Card } from '@/components/ui/card';
 import { useStudents } from '@/hooks/student/useStudents';
-import { Insert } from '@/services/api/student/type';
 import { hasRoleAccess, hasUser } from '@/utils';
-import { Aluno, alunos } from '@/utils/types';
 import { useRouter } from 'next/navigation';
 
 const AlunosPage = () => {

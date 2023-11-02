@@ -3,27 +3,16 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 
 import { Button } from '../../../ui/button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
-import { Label } from '../../../ui/label';
-import { Input } from '../../../ui/input';
-import { Separator } from '../../../ui/separator';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
 import { Check, ChevronsUpDown } from 'lucide-react';
 import {
   Popover,

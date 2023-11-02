@@ -1,7 +1,7 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Professor, Teacher } from '@/utils/types';
+import { Teacher } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 
 interface ExcluirProfessorMenuItemProps {

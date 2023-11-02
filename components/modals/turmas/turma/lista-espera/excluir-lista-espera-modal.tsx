@@ -28,7 +28,7 @@ export const ExcluirAlunoListaEsperaModal = () => {
     try {
       setIsLoading(true);
       const result = await api.class.deleteStudentWaitList(
-        data?.alunoEspera?.id!
+        data?.alunoEspera?.id! + ''
       );
       if (result.error)
         throw new Error('Erro ao excluir aluno da lista de espera.');

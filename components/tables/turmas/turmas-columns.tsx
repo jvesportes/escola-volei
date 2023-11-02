@@ -1,22 +1,13 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Aluno, ClassType, Student, Teacher, Turma } from '@/utils/types';
-import { EditTurmaMenuItem } from './edit-turma-menu-item';
-import { ExcluirTurmaMenuItem } from './delete-turma-menu-item';
-import { hasRoleAccess } from '@/utils';
-import { formatToDateTime } from 'brazilian-values';
+
+import { ClassType, Teacher } from '@/utils/types';
+
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 

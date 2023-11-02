@@ -1,7 +1,7 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { ClassType, Turma } from '@/utils/types';
+import { ClassType } from '@/utils/types';
 import { Edit } from 'lucide-react';
 interface Props {
   turma: ClassType;

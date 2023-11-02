@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -16,9 +15,7 @@ import { Button } from '../../ui/button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
-import { Label } from '../../ui/label';
 import { Input } from '../../ui/input';
-import { Separator } from '../../ui/separator';
 import {
   Select,
   SelectContent,
@@ -29,11 +26,9 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';

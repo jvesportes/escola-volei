@@ -1,13 +1,10 @@
 'use client';
 import { GoBackButton } from '@/components/navigation/go-back-button';
-import { columns } from '@/components/tables/alunos/columns';
-import { DataTable } from '@/components/tables/alunos/data-table';
 import { professoresColumns } from '@/components/tables/professores/professores-columns';
 import { ProfessoresDataTable } from '@/components/tables/professores/professores-data-table';
 import { Card } from '@/components/ui/card';
 import { useProfessor } from '@/hooks/useProfessor';
 import { hasRoleAccess, hasUser } from '@/utils';
-import { alunos, professores } from '@/utils/types';
 import { useRouter } from 'next/navigation';
 
 const ProfessoresPage = () => {

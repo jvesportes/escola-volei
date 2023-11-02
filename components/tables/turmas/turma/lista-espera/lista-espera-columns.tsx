@@ -9,17 +9,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Aluno,
-  AlunoEspera,
-  AlunoPresenca,
-  AlunoTurma,
-  Turma,
-  WaitListStudent,
-} from '@/utils/types';
+import { WaitListStudent } from '@/utils/types';
 import { ExcluirListaEsperaAlunoMenuItem } from './delete-lista-espera-menu-item';
 
 export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
@@ -90,7 +82,7 @@ export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <ExcluirListaEsperaAlunoMenuItem alunoEspera={alunoEspera} />
+            <ExcluirListaEsperaAlunoMenuItem alunoEspera={alunoEspera!} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

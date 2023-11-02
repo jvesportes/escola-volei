@@ -31,10 +31,9 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ArrowLeft, FileText, Settings, UserPlus, Users } from 'lucide-react';
+import { ArrowLeft, Settings, UserPlus } from 'lucide-react';
 import { useModal } from '@/hooks/use-modal-store';
 import { useRouter } from 'next/navigation';
-import { AlunoEspera, ClassType } from '@/utils/types';
 import { hasRoleAccess } from '@/utils';
 
 interface DataTableProps<TData, TValue, ClassType> {
@@ -76,7 +75,6 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
-  const user = {};
 
   return (
     <div>

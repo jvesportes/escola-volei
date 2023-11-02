@@ -2,8 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Aluno, Pagamento, Payment, Student } from '@/utils/types';
-import { Trash2Icon } from 'lucide-react';
+import { Payment, Student } from '@/utils/types';
 
 interface PagamentoAlunoButtonProps {
   pagamento: Payment[];

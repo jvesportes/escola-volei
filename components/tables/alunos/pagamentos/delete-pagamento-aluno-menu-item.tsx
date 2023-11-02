@@ -1,7 +1,7 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { Pagamento, Payment } from '@/utils/types';
+import { Payment } from '@/utils/types';
 import { Trash2Icon } from 'lucide-react';
 interface DeletePagmaentoAlunoMenuItemProps {
   payment: Payment;

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
 import {
   AlertDialog,
@@ -18,7 +17,6 @@ import { api } from '@/services';
 
 export const ExcluirProfessorModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const router = useRouter();
   const { toast } = useToast();
 
   const isModalOpen = isOpen && type === 'excluirProfessor';

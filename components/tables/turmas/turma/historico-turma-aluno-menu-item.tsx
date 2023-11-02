@@ -1,7 +1,7 @@
 'use client';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { useModal } from '@/hooks/use-modal-store';
-import { AlunoTurma, ClassType, Presence, Student, Turma } from '@/utils/types';
+import { Presence, Student } from '@/utils/types';
 import { FileText } from 'lucide-react';
 
 interface HistoricoAlunoTurmaMenuItemProps {

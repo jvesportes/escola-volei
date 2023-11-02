@@ -1,31 +1,11 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Aluno,
-  AlunoPresenca,
-  AlunoTurma,
-  PresenceType,
-  StudentClassType,
-  Turma,
-} from '@/utils/types';
-import { ExcluirAlunoTurmaMenuItem } from './delete-turma-aluno-menu-item';
-import { Separator } from '@/components/ui/separator';
-import { HistoricoAlunoTurmaMenuItem } from './historico-turma-aluno-menu-item';
-import { isEqual, lightFormat } from 'date-fns';
-import { api } from '@/services';
-import { useToast } from '@/components/ui/use-toast';
+
+import { StudentClassType } from '@/utils/types';
 
 export const turmaColumns: ColumnDef<StudentClassType>[] = [
   {
