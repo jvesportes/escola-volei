@@ -64,10 +64,6 @@ export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
     header: 'Email',
   },
   {
-    accessorKey: 'id',
-    header: 'id',
-  },
-  {
     id: 'ações',
     accessorKey: 'Ações',
     header: 'Ações',
