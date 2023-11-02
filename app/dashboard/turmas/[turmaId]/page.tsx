@@ -7,6 +7,7 @@ import { turmaColumns } from '@/components/tables/turmas/turma/turma-columns';
 import { SingleTurmaDataTable } from '@/components/tables/turmas/turma/turma-data-table';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,11 +15,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/components/ui/use-toast';
 import { useClass } from '@/hooks/class/useClass';
 import { useStudents } from '@/hooks/student/useStudents';
 import { useModal } from '@/hooks/use-modal-store';
+import { api } from '@/services';
 import { hasRoleAccess } from '@/utils';
 import { AlunoTurma, Student, StudentClassType, turmas } from '@/utils/types';
+import { lightFormat } from 'date-fns';
 import { FileText, MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -33,6 +37,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   const { data: turma, error, isLoading } = useClass(turmaId);
 
   const [isMounted, setIsMounted] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsMounted(true);
@@ -43,6 +48,54 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   }
   const user = {};
   const newTurmaColumns = [...turmaColumns];
+  newTurmaColumns.push({
+    accessorKey: 'presenca.presencas',
+    header: 'Presença',
+    cell: ({ row }) => {
+      const studentClass: any = row.original;
+      const isPresent =
+        studentClass.presenca !== undefined &&
+        studentClass.presenca.presencas[0].data ===
+          lightFormat(new Date(), 'yyyy-MM-dd') &&
+        studentClass.presenca.presencas[0].estaPresente;
+      const handlePresence = async () => {
+        try {
+          const result = await api.class.handleStudentPresence(
+            turma?.id!,
+            studentClass.id
+          );
+          if (result.error) throw new Error('Erro ao dar presença ao aluno.');
+          window.location.reload();
+        } catch (error) {
+          toast({
+            title: 'Erro ao dar presença ao aluno.',
+            description: (error as Error).message,
+            variant: 'destructive',
+          });
+          console.log('[PRESENÇA ALUNO TURMA ERROR]', error);
+        }
+      };
+      return (
+        <div className="items-top flex space-x-2">
+          <Checkbox
+            id="terms1"
+            checked={isPresent ? true : false}
+            onClick={() => {
+              handlePresence();
+            }}
+          />
+          <div className="grid gap-1.5 leading-none">
+            <label
+              htmlFor="terms1"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Presença
+            </label>
+          </div>
+        </div>
+      );
+    },
+  });
   if (hasRoleAccess('admin', user)) {
     newTurmaColumns.push({
       id: 'ações',

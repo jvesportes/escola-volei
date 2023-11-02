@@ -91,6 +91,28 @@ function ClassFactory() {
     async addStudentWaitList(id: string, studentId: string) {
       // impleme,ntar
     },
+    async handleStudentPresence(id: string, studentId: string) {
+      const alreadyHavePresence = await supabase
+        .from('presenca_alunos')
+        .select()
+        .eq('id_aluno', studentId)
+        .eq('id_turma', id)
+        .eq('data_aula', new Date().toDateString());
+      if (alreadyHavePresence.data?.length! > 0)
+        return await supabase
+          .from('presenca_alunos')
+          .update({
+            esta_presente: !alreadyHavePresence.data![0].esta_presente,
+          })
+          .eq('id', alreadyHavePresence.data![0].id);
+      const result = await supabase.from('presenca_alunos').insert({
+        data_aula: new Date().toDateString(),
+        esta_presente: true,
+        id_aluno: studentId,
+        id_turma: id,
+      });
+      return result;
+    },
     async deleteStudent(id: string, studentId: string) {
       const result = await supabase
         .from('alunos_turmas')
