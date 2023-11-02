@@ -51,7 +51,6 @@ const formSchema = z.object({
   telefone: z.string().refine((telefone) => isPhone(telefone)),
   cpf: z.string().refine((cpf) => isCPF(cpf)),
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
-  // unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
   responsavelNome: z.string().optional(),
   responsavelTelefone: z.string().optional(),
   responsavelCpf: z.string().optional(),
@@ -96,15 +95,13 @@ export const AddAlunoModal = () => {
           telefone: values.responsavelTelefone,
         };
       }
-      console.log(aluno);
       const result = await api.student.create(aluno);
-      if (result)
-        // form.reset();
-        // router.refresh();
-        toast({
-          title: 'Sucesso ao criar aluno!',
-          variant: 'success',
-        });
+      if (result) form.reset();
+      window.location.reload();
+      toast({
+        title: 'Sucesso ao criar aluno!',
+        variant: 'success',
+      });
     } catch (error) {
       toast({
         title: 'Erro ao criar aluno.',

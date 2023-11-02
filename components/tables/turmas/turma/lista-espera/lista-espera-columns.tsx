@@ -1,29 +1,30 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Aluno,
   AlunoEspera,
   AlunoPresenca,
   AlunoTurma,
   Turma,
-} from "@/utils/types";
-import { ExcluirListaEsperaAlunoMenuItem } from "./delete-lista-espera-menu-item";
+  WaitListStudent,
+} from '@/utils/types';
+import { ExcluirListaEsperaAlunoMenuItem } from './delete-lista-espera-menu-item';
 
-export const ListaEsperaColumns: ColumnDef<AlunoEspera>[] = [
+export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -43,17 +44,12 @@ export const ListaEsperaColumns: ColumnDef<AlunoEspera>[] = [
   },
 
   {
-    accessorKey: "posicao",
-    header: "Posição",
-    cell: ({ row }) => <>#{row.getValue("posicao")}</>,
-  },
-  {
-    accessorKey: "nome",
+    accessorKey: 'nome',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nome
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -63,22 +59,27 @@ export const ListaEsperaColumns: ColumnDef<AlunoEspera>[] = [
   },
 
   {
-    accessorKey: "telefone",
-    header: "Telefone",
+    accessorKey: 'telefone',
+    header: 'Telefone',
   },
   {
-    accessorKey: "cpf",
-    header: "CPF",
+    accessorKey: 'cpf',
+    header: 'CPF',
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: 'email',
+    header: 'Email',
   },
   {
-    id: "ações",
-    accessorKey: "Ações",
-    header: "Ações",
+    accessorKey: 'id',
+    header: 'id',
+  },
+  {
+    id: 'ações',
+    accessorKey: 'Ações',
+    header: 'Ações',
     cell: ({ row }) => {
+      const alunoEspera = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -89,7 +90,7 @@ export const ListaEsperaColumns: ColumnDef<AlunoEspera>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <ExcluirListaEsperaAlunoMenuItem />
+            <ExcluirListaEsperaAlunoMenuItem alunoEspera={alunoEspera} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

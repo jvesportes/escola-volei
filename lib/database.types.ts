@@ -47,6 +47,7 @@ export interface Database {
           {
             foreignKeyName: 'alunos_id_responsavel_fkey';
             columns: ['id_responsavel'];
+            isOneToOne: false;
             referencedRelation: 'responsaveis';
             referencedColumns: ['id'];
           },
@@ -75,12 +76,14 @@ export interface Database {
           {
             foreignKeyName: 'alunos_turmas_id_aluno_fkey';
             columns: ['id_aluno'];
+            isOneToOne: false;
             referencedRelation: 'alunos';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'alunos_turmas_id_turma_fkey';
             columns: ['id_turma'];
+            isOneToOne: false;
             referencedRelation: 'turmas';
             referencedColumns: ['id'];
           },
@@ -118,6 +121,7 @@ export interface Database {
           {
             foreignKeyName: 'pagamentos_aluno_id_fkey';
             columns: ['aluno_id'];
+            isOneToOne: false;
             referencedRelation: 'alunos';
             referencedColumns: ['id'];
           },
@@ -182,12 +186,14 @@ export interface Database {
           {
             foreignKeyName: 'presenca_alunos_id_aluno_fkey';
             columns: ['id_aluno'];
+            isOneToOne: false;
             referencedRelation: 'alunos';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'presenca_alunos_id_turma_fkey';
             columns: ['id_turma'];
+            isOneToOne: false;
             referencedRelation: 'turmas';
             referencedColumns: ['id'];
           },
@@ -222,30 +228,37 @@ export interface Database {
       };
       turma_lista_de_espera: {
         Row: {
-          contato: string;
+          cpf: string | null;
           created_at: string;
+          email: string | null;
           id: number;
           id_turma: string;
           nome: string;
+          telefone: string;
         };
         Insert: {
-          contato: string;
+          cpf?: string | null;
           created_at?: string;
+          email?: string | null;
           id?: number;
           id_turma: string;
           nome: string;
+          telefone: string;
         };
         Update: {
-          contato?: string;
+          cpf?: string | null;
           created_at?: string;
+          email?: string | null;
           id?: number;
           id_turma?: string;
           nome?: string;
+          telefone?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'turma_lista_de_espera_id_turma_fkey';
             columns: ['id_turma'];
+            isOneToOne: false;
             referencedRelation: 'turmas';
             referencedColumns: ['id'];
           },
@@ -280,6 +293,7 @@ export interface Database {
           {
             foreignKeyName: 'turmas_id_professor_fkey';
             columns: ['id_professor'];
+            isOneToOne: false;
             referencedRelation: 'perfis';
             referencedColumns: ['id'];
           },

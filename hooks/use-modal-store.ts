@@ -1,3 +1,4 @@
+import { WaitListStudent } from '@/services/api/class/type';
 import {
   Aluno,
   AlunoEspera,
@@ -29,6 +30,7 @@ export type ModalType =
   | 'historicoAlunoTurma'
   | 'pagamentoAluno'
   | 'excluirPagamentoAluno'
+  | 'excluirAlunoListaEspera'
   | 'addAlunoTurma';
 
 interface ModalData {
@@ -37,6 +39,7 @@ interface ModalData {
   teacher?: Teacher;
   turma?: ClassType;
   presences?: Presence[];
+  alunoEspera?: WaitListStudent;
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;
   professor?: Professor;

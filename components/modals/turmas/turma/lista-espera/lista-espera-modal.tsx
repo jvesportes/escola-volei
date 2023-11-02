@@ -29,6 +29,7 @@ import {
   FormLabel,
 } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
+import { formatToCPF, formatToPhone, isCPF, isPhone } from 'brazilian-values';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Email inválido.' }).min(5, {
@@ -37,12 +38,8 @@ const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  telefone: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
-  cpf: z.string().min(5, {
-    message: 'O cpf deve ter pelo menos 5 caracteres',
-  }),
+  telefone: z.string().refine((telefone) => isPhone(telefone)),
+  cpf: z.string().refine((cpf) => isCPF(cpf)),
 });
 
 export const ListaEsperaModal = () => {
@@ -66,9 +63,17 @@ export const ListaEsperaModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      await api.class.addStudentWaitList('', '');
+      const result = await api.class.addStudentWaitList({
+        id_turma: data.turma?.id!,
+        nome: values.nome,
+        email: values.email,
+        telefone: values.telefone,
+        cpf: values.cpf,
+      });
+      if (result.error)
+        throw new Error('Erro ao adicionar aluno na lista de espera.');
+      window.location.reload();
       form.reset();
-      router.refresh();
       toast({
         title: 'Sucesso ao adicionar aluno na lista de espera!',
         variant: 'success',
@@ -149,7 +154,16 @@ export const ListaEsperaModal = () => {
                         <FormItem>
                           <FormLabel>Telefone</FormLabel>
                           <FormControl>
-                            <Input placeholder="Telefone" {...field} />
+                            <Input
+                              placeholder="Telefone"
+                              {...field}
+                              onChange={(e) =>
+                                form.setValue(
+                                  'telefone',
+                                  formatToPhone(e.target.value)
+                                )
+                              }
+                            />
                           </FormControl>
                         </FormItem>
                       )}
@@ -163,7 +177,16 @@ export const ListaEsperaModal = () => {
                         <FormItem>
                           <FormLabel>CPF</FormLabel>
                           <FormControl>
-                            <Input placeholder="CPF" {...field} />
+                            <Input
+                              placeholder="CPF"
+                              {...field}
+                              onChange={(e) =>
+                                form.setValue(
+                                  'cpf',
+                                  formatToCPF(e.target.value)
+                                )
+                              }
+                            />
                           </FormControl>
                         </FormItem>
                       )}

@@ -32,6 +32,8 @@ function ClassFactory() {
         .order('data_aula', { ascending: false });
     },
     async get(id: string) {
+      const { data: listaEspera, error: listaEsperaError } =
+        await this.listWaitList(id);
       const { data, error } = await supabase
         .from('turmas')
         .select(
@@ -70,6 +72,7 @@ function ClassFactory() {
         horario: data![0].horario,
         nome: data![0].nome,
         presencas: presencas,
+        listaEspera: listaEspera,
         alunosTurmas: data![0].alunosTurmas.map((item) => {
           return {
             id: item.alunos!.id,
@@ -80,6 +83,7 @@ function ClassFactory() {
           };
         }),
       };
+      console.log('TURMA ------> ', turma);
       return { turma, error };
     },
     async addStudent(id: string, studentId: string) {
@@ -96,8 +100,23 @@ function ClassFactory() {
       });
       return result;
     },
-    async addStudentWaitList(id: string, studentId: string) {
-      // impleme,ntar
+    async addStudentWaitList(data: Class.WaitListStudent) {
+      return await supabase.from('turma_lista_de_espera').insert({
+        id_turma: data.id_turma,
+        nome: data.nome,
+        telefone: data.telefone,
+        email: data.email,
+        cpf: data.cpf,
+      });
+    },
+    async deleteStudentWaitList(id: string) {
+      return await supabase.from('turma_lista_de_espera').delete().eq('id', id);
+    },
+    async listWaitList(id: string) {
+      return await supabase
+        .from('turma_lista_de_espera')
+        .select('*')
+        .eq('id_turma', id);
     },
     async handleStudentPresence(id: string, studentId: string) {
       const alreadyHavePresence = await supabase

@@ -18,6 +18,7 @@ import { SairModal } from '../modals/sair-modal';
 import { HistoricoModal } from '../modals/turmas/turma/historico/historico-modal';
 import { PagamentoAlunoModal } from '../modals/alunos/pagamentos/pagamento-aluno-modal';
 import { ExcluirPagamentoAlunoModal } from '../modals/alunos/pagamentos/excluir-pagamento-aluno-modal';
+import { ExcluirAlunoListaEsperaModal } from '../modals/turmas/turma/lista-espera/excluir-lista-espera-modal';
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -48,6 +49,7 @@ export const ModalProvider = () => {
       <HistoricoModal />
       <PagamentoAlunoModal />
       <ExcluirPagamentoAlunoModal />
+      <ExcluirAlunoListaEsperaModal />
     </>
   );
 };

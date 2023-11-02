@@ -8,6 +8,13 @@ export interface Student {
   responsavel?: Responsable;
   pagamentos?: Payment[];
 }
+export interface WaitListStudent {
+  nome: string;
+  cpf: string;
+  email?: string;
+  telefone?: string;
+  id?: string;
+}
 export interface ClassType {
   id?: string;
   nome: string;
@@ -16,6 +23,7 @@ export interface ClassType {
   alunosTurmas?: StudentClassType[];
   unidade: 'zonasul' | 'zonanorte' | 'zonaleste' | 'zonaoeste';
   presenca?: PresenceType[];
+  listaEspera?: WaitListStudent[];
 }
 export interface StudentClassType extends Student {
   presencas: PresenceType[];
