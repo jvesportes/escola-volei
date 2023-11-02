@@ -13,7 +13,6 @@ export function useClass(id: string) {
         setIsLoading(true);
         const { turma, error } = await api.class.get(id);
         if (error) throw new Error(error.message);
-        console.log('TURMA ------> ', turma);
         setData(turma! as unknown as ClassType);
       } catch (error) {
         setError(error);

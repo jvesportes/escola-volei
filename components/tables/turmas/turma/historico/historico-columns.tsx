@@ -46,7 +46,6 @@ export const historicoColumns: ColumnDef<Presence>[] = [
     },
     cell: ({ row }) => {
       const date = row.getValue('data_aula') as string;
-      console.log(date);
       return <>{format(new Date(date), 'P', { locale: ptBR })}</>;
     },
   },

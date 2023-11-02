@@ -4,7 +4,6 @@ import * as Class from './type';
 function ClassFactory() {
   return {
     async create(data: Class.Insert) {
-      console.log('DATA TURMA CRIAR ------> ', data);
       const result = await supabase
         .from('turmas')
         .insert({
@@ -83,7 +82,6 @@ function ClassFactory() {
           };
         }),
       };
-      console.log('TURMA ------> ', turma);
       return { turma, error };
     },
     async addStudent(id: string, studentId: string) {
@@ -159,7 +157,6 @@ function ClassFactory() {
         .select(
           `id, unidade, horario, nome, alunosTurmas:alunos_turmas(alunos(*)), professor:perfis(*)`
         );
-      console.log('LISTAGEM DE TURMAS CLASS ------> ', result.data);
       return result;
     },
   };
