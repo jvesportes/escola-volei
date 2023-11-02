@@ -54,6 +54,7 @@ export const turmaColumns: ColumnDef<StudentClassType>[] = [
       return (
         <div className="items-top flex space-x-2">
           <Checkbox id="terms1" checked={isPresent ? true : false} />
+          {/* // Quando clicar dar presenaça */}
           <div className="grid gap-1.5 leading-none">
             <label
               htmlFor="terms1"

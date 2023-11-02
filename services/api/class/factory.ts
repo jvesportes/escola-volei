@@ -75,6 +75,13 @@ function ClassFactory() {
       return { turma, error };
     },
     async addStudent(id: string, studentId: string) {
+      const verifyIfStudentIsAlreadyInClass = await supabase
+        .from('alunos_turmas')
+        .select()
+        .eq('id_aluno', studentId)
+        .eq('id_turma', id);
+      if (verifyIfStudentIsAlreadyInClass?.data!.length > 0)
+        throw new Error('Aluno já está cadastrado na turma');
       const result = await supabase.from('alunos_turmas').insert({
         id_aluno: studentId,
         id_turma: id,

@@ -82,6 +82,7 @@ export const AddAlunoTurma = () => {
     } catch (error) {
       toast({
         title: 'Erro ao adicionar aluno à turma.',
+        description: (error as Error).message,
         variant: 'destructive',
       });
       console.log('[ADICIONAR ALUNO TURMA ERROR]', error);
