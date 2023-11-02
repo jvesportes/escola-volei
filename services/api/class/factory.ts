@@ -23,6 +23,14 @@ function ClassFactory() {
     async delete(id: string) {
       return await supabase.from('turmas').delete().eq('id', id);
     },
+    async listPresences(id: string, studentId: string) {
+      return await supabase
+        .from('presenca_alunos')
+        .select('*')
+        .eq('id_aluno', studentId)
+        .eq('id_turma', id)
+        .order('data_aula', { ascending: false });
+    },
     async get(id: string) {
       const { data, error } = await supabase
         .from('turmas')

@@ -1,26 +1,16 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Aluno,
-  AlunoEspera,
-  AlunoPresenca,
-  AlunoTurma,
-  Turma,
-} from '@/utils/types';
 
-export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
+import { Presence } from '@/utils/types';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
+export const historicoColumns: ColumnDef<Presence>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -42,7 +32,7 @@ export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
   },
 
   {
-    accessorKey: 'date',
+    accessorKey: 'data_aula',
     header: ({ column }) => {
       return (
         <Button
@@ -55,42 +45,17 @@ export const historicoColumns: ColumnDef<AlunoPresenca>[] = [
       );
     },
     cell: ({ row }) => {
-      const date = row.getValue('date') as Date;
+      const date = row.getValue('data_aula') as string;
       console.log(date);
-      return (
-        <>
-          {date.getDay()}/{date.getMonth()}/{date.getFullYear()}
-        </>
-      );
+      return <>{format(new Date(date), 'P', { locale: ptBR })}</>;
     },
   },
   {
-    accessorKey: 'presenca',
+    accessorKey: 'esta_presente',
     header: 'Status',
     cell: ({ row }) => {
-      const presenca = row.getValue('presenca') as boolean;
+      const presenca = row.getValue('esta_presente') as boolean;
       return <>{presenca ? 'Presente' : 'Ausente'}</>;
-    },
-  },
-  {
-    id: 'ações',
-    accessorKey: 'Ações',
-    header: 'Ações',
-    cell: ({ row }) => {
-      return (
-        <div className="items-top flex space-x-2">
-          {/* <Checkbox id="terms1" checked={presenca[0].presenca} /> */}
-          <Checkbox id="terms1" />
-          <div className="grid gap-1.5 leading-none pr-2">
-            <label
-              htmlFor="terms1"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Presença
-            </label>
-          </div>
-        </div>
-      );
     },
   },
 ];

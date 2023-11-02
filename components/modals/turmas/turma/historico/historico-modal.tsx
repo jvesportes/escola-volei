@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -13,36 +12,12 @@ import {
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks/use-modal-store';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { alunos } from '@/utils/types';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
+
 import { Button } from '@/components/ui/button';
-import { ListaEsperaDataTable } from '@/components/tables/turmas/turma/lista-espera/lista-espera-data-table';
-import { ListaEsperaColumns } from '@/components/tables/turmas/turma/lista-espera/lista-espera-columns';
-import { Separator } from '@/components/ui/separator';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { HistoricoDataTable } from '@/components/tables/turmas/turma/historico/historico-data-table';
 import { historicoColumns } from '@/components/tables/turmas/turma/historico/historico-columns';
+import { usePresences } from '@/hooks/student/usePresences';
+import { Presence } from '@/utils/types';
 
 export const HistoricoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -61,11 +36,11 @@ export const HistoricoModal = () => {
         </DialogHeader>
         <div className="flex w-full">
           <div className="flex flex-col w-full items-center">
-            <h3 className="pb-2 w-full">{data?.aluno?.aluno.nome}</h3>
+            <h3 className="pb-2 w-full">{data?.student?.nome}</h3>
             <div className="flex gap-1.5 w-full items-center">
               <HistoricoDataTable
                 columns={historicoColumns}
-                data={data?.aluno?.presenca || []}
+                data={data?.presences as unknown as Presence[]}
               />
             </div>
           </div>

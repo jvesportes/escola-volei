@@ -20,12 +20,16 @@ export interface ClassType {
 export interface StudentClassType extends Student {
   presencas: PresenceType[];
 }
+export interface Presence {
+  data: Date;
+  estaPresente: boolean;
+}
 export interface PresenceType {
   aluno: {
     id: string;
     nome: string;
   };
-  presencas: { data: Date; estaPresente: boolean }[];
+  presencas: Presence[];
 }
 export interface Teacher {
   id?: string;

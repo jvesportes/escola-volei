@@ -6,6 +6,7 @@ import {
   ClassType,
   Pagamento,
   Payment,
+  Presence,
   Professor,
   Student,
   Teacher,
@@ -35,6 +36,7 @@ interface ModalData {
   payment?: Payment;
   teacher?: Teacher;
   turma?: ClassType;
+  presences?: Presence[];
   aluno?: AlunoTurma;
   alunoNormal?: Aluno;
   professor?: Professor;

@@ -59,18 +59,22 @@ export const EditTurmaModal = () => {
     isLoading: isProfessoresLoading,
   } = useProfessor();
 
+  const isModalOpen = isOpen && type === 'editTurma';
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: {
-      nome: data?.turma?.nome!,
-      horario: data?.turma?.horario!,
-      professor: data?.turma?.professor.id!,
-      unidade: data?.turma?.unidade!,
+      nome: data?.turma?.nome || '',
+      horario: data?.turma?.horario || '',
+      professor: data?.turma?.professor ? data?.turma?.professor.id! : '',
+      unidade: data?.turma?.unidade || 'zonasul',
     },
     defaultValues: {
       nome: data?.turma?.nome,
       horario: data?.turma?.horario,
-      professor: data?.turma?.professor.id,
+      professor: data?.turma?.professor ? data?.turma?.professor.id! : '',
       unidade: data?.turma?.unidade,
     },
   });
@@ -102,10 +106,6 @@ export const EditTurmaModal = () => {
       setIsLoading(false);
     }
   }
-
-  const isModalOpen = isOpen && type === 'editTurma';
-
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>

@@ -17,6 +17,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/components/ui/use-toast';
 import { useClass } from '@/hooks/class/useClass';
+import { usePresences } from '@/hooks/student/usePresences';
 import { useStudents } from '@/hooks/student/useStudents';
 import { useModal } from '@/hooks/use-modal-store';
 import { api } from '@/services';
@@ -103,6 +104,10 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       header: 'Ações',
       cell: ({ row }) => {
         const aluno = row.original;
+        const { data: presences, isLoading: isPresencesLoading } = usePresences(
+          turma?.id!,
+          aluno.id!
+        );
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -113,7 +118,10 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <HistoricoAlunoTurmaMenuItem student={aluno} />
+              <HistoricoAlunoTurmaMenuItem
+                presences={presences!}
+                student={aluno}
+              />
               <Separator />
               <ExcluirAlunoTurmaMenuItem student={aluno} turma={turma!} />
             </DropdownMenuContent>
@@ -128,6 +136,10 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       header: 'Ações',
       cell: ({ row }) => {
         const aluno = row.original;
+        const { data: presences, isLoading: isPresencesLoading } = usePresences(
+          turma?.id!,
+          aluno.id!
+        );
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -138,15 +150,16 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <HistoricoAlunoTurmaMenuItem student={aluno} />
+              <HistoricoAlunoTurmaMenuItem
+                presences={presences!}
+                student={aluno}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         );
       },
     });
   }
-  //preciso arrumar esses erros, excluir, e passar historico, depois preciso permitir dar presença(em tempo real mudar, sem f5), depois lista de espera( excluir add, e listar) e também adicionar alunos
-  // adicionar e excluir turma
   return (
     <div className="flex w-full h-full md:px-16 md:py-6 md:gap-12 gap-6 p-4 flex-col overflow-y-scroll pb-32 scroll-smooth">
       <div className="flex flex-col">
