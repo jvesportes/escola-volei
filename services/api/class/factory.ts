@@ -21,7 +21,7 @@ function ClassFactory() {
       // supabase.from('alunos').update(data)
     },
     async delete(id: string) {
-      // implementar
+      return await supabase.from('turmas').delete().eq('id', id);
     },
     async get(id: string) {
       const { data, error } = await supabase

@@ -155,23 +155,43 @@ export function TurmaDataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   className="cursor-pointer"
-                  onClick={() => {
-                    router.push(
-                      `/dashboard/turmas/${
-                        (data[row.id as unknown as number] as { id: string }).id
-                      }`
-                    );
-                  }}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+                  {/* {cell.column.columnDef.id === 'actions' ? null : ()} */}
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <>
+                        {cell.column.columnDef.id === 'actions' ? (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ) : (
+                          <TableCell
+                            key={cell.id}
+                            onClick={() => {
+                              router.push(
+                                `/dashboard/turmas/${
+                                  (
+                                    data[row.id as unknown as number] as {
+                                      id: string;
+                                    }
+                                  ).id
+                                }`
+                              );
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        )}
+                      </>
+                    );
+                  })}
                 </TableRow>
               ))
             ) : (
