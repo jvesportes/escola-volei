@@ -13,9 +13,12 @@ export interface ClassType {
   nome: string;
   professor: Teacher;
   horario: string;
-  alunosTurmas: Student[];
+  alunosTurmas?: StudentClassType[];
   unidade: 'zonasul' | 'zonanorte' | 'zonaleste' | 'zonaoeste';
   presenca?: PresenceType[];
+}
+export interface StudentClassType extends Student {
+  presencas: PresenceType[];
 }
 export interface PresenceType {
   aluno: {

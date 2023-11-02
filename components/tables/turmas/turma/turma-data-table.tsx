@@ -107,6 +107,7 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
             <Button
               size={'sm'}
               onClick={() => {
+                //@ts-ignore
                 onOpen('addAlunoTurma', { turma });
               }}
             >

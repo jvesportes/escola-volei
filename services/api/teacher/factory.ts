@@ -70,7 +70,6 @@ function TeacherFactory() {
           } as TeacherType;
         })
         .filter((user) => user.tipo === 'teacher');
-      console.log(mappedData);
       return { mappedData, error };
     },
   };

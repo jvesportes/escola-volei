@@ -17,34 +17,17 @@ import {
   AlunoPresenca,
   AlunoTurma,
   PresenceType,
+  StudentClassType,
   Turma,
 } from '@/utils/types';
 import { ExcluirAlunoTurmaMenuItem } from './delete-turma-aluno-menu-item';
 import { Separator } from '@/components/ui/separator';
 import { HistoricoAlunoTurmaMenuItem } from './historico-turma-aluno-menu-item';
+import { isEqual, lightFormat } from 'date-fns';
 
-export const turmaColumns: ColumnDef<PresenceType>[] = [
+export const turmaColumns: ColumnDef<StudentClassType>[] = [
   {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllPageRowsSelected()}
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'aluno.nome',
+    accessorKey: 'nome',
     header: ({ column }) => {
       return (
         <Button
@@ -59,15 +42,18 @@ export const turmaColumns: ColumnDef<PresenceType>[] = [
   },
 
   {
-    accessorKey: 'presencas',
+    accessorKey: 'presenca.presencas',
     header: 'Presença',
     cell: ({ row }) => {
-      const presenca: { data: Date; estaPresente: boolean }[] =
-        row.getValue('presencas');
-      console.log(presenca);
+      const studentClass: any = row.original;
+      const isPresent =
+        studentClass.presenca !== undefined &&
+        studentClass.presenca.presencas[0].data ===
+          lightFormat(new Date(), 'yyyy-MM-dd') &&
+        studentClass.presenca.presencas[0].estaPresente;
       return (
         <div className="items-top flex space-x-2">
-          <Checkbox id="terms1" checked={presenca[0].estaPresente} />
+          <Checkbox id="terms1" checked={isPresent ? true : false} />
           <div className="grid gap-1.5 leading-none">
             <label
               htmlFor="terms1"

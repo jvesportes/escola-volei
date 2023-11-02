@@ -1,5 +1,6 @@
 'use client';
 import { GoBackButton } from '@/components/navigation/go-back-button';
+import { DataTable } from '@/components/tables/alunos/data-table';
 import { ExcluirAlunoTurmaMenuItem } from '@/components/tables/turmas/turma/delete-turma-aluno-menu-item';
 import { HistoricoAlunoTurmaMenuItem } from '@/components/tables/turmas/turma/historico-turma-aluno-menu-item';
 import { turmaColumns } from '@/components/tables/turmas/turma/turma-columns';
@@ -17,7 +18,7 @@ import { useClass } from '@/hooks/class/useClass';
 import { useStudents } from '@/hooks/student/useStudents';
 import { useModal } from '@/hooks/use-modal-store';
 import { hasRoleAccess } from '@/utils';
-import { AlunoTurma, Student, turmas } from '@/utils/types';
+import { AlunoTurma, Student, StudentClassType, turmas } from '@/utils/types';
 import { FileText, MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -59,14 +60,9 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <HistoricoAlunoTurmaMenuItem
-                student={aluno.aluno as unknown as Student}
-              />
+              <HistoricoAlunoTurmaMenuItem student={aluno} />
               <Separator />
-              <ExcluirAlunoTurmaMenuItem
-                student={aluno.aluno as unknown as Student}
-                turma={turma!}
-              />
+              <ExcluirAlunoTurmaMenuItem student={aluno} turma={turma!} />
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -89,9 +85,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <HistoricoAlunoTurmaMenuItem
-                student={aluno.aluno as unknown as Student}
-              />
+              <HistoricoAlunoTurmaMenuItem student={aluno} />
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -132,7 +126,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             <div className="flex flex-col md:gap-4 gap-2">
               <SingleTurmaDataTable
                 columns={newTurmaColumns}
-                data={turma?.presenca!}
+                data={turma?.alunosTurmas as unknown as StudentClassType[]}
                 turma={turma!}
               />
             </div>

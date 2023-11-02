@@ -27,7 +27,7 @@ function ClassFactory() {
       const { data, error } = await supabase
         .from('turmas')
         .select(
-          `id, unidade, horario, nome, presenca:presenca_alunos(aluno:alunos(nome, id), data:data_aula, estaPresente:esta_presente)`
+          `id, unidade, horario, nome, presenca:presenca_alunos(aluno:alunos(nome, id), data:data_aula, estaPresente:esta_presente), alunosTurmas:alunos_turmas(alunos(nome, id))`
         )
         .eq('id', id)
         .order('data_aula', {
@@ -61,7 +61,16 @@ function ClassFactory() {
         unidade: data![0].unidade,
         horario: data![0].horario,
         nome: data![0].nome,
-        presenca: presencas,
+        presencas: presencas,
+        alunosTurmas: data![0].alunosTurmas.map((item) => {
+          return {
+            id: item.alunos!.id,
+            nome: item.alunos!.nome,
+            presenca: presencas.find((p) => {
+              return p.aluno.id === item.alunos!.id;
+            }),
+          };
+        }),
       };
       return { turma, error };
     },
