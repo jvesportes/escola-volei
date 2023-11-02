@@ -12,6 +12,7 @@ export interface WaitListStudent {
   nome: string;
   cpf: string;
   email?: string;
+  id_turma?: string;
   telefone?: string;
   id?: string;
 }

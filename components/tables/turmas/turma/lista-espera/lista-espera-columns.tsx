@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { WaitListStudent } from '@/utils/types';
+import { WaitListStudent as WaitListStud } from '@/services/api/class/type';
 import { ExcluirListaEsperaAlunoMenuItem } from './delete-lista-espera-menu-item';
 
 export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
@@ -82,7 +83,9 @@ export const ListaEsperaColumns: ColumnDef<WaitListStudent>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <ExcluirListaEsperaAlunoMenuItem alunoEspera={alunoEspera!} />
+            <ExcluirListaEsperaAlunoMenuItem
+              alunoEspera={alunoEspera as unknown as WaitListStud}
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       );
