@@ -32,7 +32,7 @@ export const NavigationTabbar = () => {
         <HomeIcon className="h-6 w-6" />
         <span className="text-xs not-italic font-medium leading-5">Início</span>
       </div>
-      {hasRoleAccess('admin', user) && (
+      {hasRoleAccess() && (
         <div
           onClick={() => {
             router.push('/dashboard/alunos');
@@ -65,7 +65,7 @@ export const NavigationTabbar = () => {
         <Users className="h-6 w-6" />
         <span className="text-xs not-italic font-medium leading-5">Turmas</span>
       </div>
-      {hasRoleAccess('admin', user) && (
+      {hasRoleAccess() && (
         <div
           onClick={() => {
             router.push('/dashboard/professores');

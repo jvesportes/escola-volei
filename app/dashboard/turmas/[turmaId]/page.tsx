@@ -21,10 +21,11 @@ import { usePresences } from '@/hooks/student/usePresences';
 import { useStudents } from '@/hooks/student/useStudents';
 import { useModal } from '@/hooks/use-modal-store';
 import { api } from '@/services';
-import { hasRoleAccess } from '@/utils';
+import { hasRoleAccess, hasUser } from '@/utils';
 import { AlunoTurma, Student, StudentClassType, turmas } from '@/utils/types';
 import { lightFormat } from 'date-fns';
 import { FileText, MoreHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface TurmaPageProps {
@@ -36,6 +37,8 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   const { turmaId } = params;
   const { data, isOpen, onClose, onOpen, type } = useModal();
   const { data: turma, error, isLoading } = useClass(turmaId);
+  const router = useRouter();
+  if (!hasUser()) router.push('/');
 
   const [isMounted, setIsMounted] = useState(false);
   const { toast } = useToast();
@@ -97,7 +100,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       );
     },
   });
-  if (hasRoleAccess('admin', user)) {
+  if (hasRoleAccess()) {
     newTurmaColumns.push({
       id: 'ações',
       accessorKey: 'Ações',
@@ -176,7 +179,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
           <div className="flex flex-col md:gap-6 gap-4 w-full">
             <div className="flex flex-row justify-between">
               <h1>{turma?.nome}</h1>
-              {hasRoleAccess('admin', user) && (
+              {hasRoleAccess() && (
                 <Button
                   size={'sm'}
                   variant={'secondary'}

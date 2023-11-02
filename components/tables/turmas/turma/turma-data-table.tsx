@@ -103,7 +103,7 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
             <ArrowLeft className="text-slate-900 w-5 h-5" />
             <span className="md:flex hidden">Voltar</span>
           </Button>
-          {hasRoleAccess('admin', user) && (
+          {hasRoleAccess() && (
             <Button
               size={'sm'}
               onClick={() => {

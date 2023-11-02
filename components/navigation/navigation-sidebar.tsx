@@ -93,7 +93,7 @@ export const NavigationSidebar = () => {
             </span>
           )}
         </a>
-        {hasRoleAccess('admin', user) && (
+        {hasRoleAccess() && (
           <a
             onClick={() => {
               router.push('/dashboard/alunos');
@@ -147,7 +147,7 @@ export const NavigationSidebar = () => {
             </span>
           )}
         </a>
-        {hasRoleAccess('admin', user) && (
+        {hasRoleAccess() && (
           <a
             onClick={() => {
               router.push('/dashboard/professores');

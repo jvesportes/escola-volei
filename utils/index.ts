@@ -1,1 +1,2 @@
-export * from './hasRoleAccess'
+export * from './hasRoleAccess';
+export * from './hasUser';

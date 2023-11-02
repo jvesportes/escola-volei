@@ -14,15 +14,15 @@ import {
 import { Database } from '@/lib/database.types';
 import { useToast } from '../ui/use-toast';
 import { supabase } from '@/lib';
+import { hasUser } from '@/utils';
 
 export const LoginPage = () => {
-  // const supabase = createClientComponentClient<Database>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-
+  if (hasUser()) router.push('/dashboard');
   const handleSignIn = async () => {
     try {
       setIsLoading(true);
@@ -39,13 +39,6 @@ export const LoginPage = () => {
         });
         return;
       }
-
-      const tokens = {
-        access_token: result.data?.session?.access_token,
-        refresh_token: result.data?.session?.refresh_token,
-      };
-
-      localStorage.setItem('@tokens', JSON.stringify(tokens));
       localStorage.setItem('@user', JSON.stringify(result.data?.user));
 
       router.push('/dashboard');

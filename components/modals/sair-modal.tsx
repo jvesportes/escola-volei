@@ -34,6 +34,7 @@ export const SairModal = () => {
       variant: 'success',
     });
     router.push('/');
+    window.localStorage.removeItem('@user');
   };
 
   return (

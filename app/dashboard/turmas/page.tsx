@@ -14,16 +14,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useClasses } from '@/hooks';
-import { hasRoleAccess } from '@/utils';
+import { hasRoleAccess, hasUser } from '@/utils';
 import { ClassType, Turma } from '@/utils/types';
 import { MoreHorizontal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const TurmasPage = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+  if (!hasUser()) router.push('/');
 
   const { data: turmas, isLoading, error } = useClasses();
-  console.log(turmas);
 
   useEffect(() => {
     setIsMounted(true);
@@ -34,7 +36,7 @@ const TurmasPage = () => {
   }
   const user = {};
   const newTurmasColumns = [...turmasColumns];
-  if (hasRoleAccess('admin', user)) {
+  if (hasRoleAccess()) {
     newTurmasColumns.push({
       id: 'actions',
       header: 'Ações',

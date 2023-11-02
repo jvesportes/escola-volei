@@ -89,7 +89,7 @@ export function TurmaDataTable<TData, TValue>({
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
-          {hasRoleAccess('admin', user) && (
+          {hasRoleAccess() && (
             <Button
               size={'sm'}
               onClick={() => {
