@@ -38,15 +38,14 @@ import {
 import { useForm } from 'react-hook-form';
 import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
+import { useProfessor } from '@/hooks/useProfessor';
 
 const formSchema = z.object({
   nome: z.string().min(5, {
     message: 'O nome deve ter pelo menos 5 caracteres',
   }),
-  horario: z.string().min(5, {
-    message: 'O telefone deve ter pelo menos 5 caracteres',
-  }),
-  professor: z.enum(['joao', 'joao', 'julio']),
+  horario: z.string(),
+  professor: z.string(),
   unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
 });
 
@@ -54,12 +53,25 @@ export const EditTurmaModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
   const { toast } = useToast();
+  const {
+    data: professores,
+    error,
+    isLoading: isProfessoresLoading,
+  } = useProfessor();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    values: {
+      nome: data?.turma?.nome!,
+      horario: data?.turma?.horario!,
+      professor: data?.turma?.professor.id!,
+      unidade: data?.turma?.unidade!,
+    },
     defaultValues: {
       nome: data?.turma?.nome,
       horario: data?.turma?.horario,
+      professor: data?.turma?.professor.id,
+      unidade: data?.turma?.unidade,
     },
   });
 
@@ -67,14 +79,15 @@ export const EditTurmaModal = () => {
     try {
       setIsLoading(true);
 
-      //Falta Nome da turma
-      await api.class.edit({
+      const result = await api.class.edit(data?.turma?.id!, {
         horario: values.horario,
-        id_professor: '9e63818a-1684-426d-b471-1e6df3cb36a8',
+        id_professor: values.professor,
         unidade: values.unidade,
+        nome: values.nome,
       });
+      if (result.error) throw new Error('Erro ao editar turma');
       form.reset();
-      router.refresh();
+      window.location.reload();
       toast({
         title: 'Sucesso ao editar turma!',
         variant: 'success',
@@ -124,36 +137,45 @@ export const EditTurmaModal = () => {
                     )}
                   />
                 </div>
-                <div className="grid w-full  items-center gap-1.5">
-                  <FormField
-                    control={form.control}
-                    name="professor"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Professor</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <SelectTrigger>
-                              <SelectValue
-                                placeholder="Selecione um professor"
-                                className="text-slate-500"
-                              />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="joao">João</SelectItem>
-                              <SelectItem value="julio">Júlio</SelectItem>
-                              <SelectItem value="cesar">César</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                {isProfessoresLoading ? (
+                  <></>
+                ) : (
+                  <div className="grid w-full  items-center gap-1.5">
+                    <FormField
+                      control={form.control}
+                      name="professor"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Professor</FormLabel>
+                          <FormControl>
+                            <Select
+                              {...field}
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger>
+                                <SelectValue
+                                  placeholder="Selecione um professor"
+                                  className="text-slate-500"
+                                />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {professores.map((professor) => (
+                                  <SelectItem
+                                    value={professor.id!}
+                                    key={professor.id!}
+                                  >
+                                    {professor.nome}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
                 <div className="grid w-full  items-center gap-1.5">
                   <FormField
                     control={form.control}
@@ -166,6 +188,7 @@ export const EditTurmaModal = () => {
                             placeholder="Horário"
                             {...field}
                             defaultValue={data?.turma?.horario}
+                            type="time"
                           />
                         </FormControl>
                       </FormItem>
@@ -217,7 +240,7 @@ export const EditTurmaModal = () => {
                   Cancelar
                 </Button>
                 <Button disabled={isLoading} type="submit">
-                  {!isLoading ? 'Adicionar' : 'Adicionando...'}
+                  {!isLoading ? 'Editar' : 'Editando...'}
                 </Button>
               </div>
             </DialogFooter>

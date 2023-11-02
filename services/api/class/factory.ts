@@ -17,8 +17,8 @@ function ClassFactory() {
 
       return result;
     },
-    async edit(data: Class.Update) {
-      // supabase.from('alunos').update(data)
+    async edit(turmaId: string, data: Class.Update) {
+      return await supabase.from('turmas').update(data).eq('id', turmaId);
     },
     async delete(id: string) {
       return await supabase.from('turmas').delete().eq('id', id);
