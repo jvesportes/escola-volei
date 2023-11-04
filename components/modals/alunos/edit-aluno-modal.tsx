@@ -94,7 +94,7 @@ export const EditAlunoModal = () => {
       //refetch aluno.
       form.reset();
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao editar aluno!',
         variant: 'success',

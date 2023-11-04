@@ -63,7 +63,7 @@ export const AddAlunoTurma = () => {
       const result = await api.class.addStudent(data?.turma?.id!, values.aluno);
       if (result.error) throw new Error('Erro ao adicionar aluno à turma.');
       form.reset();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao adicionar aluno à turma!',
         variant: 'success',

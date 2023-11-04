@@ -72,7 +72,7 @@ export const AddTurmaModal = () => {
       });
       if (result.error) throw new Error('Erro ao criar turma');
       form.reset();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao criar turma!',
         variant: 'success',

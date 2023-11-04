@@ -86,7 +86,7 @@ export const EditTurmaModal = () => {
       });
       if (result.error) throw new Error('Erro ao editar turma');
       form.reset();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao editar turma!',
         variant: 'success',

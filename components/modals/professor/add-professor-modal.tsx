@@ -73,7 +73,7 @@ export const AddProfessorModal = () => {
       if (result.error) throw new Error('Erro ao criar professor.');
       form.reset();
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao criar professor!',
         variant: 'success',

@@ -30,7 +30,7 @@ export const ExcluirAlunoModal = () => {
       setIsLoading(true);
       await api.student.delete(data?.student?.id!);
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao excluir aluno!',
         variant: 'success',

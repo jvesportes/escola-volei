@@ -75,7 +75,7 @@ export const EditProfessorModal = () => {
       });
       if (result.error) throw new Error('Erro ao criar professor.');
       form.reset();
-      window.location.reload();
+      location.reload();
 
       toast({
         title: 'Sucesso ao criar professor!',

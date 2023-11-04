@@ -67,7 +67,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
             studentClass.id
           );
           if (result.error) throw new Error('Erro ao dar presença ao aluno.');
-          window.location.reload();
+          location.reload();
         } catch (error) {
           toast({
             title: 'Erro ao dar presença ao aluno.',

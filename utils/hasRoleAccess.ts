@@ -1,6 +1,6 @@
 export function hasRoleAccess() {
   const user = JSON.parse(
-    window.localStorage.getItem('@user') || '{}'
+    localStorage.getItem('@user') || '{}'
   ) as UserType;
   return user?.user_metadata?.tipo === 'admin';
 }

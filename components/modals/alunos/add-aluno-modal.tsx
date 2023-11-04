@@ -93,7 +93,7 @@ export const AddAlunoModal = () => {
       }
       const result = await api.student.create(aluno);
       if (result) form.reset();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao criar aluno!',
         variant: 'success',

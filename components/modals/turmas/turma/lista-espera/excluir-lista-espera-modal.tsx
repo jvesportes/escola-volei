@@ -33,7 +33,7 @@ export const ExcluirAlunoListaEsperaModal = () => {
       if (result.error)
         throw new Error('Erro ao excluir aluno da lista de espera.');
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao excluir aluno da lista de espera.',
         variant: 'success',

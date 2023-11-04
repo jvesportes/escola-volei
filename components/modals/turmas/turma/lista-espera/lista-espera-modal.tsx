@@ -72,7 +72,7 @@ export const ListaEsperaModal = () => {
       });
       if (result.error)
         throw new Error('Erro ao adicionar aluno na lista de espera.');
-      window.location.reload();
+      location.reload();
       form.reset();
       toast({
         title: 'Sucesso ao adicionar aluno na lista de espera!',

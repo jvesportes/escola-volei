@@ -29,7 +29,7 @@ export const ExcluirPagamentoAlunoModal = () => {
       setIsLoading(true);
       await api.student.deletePayment(data?.payment?.id!);
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao excluir pagamento do aluno!',
         variant: 'success',

@@ -33,7 +33,7 @@ export const ExcluirAlunoTurmaModal = () => {
       );
       if (result.error) throw new Error('Erro ao excluir aluno da turma.');
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao excluir aluno da turma!',
         variant: 'success',

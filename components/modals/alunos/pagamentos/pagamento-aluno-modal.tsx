@@ -76,7 +76,7 @@ export const PagamentoAlunoModal = () => {
       });
       form.reset();
       router.refresh();
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao adicionar pagamento do aluno!',
         variant: 'success',

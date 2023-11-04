@@ -27,7 +27,7 @@ export const ExcluirTurmaModal = () => {
       setIsLoading(true);
       const result = await api.class.delete(data.turma?.id!);
       if (result.error) throw new Error('Erro ao excluir turma.');
-      window.location.reload();
+      location.reload();
       toast({
         title: 'Sucesso ao excluir turma!',
         variant: 'success',

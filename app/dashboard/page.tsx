@@ -34,7 +34,7 @@ const DashboardPage = () => {
               {
                 (
                   JSON.parse(
-                    window.localStorage.getItem('@user') || '{}'
+                    localStorage.getItem('@user') || '{}'
                   ) as UserType
                 ).user_metadata.nome
               }
