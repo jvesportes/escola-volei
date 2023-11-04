@@ -5,7 +5,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useToast } from '../ui/use-toast';
@@ -18,6 +18,17 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+
+  const [isMounted, setIsMounted] = useState(false);
+  if (typeof window === 'undefined') return null;
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
   if (hasUser()) router.push('/dashboard');
   const handleSignIn = async () => {
     try {
