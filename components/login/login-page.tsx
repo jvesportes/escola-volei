@@ -41,7 +41,7 @@ export const LoginPage = () => {
       if (result.error) {
         toast({
           title: 'Erro ao fazer login',
-          description: result.error.message,
+          description: "Credenciais inválidas. Tente novamente.",
           variant: 'destructive',
         });
         return;
