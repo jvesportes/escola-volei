@@ -86,7 +86,6 @@ function StudentFactory() {
           tipo: payment.plano,
           data_pagamento: payment.dataPagamento.toDateString(),
           vigencia: payment.vigencia.toDateString(),
-          preco: payment.preco,
         })
         .select();
       // implementar

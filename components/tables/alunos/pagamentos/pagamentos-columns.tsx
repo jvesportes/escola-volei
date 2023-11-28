@@ -18,7 +18,7 @@ import { formatToDate } from 'brazilian-values';
 export const pagamentosColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: 'dataPagamento',
-    header: 'Data de Pagamento',
+    header: 'Início do Contrato',
     cell: ({ row }) => {
       const pagamentoDate: Date = new Date(row.getValue('dataPagamento'));
 
@@ -33,7 +33,7 @@ export const pagamentosColumns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Data de Vencimento
+          Vencimento
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -45,10 +45,6 @@ export const pagamentosColumns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: 'valor',
-    header: 'Valor',
-  },
-  {
     accessorKey: 'plano',
     header: 'Plano',
   },
@@ -57,8 +53,10 @@ export const pagamentosColumns: ColumnDef<Payment>[] = [
     header: 'Situação',
     cell: ({ row }) => {
       const vigencia: string = row.getValue('vigencia');
+      const pagamentoDate: Date = new Date(row.getValue('dataPagamento'));
 
-      const situacao = new Date(vigencia) < new Date() ? 'Atrasado' : 'Em dia';
+      const situacao =
+        new Date(vigencia) < pagamentoDate ? 'Atrasado' : 'Em dia';
       return (
         <Badge
           className="w-20 justify-center"

@@ -31,15 +31,15 @@ export const ExcluirPagamentoAlunoModal = () => {
       router.refresh();
       location.reload();
       toast({
-        title: 'Sucesso ao excluir pagamento do aluno!',
+        title: 'Sucesso ao excluir contrato do aluno!',
         variant: 'success',
       });
     } catch (error) {
       toast({
-        title: 'Erro ao excluir pagamento do aluno.',
+        title: 'Erro ao excluir contrato do aluno.',
         variant: 'destructive',
       });
-      console.log('[EXCLUIR PAGAMENTO DO ALUNO ERROR]', error);
+      console.log('[EXCLUIR CONTRATO DO ALUNO ERROR]', error);
     } finally {
       setIsLoading(false);
     }
@@ -51,8 +51,8 @@ export const ExcluirPagamentoAlunoModal = () => {
         <AlertDialogHeader>
           <AlertDialogTitle>Você tem absoluta certeza?</AlertDialogTitle>
           <AlertDialogDescription>
-            Você tem absoluta certeza? Que deseja apagar este pagamento, ele
-            será excluido permanentemente dos nossos servidores.
+            Você tem absoluta certeza? Que deseja apagar este contrato, ele será
+            excluido permanentemente dos nossos servidores.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

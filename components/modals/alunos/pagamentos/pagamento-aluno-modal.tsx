@@ -51,7 +51,6 @@ import { calcularDataVencimento } from '@/utils/calcularDataVencimento';
 
 const formSchema = z.object({
   datePagamento: z.date(),
-  valor: z.string(),
   plano: z.enum(['mensal', 'trimestral', 'semestral', 'anual']),
 });
 
@@ -70,7 +69,6 @@ export const PagamentoAlunoModal = () => {
       const vigencia = calcularDataVencimento(values.plano);
       await api.student.addPayment(data?.student?.id!, {
         dataPagamento: values.datePagamento,
-        preco: Number.parseInt(values.valor),
         plano: values.plano,
         vigencia: vigencia!,
       });
@@ -78,15 +76,15 @@ export const PagamentoAlunoModal = () => {
       router.refresh();
       location.reload();
       toast({
-        title: 'Sucesso ao adicionar pagamento do aluno!',
+        title: 'Sucesso ao adicionar contrato do aluno!',
         variant: 'success',
       });
     } catch (error) {
       toast({
-        title: 'Erro ao adicionar pagamento do aluno.',
+        title: 'Erro ao adicionar contrato do aluno.',
         variant: 'destructive',
       });
-      console.log('[CRIAR PAGAMENTO ALUNO ERRO]', error);
+      console.log('[CRIAR CONTRATO ALUNO ERRO]', error);
     } finally {
       setIsLoading(false);
     }
@@ -102,7 +100,7 @@ export const PagamentoAlunoModal = () => {
         <div className="flex flex-col md:w-full box-border">
           <DialogHeader className="justify-center items-center md:py-6 py-4 w-full">
             <DialogTitle className="text-slate-900 font-extrabold md:text-5xl text-2xl">
-              Informações De Pagamentos
+              Informações De Contratos
             </DialogTitle>
           </DialogHeader>
           <div className="w-100">
@@ -121,7 +119,7 @@ export const PagamentoAlunoModal = () => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-col md:gap-6 gap-4">
                 <div className="flex flex-row gap-2 items-center">
-                  <h3>Adicionar Pagamento</h3>
+                  <h3>Adicionar Contrato</h3>
                   <span className="font-semibold text-slate-900 text-xs uppercase">
                     OPCIONAL
                   </span>
@@ -133,7 +131,7 @@ export const PagamentoAlunoModal = () => {
                       name="datePagamento"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>Data de Pagamento</FormLabel>
+                          <FormLabel>Início do Contrato</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
@@ -199,20 +197,6 @@ export const PagamentoAlunoModal = () => {
                                 <SelectItem value="anual">Anual</SelectItem>
                               </SelectContent>
                             </Select>
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="grid w-full  items-center gap-1.5">
-                    <FormField
-                      control={form.control}
-                      name="valor"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Valor</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Valor" {...field} />
                           </FormControl>
                         </FormItem>
                       )}

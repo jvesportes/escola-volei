@@ -61,7 +61,7 @@ export const columns: ColumnDef<Student>[] = [
   },
   {
     accessorKey: 'pagamentos',
-    header: 'Pagamento',
+    header: 'Contrato',
     cell: ({ row }) => {
       const payment: Payment[] = row.getValue('pagamentos');
       const aluno = row.original;

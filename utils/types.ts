@@ -59,7 +59,6 @@ export interface Payment {
   id?: string;
   dataPagamento: Date;
   vigencia: Date;
-  preco: number;
   plano: 'mensal' | 'trimestral' | 'semestral' | 'anual';
 }
 
