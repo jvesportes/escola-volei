@@ -1,6 +1,7 @@
 import { supabase } from '@/lib';
+import { Payment } from '@/utils/types';
+
 import * as Student from './type';
-import { Payment, Responsable, Student as StudentType } from '@/utils/types';
 
 function StudentFactory() {
   return {
@@ -114,6 +115,10 @@ function StudentFactory() {
         return { data: { ...data[0], responsavel: responsavel![0] }, error };
       }
       return { data: { ...data[0] }, error };
+    },
+    async addStudentsCSV(data: string) {
+      // implementar
+      return { data: {}, error: null };
     },
     async list() {
       // Expected pattern:

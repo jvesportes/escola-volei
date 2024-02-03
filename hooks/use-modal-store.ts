@@ -1,8 +1,8 @@
+import { create } from 'zustand';
+
 import { WaitListStudent } from '@/services/api/class/type';
 import {
   Aluno,
-  AlunoEspera,
-  AlunoPresenca,
   AlunoTurma,
   ClassType,
   Pagamento,
@@ -11,11 +11,11 @@ import {
   Professor,
   Student,
   Teacher,
-  Turma,
 } from '@/utils/types';
-import { create } from 'zustand';
+
 export type ModalType =
   | 'addAluno'
+  | 'addAlunos'
   | 'editAluno'
   | 'excluirAluno'
   | 'addTurma'
