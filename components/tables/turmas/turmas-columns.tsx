@@ -82,10 +82,9 @@ export const turmasColumns: ColumnDef<ClassType>[] = [
     cell: ({ row }) => {
       const unidade: string = row.getValue('unidade');
 
-      if (unidade === 'zonasul') return <>{'Zona Sul'}</>;
-      if (unidade === 'zonanorte') return <>{'Zona Norte'}</>;
-      if (unidade === 'zonaoeste') return <>{'Zona Oeste'}</>;
-      if (unidade === 'zonaleste') return <>{'Zona Leste'}</>;
+      if (unidade === 'asasul') return <>{'Asa Sul'}</>;
+      if (unidade === 'asanorte') return <>{'Asa Norte'}</>;
+      if (unidade === 'parkway') return <>{'Park Way'}</>;
     },
   },
 ];

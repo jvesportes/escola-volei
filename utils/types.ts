@@ -22,7 +22,7 @@ export interface ClassType {
   professor: Teacher;
   horario: string;
   alunosTurmas?: StudentClassType[];
-  unidade: 'zonasul' | 'zonanorte' | 'zonaleste' | 'zonaoeste';
+  unidade: 'asasul' | 'asanorte' | 'parkway';
   presenca?: PresenceType[];
   listaEspera?: WaitListStudent[];
 }

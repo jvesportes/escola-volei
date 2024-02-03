@@ -41,7 +41,7 @@ const formSchema = z.object({
   }),
   horario: z.string(),
   professor: z.string(),
-  unidade: z.enum(['zonasul', 'zonanorte', 'zonaoeste', 'zonaleste']),
+  unidade: z.enum(['asasul', 'asanorte', 'parkway']),
 });
 
 export const AddTurmaModal = () => {
@@ -192,15 +192,12 @@ export const AddTurmaModal = () => {
                               />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="zonasul">Zona Sul</SelectItem>
-                              <SelectItem value="zonaleste">
-                                Zona Leste
+                              <SelectItem value="asasul">Asa Sul</SelectItem>
+                              <SelectItem value="asanorte">
+                                Asa Norte
                               </SelectItem>
-                              <SelectItem value="zonanorte">
-                                Zona Norte
-                              </SelectItem>
-                              <SelectItem value="zonaoeste">
-                                Zona Oeste
+                              <SelectItem value="parkway">
+                                Park Way
                               </SelectItem>
                             </SelectContent>
                           </Select>
