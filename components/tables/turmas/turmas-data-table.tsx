@@ -36,6 +36,8 @@ import { useModal } from '@/hooks/use-modal-store';
 import { useRouter } from 'next/navigation';
 import { hasRoleAccess } from '@/utils';
 
+import csvDownload from 'json-to-csv-export';
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -73,6 +75,21 @@ export function TurmaDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
+
+  function downloadCSV() {
+    const newData = data.map(item => {
+      const professor = item['professor']['nome'];
+      return {
+        ...item,
+        professor
+      }
+    })
+    csvDownload({
+      data: newData,
+      filename: 'turmas.csv',
+    });
+  };
+
 
   return (
     <div>
@@ -125,6 +142,9 @@ export function TurmaDataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="secondary" onClick={downloadCSV}>
+            <span className="md:flex hidden">Exportar</span>
+          </Button>
         </div>
       </div>
 

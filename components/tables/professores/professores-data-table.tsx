@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Settings, UserPlus } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
+import csvDownload from "json-to-csv-export";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -70,6 +71,15 @@ export function ProfessoresDataTable<TData, TValue>({
     },
   });
   const { onOpen } = useModal();
+
+  function downloadCSV() {
+    // console.log(table.getRowModel().rows)
+    csvDownload({
+      data,
+      // data: table.getRowModel().rows.map((item) => item.getVisibleCells()),
+      filename: 'professores.csv',
+    })
+  }
 
   return (
     <div>
@@ -120,6 +130,9 @@ export function ProfessoresDataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="secondary" onClick={downloadCSV}>
+              <span className="md:flex hidden">Exportar</span>
+          </Button>
         </div>
       </div>
 

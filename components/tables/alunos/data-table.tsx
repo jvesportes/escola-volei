@@ -38,6 +38,9 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 
+import csvDownload from 'json-to-csv-export';
+
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -74,6 +77,15 @@ export function DataTable<TData, TValue>({
     },
   });
   const { onOpen } = useModal();
+
+  function downloadCSV() {
+    // console.log(table.getRowModel().rows)
+    csvDownload({
+      data,
+      // data: table.getRowModel().rows.map((item) => item.getVisibleCells()),
+      filename: 'alunos.csv',
+    })
+  }
 
   return (
     <div>
@@ -134,6 +146,9 @@ export function DataTable<TData, TValue>({
                   })}
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button variant="secondary" onClick={downloadCSV}>
+              <span className="md:flex hidden">Exportar</span>
+            </Button>
           </div>
         </div>
       </div>

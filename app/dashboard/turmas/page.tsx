@@ -25,17 +25,16 @@ const TurmasPage = () => {
   const router = useRouter();
   if (!hasUser()) router.push('/');
 
-  const { data: turmas, isLoading, error } = useClasses();
+  const { data: turmas, isLoading } = useClasses();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
-    return null;
-  }
-  const user = {};
+  if (!isMounted) return null;
+
   const newTurmasColumns = [...turmasColumns];
+
   if (hasRoleAccess()) {
     newTurmasColumns.push({
       id: 'actions',
@@ -61,6 +60,8 @@ const TurmasPage = () => {
       },
     });
   }
+
+
   return (
     <div className="flex w-full h-full md:px-16 md:py-6 md:gap-12 gap-6 p-4 flex-col overflow-y-scroll pb-32 scroll-smooth">
       <div className="flex flex-col">

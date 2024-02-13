@@ -41,25 +41,26 @@ export const AddAlunosModal = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      setIsLoading(true);
-      const mocked = '';
-      const result = await api.student.addStudentsCSV(mocked);
-      if (result) form.reset();
-      location.reload();
-      toast({
-        title: 'Sucesso ao adicionar alunos!',
-        variant: 'success',
-      });
-    } catch (error) {
-      toast({
-        title: 'Erro ao adicionar alunos.',
-        variant: 'destructive',
-      });
-      console.log('[CRIAR ALUNOS ERRO]', error);
-    } finally {
-      setIsLoading(false);
-    }
+    console.log(values)
+    // try {
+    //   setIsLoading(true);
+    //   const mocked = '';
+    //   const result = await api.student.addStudentsCSV(mocked);
+    //   if (result) form.reset();
+    //   location.reload();
+    //   toast({
+    //     title: 'Sucesso ao adicionar alunos!',
+    //     variant: 'success',
+    //   });
+    // } catch (error) {
+    //   toast({
+    //     title: 'Erro ao adicionar alunos.',
+    //     variant: 'destructive',
+    //   });
+    //   console.log('[CRIAR ALUNOS ERRO]', error);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   }
 
   const isModalOpen = isOpen && type === 'addAlunos';
