@@ -1,3 +1,16 @@
+export type CSVtoJson = {
+  nome: string;
+  telefone: string;
+  telefoneResponsavel: string;
+  plano: string;
+  cpf: string;
+  email: string;
+  tem_responsavel: string | boolean;
+  cpfResponsavel?: string;
+  emailResponsavel?: string;
+  nomeResponsavel?: string;
+};
+
 export interface Student {
   id: string;
   nome: string;

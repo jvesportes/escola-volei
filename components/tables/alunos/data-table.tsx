@@ -107,7 +107,8 @@ export function DataTable<TData, TValue>({
               onOpen('addAlunos');
             }}
           >
-            <File className="text-white w-5 h-5" />
+            <File className="text-white w-5 h-5 md:hidden" />
+            <span className="md:flex hidden">Importar</span>
           </Button>
           <div className="flex flex-row gap-2 items-center">
             <Button

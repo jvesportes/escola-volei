@@ -13,6 +13,7 @@ import {
 import { useToast } from '@/components/ui/use-toast';
 import { useModal } from '@/hooks/use-modal-store';
 import { api } from '@/services';
+import { CSVtoJson } from '@/utils/types';
 
 export const AddAlunosModal = () => {
   const { isOpen, onClose, type } = useModal();
@@ -25,7 +26,8 @@ export const AddAlunosModal = () => {
     console.log(jsonValue);
     try {
       setIsLoading(true);
-      const result = await api.student.addStudentsCSV(jsonValue as string);
+      const result = await api.student.addStudentsCSV(jsonValue as CSVtoJson[]);
+      if (result.error) throw new Error('Erro ao adicionar alunos');
       location.reload();
       toast({
         title: 'Sucesso ao adicionar alunos!',
@@ -59,6 +61,14 @@ export const AddAlunosModal = () => {
             <span className="text-center">Arquivo carregado com sucesso!</span>
             <Button onClick={onSubmit} disabled={isLoading}>
               {isLoading ? 'Carregando...' : 'Adicionar alunos'}
+            </Button>
+            <Button
+              onClick={() => {
+                location.reload();
+              }}
+              variant={'secondary'}
+            >
+              Mudar Arquivo
             </Button>
           </div>
         ) : (

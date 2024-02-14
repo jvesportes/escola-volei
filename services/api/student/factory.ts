@@ -1,5 +1,9 @@
 import { supabase } from '@/lib';
-import { Payment } from '@/utils/types';
+import { Database } from '@/lib/database.types';
+import {
+  CSVtoJson,
+  Payment,
+} from '@/utils/types';
 
 import * as Student from './type';
 
@@ -116,8 +120,49 @@ function StudentFactory() {
       }
       return { data: { ...data[0] }, error };
     },
-    async addStudentsCSV(data: string) {
-      // implementar
+    async addStudentsCSV(data: CSVtoJson[]) {
+      const filteredData = data.filter(
+        (aluno) =>
+          aluno.cpf !== '' &&
+          aluno.nome !== '' &&
+          aluno.email !== '' &&
+          aluno.plano !== '' &&
+          aluno.telefone !== ''
+      );
+      filteredData.map(async (aluno) => {
+        const stringToBoolean = aluno.tem_responsavel === 'true';
+        console.log(stringToBoolean, aluno.tem_responsavel);
+        const newStudent: Student.Insert = stringToBoolean
+          ? {
+              cpf: aluno.cpf,
+              email: aluno.email,
+              nome: aluno.nome,
+              plano: aluno.plano as
+                | Database['public']['Enums']['planos']
+                | null,
+              telefone: aluno.telefone,
+              tem_responsavel: true,
+              id_responsavel: '',
+              responsavel: {
+                cpf: aluno.cpfResponsavel as string,
+                email: aluno.emailResponsavel,
+                nome: aluno.nomeResponsavel as string,
+                telefone: aluno.telefoneResponsavel,
+              },
+            }
+          : {
+              cpf: aluno.cpf,
+              email: aluno.email,
+              nome: aluno.nome,
+              plano: aluno.plano as
+                | Database['public']['Enums']['planos']
+                | null,
+              telefone: aluno.telefone as string,
+              tem_responsavel: false,
+            };
+        await this.create(newStudent);
+      });
+      console.log(filteredData);
       return { data: {}, error: null };
     },
     async list() {
