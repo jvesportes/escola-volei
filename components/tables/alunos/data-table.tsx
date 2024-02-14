@@ -2,7 +2,9 @@
 
 import * as React from 'react';
 
+import csvDownload from 'json-to-csv-export';
 import {
+  Download,
   File,
   Settings,
   UserPlus,
@@ -37,9 +39,6 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-
-import csvDownload from 'json-to-csv-export';
-
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -84,7 +83,7 @@ export function DataTable<TData, TValue>({
       data,
       // data: table.getRowModel().rows.map((item) => item.getVisibleCells()),
       filename: 'alunos.csv',
-    })
+    });
   }
 
   return (
@@ -148,6 +147,7 @@ export function DataTable<TData, TValue>({
             </DropdownMenu>
             <Button variant="secondary" onClick={downloadCSV}>
               <span className="md:flex hidden">Exportar</span>
+              <Download className="text-black md:hidden w-5 h-5" />
             </Button>
           </div>
         </div>

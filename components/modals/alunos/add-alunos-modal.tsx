@@ -2,65 +2,44 @@
 
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
 import { FileUpload } from '@/components/file-upload';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from '@/components/ui/form';
 import { useToast } from '@/components/ui/use-toast';
 import { useModal } from '@/hooks/use-modal-store';
 import { api } from '@/services';
-import { zodResolver } from '@hookform/resolvers/zod';
-
-const formSchema = z.object({
-  fileUrl: z.string(),
-});
 
 export const AddAlunosModal = () => {
-  const { isOpen, onClose, type, data } = useModal();
-  const router = useRouter();
+  const { isOpen, onClose, type } = useModal();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fileUrl: '',
-    },
-  });
+  const [jsonValue, setJsonValue] = useState<unknown>();
+  const [isFileLoading, setFileLoading] = useState(false);
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    // try {
-    //   setIsLoading(true);
-    //   const mocked = '';
-    //   const result = await api.student.addStudentsCSV(mocked);
-    //   if (result) form.reset();
-    //   location.reload();
-    //   toast({
-    //     title: 'Sucesso ao adicionar alunos!',
-    //     variant: 'success',
-    //   });
-    // } catch (error) {
-    //   toast({
-    //     title: 'Erro ao adicionar alunos.',
-    //     variant: 'destructive',
-    //   });
-    //   console.log('[CRIAR ALUNOS ERRO]', error);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+  async function onSubmit() {
+    console.log(jsonValue);
+    try {
+      setIsLoading(true);
+      const result = await api.student.addStudentsCSV(jsonValue as string);
+      location.reload();
+      toast({
+        title: 'Sucesso ao adicionar alunos!',
+        variant: 'success',
+      });
+    } catch (error) {
+      toast({
+        title: 'Erro ao adicionar alunos.',
+        variant: 'destructive',
+      });
+      console.log('[CRIAR ALUNOS ERRO]', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const isModalOpen = isOpen && type === 'addAlunos';
@@ -75,29 +54,21 @@ export const AddAlunosModal = () => {
             Adicionar Alunos
           </DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-8 px-6">
-              <div className="flex items-center justify-center text-center">
-                <FormField
-                  control={form.control}
-                  name="fileUrl"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <FileUpload
-                          endpoint="imageUploader"
-                          value={field.value}
-                          onChange={field.onChange}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-          </form>
-        </Form>
+        {jsonValue ? (
+          <div className="flex flex-col p-1 gap-2">
+            <span className="text-center">Arquivo carregado com sucesso!</span>
+            <Button onClick={onSubmit} disabled={isLoading}>
+              {isLoading ? 'Carregando...' : 'Adicionar alunos'}
+            </Button>
+          </div>
+        ) : (
+          <FileUpload
+            isLoading={isFileLoading}
+            setJsonValue={setJsonValue}
+            file={jsonValue}
+            setIsLoading={setFileLoading}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
