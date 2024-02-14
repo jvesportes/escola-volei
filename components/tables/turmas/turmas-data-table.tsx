@@ -1,19 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
 
+import csvDownload from 'json-to-csv-export';
+import {
+  Settings,
+  Users,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -22,21 +25,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Settings, Users } from 'lucide-react';
 import { useModal } from '@/hooks/use-modal-store';
-import { useRouter } from 'next/navigation';
 import { hasRoleAccess } from '@/utils';
-
-import csvDownload from 'json-to-csv-export';
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -77,19 +79,20 @@ export function TurmaDataTable<TData, TValue>({
   const router = useRouter();
 
   function downloadCSV() {
-    const newData = data.map(item => {
+    const newData = (
+      data as Array<{ professor: { nome: string }; [key: string]: any }>
+    ).map((item) => {
       const professor = item['professor']['nome'];
       return {
         ...item,
-        professor
-      }
-    })
+        professor,
+      };
+    });
     csvDownload({
       data: newData,
       filename: 'turmas.csv',
     });
-  };
-
+  }
 
   return (
     <div>
