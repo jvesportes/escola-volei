@@ -28,7 +28,7 @@ export const AddAlunosModal = () => {
       setIsLoading(true);
       const result = await api.student.addStudentsCSV(jsonValue as CSVtoJson[]);
       if (result.error) throw new Error('Erro ao adicionar alunos');
-      location.reload();
+      // location.reload();
       toast({
         title: 'Sucesso ao adicionar alunos!',
         variant: 'success',

@@ -27,6 +27,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useModal } from '@/hooks/use-modal-store';
+import { Student } from '@/utils/types';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -45,7 +46,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends Student, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -79,8 +80,22 @@ export function DataTable<TData, TValue>({
 
   function downloadCSV() {
     // console.log(table.getRowModel().rows)
+    const formatedData = data.map((item) => {
+      return {
+        cpf: item.cpf,
+        nome: item.nome,
+        email: item.email,
+        plano: item.plano,
+        tem_responsavel: item.responsavel !== null ? 'true' : 'false',
+        telefone: item.telefone,
+        cpfResponsavel: item.responsavel ? item.responsavel.cpf : '',
+        emailResponsavel: item.responsavel ? item.responsavel.email : '',
+        nomeResponsavel: item.responsavel ? item.responsavel.nome : '',
+        telefoneResponsavel: item.responsavel ? item.responsavel.telefone : '',
+      };
+    });
     csvDownload({
-      data,
+      data: formatedData,
       // data: table.getRowModel().rows.map((item) => item.getVisibleCells()),
       filename: 'alunos.csv',
     });
