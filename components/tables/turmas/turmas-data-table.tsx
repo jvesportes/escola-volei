@@ -3,10 +3,7 @@
 import * as React from 'react';
 
 import csvDownload from 'json-to-csv-export';
-import {
-  Settings,
-  Users,
-} from 'lucide-react';
+import { Download, Settings, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
@@ -27,6 +24,7 @@ import {
 } from '@/components/ui/table';
 import { useModal } from '@/hooks/use-modal-store';
 import { hasRoleAccess } from '@/utils';
+import { ClassType, Teacher } from '@/utils/types';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -45,7 +43,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function TurmaDataTable<TData, TValue>({
+export function TurmaDataTable<TData extends ClassType, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -79,17 +77,30 @@ export function TurmaDataTable<TData, TValue>({
   const router = useRouter();
 
   function downloadCSV() {
-    const newData = (
-      data as Array<{ professor: { nome: string }; [key: string]: any }>
-    ).map((item) => {
-      const professor = item['professor']['nome'];
+    const getLocal = (local: string) => {
+      console.log('LOCALLLL ---> ', local);
+      switch (local) {
+        case 'asanorte':
+          return 'Asa Norte';
+        case 'asasul':
+          return 'Asa Sul';
+        case 'parkway':
+          return 'Park Way';
+        default:
+          return '';
+      }
+    };
+    const formattedData = data.map((item) => {
       return {
-        ...item,
-        professor,
+        nome: item.nome,
+        professor: (item.professor as unknown as Teacher).nome,
+        horario: item.horario,
+        alunos: item.alunosTurmas?.length ?? 0,
+        unidade: getLocal(item.unidade as string),
       };
     });
     csvDownload({
-      data: newData,
+      data: formattedData,
       filename: 'turmas.csv',
     });
   }
@@ -147,6 +158,7 @@ export function TurmaDataTable<TData, TValue>({
           </DropdownMenu>
           <Button variant="secondary" onClick={downloadCSV}>
             <span className="md:flex hidden">Exportar</span>
+            <Download className="text-black md:hidden w-5 h-5" />
           </Button>
         </div>
       </div>

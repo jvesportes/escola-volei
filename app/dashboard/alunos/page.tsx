@@ -1,14 +1,17 @@
 'use client';
+import { useRouter } from 'next/navigation';
+
+import { useAlunosStore } from '@/app/store/useAlunosStore';
 import { GoBackButton } from '@/components/navigation/go-back-button';
 import { columns } from '@/components/tables/alunos/columns';
 import { DataTable } from '@/components/tables/alunos/data-table';
 import { Card } from '@/components/ui/card';
 import { useStudents } from '@/hooks/student/useStudents';
 import { hasRoleAccess, hasUser } from '@/utils';
-import { useRouter } from 'next/navigation';
 
 const AlunosPage = () => {
-  const { data: students, error, isLoading } = useStudents();
+  const { isLoading } = useStudents();
+  const { students } = useAlunosStore();
   const router = useRouter();
   if (!hasUser()) router.push('/');
   if (!hasRoleAccess()) router.push('/dashboard');

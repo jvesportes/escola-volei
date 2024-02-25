@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useAlunosStore } from '@/app/store/useAlunosStore';
 import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,18 +22,22 @@ export const AddAlunosModal = () => {
 
   const [jsonValue, setJsonValue] = useState<unknown>();
   const [isFileLoading, setFileLoading] = useState(false);
+  const { addStudent } = useAlunosStore();
 
   async function onSubmit() {
     console.log(jsonValue);
     try {
       setIsLoading(true);
       const result = await api.student.addStudentsCSV(jsonValue as CSVtoJson[]);
+      result.data?.forEach(
+        (student) => !(student instanceof Error) && addStudent(student)
+      );
       if (result.error) throw new Error('Erro ao adicionar alunos');
-      // location.reload();
       toast({
         title: 'Sucesso ao adicionar alunos!',
         variant: 'success',
       });
+      onClose();
     } catch (error) {
       toast({
         title: 'Erro ao adicionar alunos.',
