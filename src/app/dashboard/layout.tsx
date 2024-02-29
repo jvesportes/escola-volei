@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { NavigationSidebar } from '@/components/core/navigation/navigation-sidebar';
-import { NavigationTabbar } from '@/components/core/navigation/navigation-tabbar';
+import { NavigationSidebar } from '@/components/layout/SideBar';
+import { NavigationTabbar } from '@/components/layout/TabBar';
 
 import { useSidebar } from '@/hooks/use-sidebar-store';
 

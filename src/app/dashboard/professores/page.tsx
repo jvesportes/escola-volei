@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { GoBackButton } from '@/components/core/navigation/go-back-button';
 import { professoresColumns } from '@/components/core/tables/professores/professores-columns';
 import { ProfessoresDataTable } from '@/components/core/tables/professores/professores-data-table';
+import { BackButton } from '@/components/layout/BackButton';
 import { Card } from '@/components/shared/ui/card';
 
 import { useProfessor } from '@/hooks/useProfessor';
@@ -20,7 +20,7 @@ const ProfessoresPage = () => {
     return (
       <div className="flex size-full flex-col gap-6 overflow-y-scroll scroll-smooth p-4 pb-32 md:gap-12 md:px-16 md:py-6">
         <div className="flex flex-col">
-          <GoBackButton disabled={false} />
+          <BackButton disabled={false} />
           <h2>Escolinha de Vôlei</h2>
           <span className="text-[14px] leading-5 text-slate-500">Páginas/Professores</span>
         </div>

@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useClasses } from '@/hooks';
 import { MoreHorizontal } from 'lucide-react';
 
-import { GoBackButton } from '@/components/core/navigation/go-back-button';
 import { ExcluirTurmaMenuItem } from '@/components/core/tables/turmas/delete-turma-menu-item';
 import { EditTurmaMenuItem } from '@/components/core/tables/turmas/edit-turma-menu-item';
 import { turmasColumns } from '@/components/core/tables/turmas/turmas-columns';
 import { TurmaDataTable } from '@/components/core/tables/turmas/turmas-data-table';
+import { BackButton } from '@/components/layout/BackButton';
 import { Button } from '@/components/shared/ui/button';
 import { Card } from '@/components/shared/ui/card';
 import {
@@ -68,7 +68,7 @@ const TurmasPage = () => {
   return (
     <div className="flex size-full flex-col gap-6 overflow-y-scroll scroll-smooth p-4 pb-32 md:gap-12 md:px-16 md:py-6">
       <div className="flex flex-col">
-        <GoBackButton disabled={false} />
+        <BackButton disabled={false} />
         <h2>Escolinha de Vôlei</h2>
         <span className="text-[14px] leading-5 text-slate-500">Páginas/Turmas</span>
       </div>
