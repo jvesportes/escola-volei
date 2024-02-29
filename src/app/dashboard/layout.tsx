@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import { NavigationSidebar } from '@/components/layout/SideBar';
 import { NavigationTabbar } from '@/components/layout/TabBar';
@@ -23,17 +23,22 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="h-full">
-      <div className="fixed inset-y-0 z-30 hidden h-full flex-col md:flex">
-        <NavigationSidebar />
+    <Fragment>
+      <NavigationSidebar />
+      <div className="h-full">
+        <div className="sticky inset-0 top-[calc(100%_-_92px)] z-30 h-0 md:hidden">
+          <NavigationTabbar />
+        </div>
+        <main
+          className={cn('min-h-screen h-full bg-slate-50', {
+            'md:pl-16': !isOpen,
+            'md:pl-64': isOpen,
+          })}
+        >
+          {children}
+        </main>
       </div>
-      <div className="sticky inset-0 top-[calc(100%_-_92px)] z-30 h-0 md:hidden">
-        <NavigationTabbar />
-      </div>
-      <main className={cn(isOpen ? 'md:pl-[256px]' : 'md:pl-[138px]', 'h-full bg-slate-50')}>
-        {children}
-      </main>
-    </div>
+    </Fragment>
   );
 };
 

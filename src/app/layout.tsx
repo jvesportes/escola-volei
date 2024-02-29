@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 import { GeistSans } from 'geist/font/sans';
 
-import { ModalProvider } from '@/components/core/providers/modal-provider';
+import { ModalProvider } from '@/components/providers/modal-provider';
 import { Toaster } from '@/components/shared/ui/toaster';
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: 'Escolinha Vôlei',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={cn(GeistSans.className)}>

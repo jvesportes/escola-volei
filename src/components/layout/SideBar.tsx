@@ -10,7 +10,12 @@ import { ChevronsLeftRight, LogOut } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';
 import { Separator } from '@/components/shared/ui/separator';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/shared/ui/tooltip';
 
 import { useModal } from '@/hooks/use-modal-store';
 import { useSidebar } from '@/hooks/use-sidebar-store';
@@ -25,7 +30,7 @@ export const NavigationSidebar = () => {
   return (
     <aside
       className={cn(
-        'z-50 relative flex h-full flex-col items-center gap-8 border-r bg-zinc-950 pt-12 pb-8',
+        'z-50 fixed inset-y-0 flex h-full flex-col items-center gap-8 border-r bg-zinc-950 pt-12 pb-8',
         {
           'w-16 px-2': !isOpen,
           'w-64 px-4': isOpen,
