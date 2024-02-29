@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { adminMenuPaths } from '@/constants/menuPaths';
-import { useRouterActiveness } from '@/hooks';
 import LogoHorizontal from '@assets/images/logo-horizontal.svg';
 import LogoIcon from '@assets/images/logo-icon.svg';
 import { ChevronsLeftRight, LogOut } from 'lucide-react';
@@ -19,26 +18,9 @@ import { useSidebar } from '@/hooks/use-sidebar-store';
 import { cn } from '@/lib/utils';
 import { hasRoleAccess } from '@/utils';
 
-// melhorias --> adicionar tooltip, aumentar o padding dos icones quando fechada e animação de abrir e fechar.
 export const NavigationSidebar = () => {
   const { isOpen, onOpen } = useSidebar();
-  const { onOpen: abrirModal } = useModal();
-
-  const [isDashboardPage, isAlunosPage, isTurmasPage, isProfessoresPage] = useRouterActiveness([
-    {
-      expected: '/dashboard',
-      mode: 'exact',
-    },
-    {
-      expected: 'alunos',
-    },
-    {
-      expected: 'turmas',
-    },
-    {
-      expected: 'professores',
-    },
-  ]);
+  const { onOpen: openModalLogout } = useModal();
 
   return (
     <aside
@@ -53,7 +35,14 @@ export const NavigationSidebar = () => {
     >
       <TooltipProvider>
         <Link href="/">
-          <Image src={isOpen ? LogoHorizontal : LogoIcon} alt="JV Esportes" />
+          <Image
+            src={isOpen ? LogoHorizontal : LogoIcon}
+            alt="JV Esportes"
+            className={cn({
+              'size-12': !isOpen,
+              'w-fit h-12': isOpen,
+            })}
+          />
         </Link>
 
         <Separator className="bg-white/10" />
@@ -91,17 +80,19 @@ export const NavigationSidebar = () => {
               </Tooltip>
             ))}
         </nav>
-        <Separator className="bg-white/10" />
-        <Button
-          onClick={() => {
-            abrirModal('logout');
-          }}
-          size={isOpen ? 'default' : 'icon'}
-          className="inline-flex w-full gap-4"
-        >
-          <LogOut className="size-5" />
-          {isOpen && 'Sair da conta'}
-        </Button>
+        <div className="flex w-full flex-col gap-4">
+          <Separator className="bg-white/10" />
+          <Button
+            onClick={() => {
+              openModalLogout('logout');
+            }}
+            size={isOpen ? 'default' : 'icon'}
+            className="inline-flex w-full gap-4"
+          >
+            <LogOut className="size-5" />
+            {isOpen && 'Sair da conta'}
+          </Button>
+        </div>
       </TooltipProvider>
     </aside>
   );
