@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
+
+import csvDownload from 'json-to-csv-export';
+import { Download, Settings, UserPlus } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -21,25 +20,28 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/table';
+import { useModal } from '@/hooks/use-modal-store';
+import { Teacher } from '@/utils/types';
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Settings, UserPlus } from "lucide-react";
-import { useModal } from "@/hooks/use-modal-store";
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function ProfessoresDataTable<TData, TValue>({
+export function ProfessoresDataTable<TData extends Teacher, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -71,24 +73,41 @@ export function ProfessoresDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
 
+  function downloadCSV() {
+    const formatedData = data.map((item) => {
+      return {
+        id: item.id,
+        nome: item.nome,
+        email: item.email,
+        cpf: item.cpf,
+        telefone: item.telefone,
+        tipo: 'Professor',
+      };
+    });
+    csvDownload({
+      data: formatedData,
+      filename: 'professores.csv',
+    });
+  }
+
   return (
     <div>
       <div className="flex flex-row items-center w-full justify-between pb-4 gap-2">
         <div className="flex flex-row items-center">
           <Input
             placeholder="Pesquisar por nome"
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              table.getColumn('email')?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
         </div>
         <div className="flex flex-row gap-2 items-center">
           <Button
-            size={"sm"}
+            size={'sm'}
             onClick={() => {
-              onOpen("addProfessor");
+              onOpen('addProfessor');
             }}
           >
             <span className="md:flex hidden">Adicionar Professor</span>
@@ -120,6 +139,10 @@ export function ProfessoresDataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="secondary" onClick={downloadCSV}>
+            <span className="md:flex hidden">Exportar</span>
+            <Download className="text-black md:hidden w-5 h-5" />
+          </Button>
         </div>
       </div>
 
@@ -148,7 +171,7 @@ export function ProfessoresDataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

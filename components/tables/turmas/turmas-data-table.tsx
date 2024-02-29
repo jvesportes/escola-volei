@@ -1,19 +1,19 @@
 'use client';
 
 import * as React from 'react';
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
 
+import csvDownload from 'json-to-csv-export';
+import { Download, Settings, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -22,26 +22,28 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Settings, Users } from 'lucide-react';
 import { useModal } from '@/hooks/use-modal-store';
-import { useRouter } from 'next/navigation';
 import { hasRoleAccess } from '@/utils';
+import { ClassType, Teacher } from '@/utils/types';
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function TurmaDataTable<TData, TValue>({
+export function TurmaDataTable<TData extends ClassType, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -73,6 +75,35 @@ export function TurmaDataTable<TData, TValue>({
   });
   const { onOpen } = useModal();
   const router = useRouter();
+
+  function downloadCSV() {
+    const getLocal = (local: string) => {
+      console.log('LOCALLLL ---> ', local);
+      switch (local) {
+        case 'asanorte':
+          return 'Asa Norte';
+        case 'asasul':
+          return 'Asa Sul';
+        case 'parkway':
+          return 'Park Way';
+        default:
+          return '';
+      }
+    };
+    const formattedData = data.map((item) => {
+      return {
+        nome: item.nome,
+        professor: (item.professor as unknown as Teacher).nome,
+        horario: item.horario,
+        alunos: item.alunosTurmas?.length ?? 0,
+        unidade: getLocal(item.unidade as string),
+      };
+    });
+    csvDownload({
+      data: formattedData,
+      filename: 'turmas.csv',
+    });
+  }
 
   return (
     <div>
@@ -125,6 +156,10 @@ export function TurmaDataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="secondary" onClick={downloadCSV}>
+            <span className="md:flex hidden">Exportar</span>
+            <Download className="text-black md:hidden w-5 h-5" />
+          </Button>
         </div>
       </div>
 

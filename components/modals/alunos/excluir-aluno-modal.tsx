@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
-import { useModal } from '@/hooks/use-modal-store';
+
+import { useAlunosStore } from '@/app/store/useAlunosStore';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,13 +15,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { api } from '@/services';
 import { useToast } from '@/components/ui/use-toast';
+import { useModal } from '@/hooks/use-modal-store';
+import { api } from '@/services';
 
 export const ExcluirAlunoModal = () => {
   const { isOpen, onClose, type, data } = useModal();
 
   const isModalOpen = isOpen && type === 'excluirAluno';
+  const { removeStudent } = useAlunosStore();
+
   const { toast } = useToast();
   const router = useRouter();
 
@@ -29,8 +34,7 @@ export const ExcluirAlunoModal = () => {
     try {
       setIsLoading(true);
       await api.student.delete(data?.student?.id!);
-      router.refresh();
-      location.reload();
+      removeStudent(data?.student?.id!);
       toast({
         title: 'Sucesso ao excluir aluno!',
         variant: 'success',

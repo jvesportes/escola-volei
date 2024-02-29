@@ -1,11 +1,12 @@
 import { supabase } from '@/lib';
-import { Payment } from '@/utils/types';
+import { Database } from '@/lib/database.types';
+import { CSVtoJson, Payment, Student as StudentType } from '@/utils/types';
 
 import * as Student from './type';
 
 function StudentFactory() {
   return {
-    async create(data: Student.Insert): Promise<{}> {
+    async create(data: Student.Insert): Promise<StudentType | Error> {
       try {
         if (data.tem_responsavel) {
           const responsable = await supabase
@@ -19,25 +20,46 @@ function StudentFactory() {
             .select();
           if (responsable.error)
             return new Error('Erro ao cadastrar responsável');
-          const aluno = await supabase.from('alunos').insert({
+          const { data: student } = await supabase
+            .from('alunos')
+            .insert({
+              cpf: data.cpf,
+              nome: data.nome,
+              email: data.email,
+              plano: data.plano,
+              tem_responsavel: data.tem_responsavel,
+              id_responsavel: responsable.data[0].id,
+              telefone: data.telefone,
+            })
+            .select(
+              `nome, cpf, id, email, plano, telefone, responsavel:responsaveis(id, nome, cpf, email, telefone), pagamentos(dataPagamento:data_pagamento, vigencia, valor:preco, id, plano:tipo)`
+            )
+            .order('data_pagamento', {
+              ascending: false,
+              foreignTable: 'pagamentos',
+            })
+            .limit(1);
+          return student![0] as unknown as StudentType;
+        }
+        const { data: student } = await supabase
+          .from('alunos')
+          .insert({
             cpf: data.cpf,
             nome: data.nome,
             email: data.email,
             plano: data.plano,
             tem_responsavel: data.tem_responsavel,
-            id_responsavel: responsable.data[0].id,
             telefone: data.telefone,
-          });
-          return aluno;
-        }
-        return await supabase.from('alunos').insert({
-          cpf: data.cpf,
-          nome: data.nome,
-          email: data.email,
-          plano: data.plano,
-          tem_responsavel: data.tem_responsavel,
-          telefone: data.telefone,
-        });
+          })
+          .select(
+            `nome, cpf, id, email, plano, telefone, responsavel:responsaveis(id, nome, cpf, email, telefone), pagamentos(dataPagamento:data_pagamento, vigencia, valor:preco, id, plano:tipo)`
+          )
+          .order('data_pagamento', {
+            ascending: false,
+            foreignTable: 'pagamentos',
+          })
+          .limit(1);
+        return student![0] as unknown as StudentType;
       } catch (error) {
         console.log(error);
         return new Error('Erro ao cadastrar aluno');
@@ -116,11 +138,54 @@ function StudentFactory() {
       }
       return { data: { ...data[0] }, error };
     },
-    async addStudentsCSV(data: string) {
-      // implementar
-      return { data: {}, error: null };
+    async addStudentsCSV(data: CSVtoJson[]) {
+      const filteredData = data.filter(
+        (aluno) =>
+          aluno.cpf !== '' &&
+          aluno.nome !== '' &&
+          aluno.email !== '' &&
+          aluno.plano !== '' &&
+          aluno.telefone !== ''
+      );
+      const alunosPromise = filteredData.map(async (aluno) => {
+        const stringToBoolean = aluno.tem_responsavel === 'true';
+        console.log(stringToBoolean, aluno.tem_responsavel);
+        const newStudent: Student.Insert = stringToBoolean
+          ? {
+              cpf: aluno.cpf,
+              email: aluno.email,
+              nome: aluno.nome,
+              plano: aluno.plano as
+                | Database['public']['Enums']['planos']
+                | null,
+              telefone: aluno.telefone,
+              tem_responsavel: true,
+              id_responsavel: '',
+              responsavel: {
+                cpf: aluno.cpfResponsavel as string,
+                email: aluno.emailResponsavel,
+                nome: aluno.nomeResponsavel as string,
+                telefone: aluno.telefoneResponsavel,
+              },
+            }
+          : {
+              cpf: aluno.cpf,
+              email: aluno.email,
+              nome: aluno.nome,
+              plano: aluno.plano as
+                | Database['public']['Enums']['planos']
+                | null,
+              telefone: aluno.telefone as string,
+              tem_responsavel: false,
+            };
+        const student = await this.create(newStudent);
+        return student;
+      });
+      const alunos = await Promise.all(alunosPromise);
+      console.log(alunos);
+      return { data: alunos, error: null };
     },
-    async list() {
+    async list(): Promise<{ data: StudentType[]; error: Error }> {
       // Expected pattern:
       // Retornará os dados do usuário, e pagamentos.
       //   {
@@ -157,7 +222,10 @@ function StudentFactory() {
         });
 
       if (!alunos) throw new Error('Erro ao buscar alunos');
-      return { data: alunos, error };
+      return {
+        data: alunos as unknown as StudentType[],
+        error: error as unknown as Error,
+      };
     },
   };
 }

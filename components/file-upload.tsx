@@ -1,43 +1,57 @@
 'use client';
 
-import { X } from 'lucide-react';
-import Image from 'next/image';
+import {
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
-import { UploadDropzone } from '@/utils/uploadthing';
+import { parse } from 'papaparse';
 
 interface FileUploadProps {
-  onChange: (url?: string) => void;
-  value: string;
-  endpoint: 'imageUploader';
+  setJsonValue: Dispatch<SetStateAction<unknown>>;
+  file: unknown;
+  setIsLoading: (loading: boolean) => void;
+  isLoading: boolean;
 }
 
-export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
-  const filetype = value?.split('.').pop();
-
-  if (value && filetype !== 'pdf') {
-    return (
-      <div className="relative h-20 w-20">
-        <Image fill src={value} alt="Upload" className="rounded-full" />
-        <button
-          onClick={() => onChange('')}
-          className="bg-rose-500 text-white p-1 rounded-full absolute top-0 right-0 shadow-sm"
-          type="button"
-        >
-          <X className="h-4 w-4" />
-        </button>
-      </div>
-    );
-  }
-
+export const FileUpload = ({
+  setJsonValue,
+  setIsLoading,
+  isLoading,
+}: FileUploadProps) => {
   return (
-    <UploadDropzone
-      endpoint={endpoint}
-      onClientUploadComplete={(res) => {
-        onChange(res?.[0].url);
-      }}
-      onUploadError={(error: Error) => {
-        console.log(error);
-      }}
-    />
+    <div className="flex flex-col items-center justify-center space-y-2">
+      <label
+        htmlFor="file"
+        className="flex items-center justify-center bg-slate-100 text-slate-900 p-2 rounded-lg cursor-pointer"
+      >
+        <input
+          disabled={isLoading}
+          type="file"
+          id="file"
+          className="hidden"
+          accept=".csv"
+          onChange={async (e) => {
+            if (e.target.files) {
+              const file = e.target.files[0];
+              setIsLoading(true);
+              parse(file, {
+                header: true,
+                complete: (result) => {
+                  setJsonValue(result.data);
+                  console.log(result.data);
+                  setIsLoading(false);
+                },
+              });
+            }
+          }}
+        />
+        {isLoading ? (
+          'Carregando...'
+        ) : (
+          <span className="text-center">Clique para adicionar um arquivo</span>
+        )}
+      </label>
+    </div>
   );
 };
