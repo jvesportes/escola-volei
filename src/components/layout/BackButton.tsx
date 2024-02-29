@@ -12,7 +12,7 @@ interface Props {
 
 export function BackButton({ disabled = false }: Readonly<Props>) {
   return (
-    <Link href="/dashbord">
+    <Link href="/dashboard">
       <button
         className={cn(
           disabled && 'pointer-events-none opacity-0',
