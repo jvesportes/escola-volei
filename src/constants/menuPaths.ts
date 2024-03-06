@@ -1,4 +1,4 @@
-import { AirplayIcon, AppleIcon, LucideIcon, UserIcon, UsersIcon } from 'lucide-react';
+import { AirplayIcon, GraduationCapIcon, LucideIcon, UserIcon, UsersIcon } from 'lucide-react';
 
 interface ISubItem {
   label: string;
@@ -29,7 +29,7 @@ export const adminMenuPaths: IMenu[] = [
     path: '/dashboard/turmas',
   },
   {
-    icon: AppleIcon,
+    icon: GraduationCapIcon,
     label: 'Professores',
     path: '/dashboard/professores',
   },
@@ -52,7 +52,7 @@ export const teacherMenuPaths: IMenu[] = [
     path: '/dashboard/turmas',
   },
   {
-    icon: AppleIcon,
+    icon: GraduationCapIcon,
     label: 'Professores',
     path: '/dashboard/professores',
   },
@@ -75,7 +75,7 @@ export const studentMenuPaths: IMenu[] = [
     path: '/dashboard/turmas',
   },
   {
-    icon: AppleIcon,
+    icon: GraduationCapIcon,
     label: 'Professores',
     path: '/dashboard/professores',
   },
