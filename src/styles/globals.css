@@ -17,87 +17,6 @@
   }
 }
 
-@layer texts {
-  @media (max-width: 640px) {
-    .subtle {
-      color: var(--slate-500, #64748b);
-      text-align: center;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 20px;
-    }
-  }
-  .subtle {
-    color: var(--slate-500, #64748b);
-    text-align: center;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-  }
-}
-@media (max-width: 640px) {
-  h1 {
-    @apply text-4xl;
-    @apply leading-9;
-    @apply font-extrabold;
-    @apply text-slate-900;
-  }
-  h2 {
-    @apply text-2xl;
-    @apply leading-8;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-
-  h3 {
-    @apply text-xl;
-    @apply leading-7;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-
-  h4 {
-    @apply text-lg;
-    @apply leading-6;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-}
-
-@layer base {
-  h1 {
-    @apply text-5xl;
-    @apply leading-[48px];
-    @apply font-extrabold;
-    @apply text-slate-900;
-  }
-  h2 {
-    @apply text-3xl;
-    @apply leading-9;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-  h3 {
-    @apply text-2xl;
-    @apply leading-8;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-  h4 {
-    @apply text-xl;
-    @apply leading-7;
-    @apply font-semibold;
-    @apply text-slate-900;
-  }
-}
-html,
-body,
-:root {
-  height: 100%;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -164,7 +83,7 @@ body,
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border font-normal antialiased;
   }
 
   body {
