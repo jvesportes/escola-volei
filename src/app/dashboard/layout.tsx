@@ -25,19 +25,15 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Fragment>
       <NavigationSidebar />
-      <div className="h-full">
-        <div className="sticky inset-0 top-[calc(100%_-_92px)] z-30 h-0 md:hidden">
-          <NavigationTabbar />
-        </div>
-        <main
-          className={cn('min-h-screen h-full bg-slate-50', {
-            'md:pl-16': !isOpen,
-            'md:pl-64': isOpen,
-          })}
-        >
-          {children}
-        </main>
-      </div>
+      <NavigationTabbar />
+      <main
+        className={cn('min-h-screen h-full bg-zinc-50', {
+          'md:pl-16': !isOpen,
+          'md:pl-64': isOpen,
+        })}
+      >
+        {children}
+      </main>
     </Fragment>
   );
 };

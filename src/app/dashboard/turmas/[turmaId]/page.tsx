@@ -11,7 +11,6 @@ import { ExcluirAlunoTurmaMenuItem } from '@/components/core/tables/turmas/turma
 import { HistoricoAlunoTurmaMenuItem } from '@/components/core/tables/turmas/turma/historico-turma-aluno-menu-item';
 import { turmaColumns } from '@/components/core/tables/turmas/turma/turma-columns';
 import { SingleTurmaDataTable } from '@/components/core/tables/turmas/turma/turma-data-table';
-import { BackButton } from '@/components/layout/BackButton';
 import { Button } from '@/components/shared/ui/button';
 import { Card } from '@/components/shared/ui/card';
 import { Checkbox } from '@/components/shared/ui/checkbox';
@@ -27,10 +26,10 @@ import { useToast } from '@/components/shared/ui/use-toast';
 import { useClass } from '@/hooks/class/useClass';
 import { usePresences } from '@/hooks/student/usePresences';
 import { useModal } from '@/hooks/use-modal-store';
+import useAuthentication from '@/hooks/useAuthentication';
 
 import { api } from '@/services';
 
-import { hasRoleAccess, hasUser } from '@/utils';
 import { StudentClassType } from '@/utils/types';
 
 interface TurmaPageProps {
@@ -41,9 +40,10 @@ interface TurmaPageProps {
 const TurmaPage = ({ params }: TurmaPageProps) => {
   const { turmaId } = params;
   const { onOpen } = useModal();
+  const { hasUser, isAdmin } = useAuthentication();
   const { data: turma, isLoading } = useClass(turmaId);
   const router = useRouter();
-  if (!hasUser()) router.push('/');
+  if (!hasUser) router.push('/');
 
   const [isMounted, setIsMounted] = useState(false);
   const { toast } = useToast();
@@ -102,7 +102,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       );
     },
   });
-  if (hasRoleAccess()) {
+  if (isAdmin) {
     newTurmaColumns.push({
       id: 'ações',
       accessorKey: 'Ações',
@@ -164,11 +164,6 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
 
   return (
     <div className="flex size-full flex-col gap-6 overflow-y-scroll scroll-smooth p-4 pb-32 md:gap-12 md:px-16 md:py-6">
-      <div className="flex flex-col">
-        <BackButton disabled={false} />
-        <h2>Escolinha de Vôlei</h2>
-        <span className="text-[14px] leading-5 text-slate-500">Páginas/Turmas</span>
-      </div>
       <Card className="w-full p-4 md:p-6">
         {isLoading ? (
           <></>
@@ -176,7 +171,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
           <div className="flex w-full flex-col gap-4 md:gap-6">
             <div className="flex flex-row justify-between">
               <h1>{turma?.nome}</h1>
-              {hasRoleAccess() && (
+              {isAdmin && (
                 <Button
                   size={'sm'}
                   variant={'secondary'}
@@ -185,7 +180,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
                   }}
                 >
                   <span className="hidden md:flex">Lista de Espera</span>
-                  <FileText className="size-5 text-slate-900 md:hidden" />
+                  <FileText className="size-5 text-zinc-900 md:hidden" />
                 </Button>
               )}
             </div>

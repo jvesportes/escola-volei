@@ -4,15 +4,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useClasses } from '@/hooks';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, UsersIcon } from 'lucide-react';
 
 import { ExcluirTurmaMenuItem } from '@/components/core/tables/turmas/delete-turma-menu-item';
 import { EditTurmaMenuItem } from '@/components/core/tables/turmas/edit-turma-menu-item';
 import { turmasColumns } from '@/components/core/tables/turmas/turmas-columns';
 import { TurmaDataTable } from '@/components/core/tables/turmas/turmas-data-table';
-import { BackButton } from '@/components/layout/BackButton';
 import { Button } from '@/components/shared/ui/button';
-import { Card } from '@/components/shared/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,13 +19,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/shared/ui/dropdown-menu';
 
-import { hasRoleAccess, hasUser } from '@/utils';
+import useAuthentication from '@/hooks/useAuthentication';
+
 import { ClassType } from '@/utils/types';
 
 const TurmasPage = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const { hasUser, isAdmin } = useAuthentication();
   const router = useRouter();
-  if (!hasUser()) router.push('/');
+  if (!hasUser) router.push('/');
 
   const { data: turmas, isLoading } = useClasses();
 
@@ -39,7 +39,7 @@ const TurmasPage = () => {
 
   const newTurmasColumns = [...turmasColumns];
 
-  if (hasRoleAccess()) {
+  if (isAdmin) {
     newTurmasColumns.push({
       id: 'actions',
       header: 'Ações',
@@ -66,20 +66,19 @@ const TurmasPage = () => {
   }
 
   return (
-    <div className="flex size-full flex-col gap-6 overflow-y-scroll scroll-smooth p-4 pb-32 md:gap-12 md:px-16 md:py-6">
-      <div className="flex flex-col">
-        <BackButton disabled={false} />
-        <h2>Escolinha de Vôlei</h2>
-        <span className="text-[14px] leading-5 text-slate-500">Páginas/Turmas</span>
-      </div>
-      <Card className="w-full p-4 md:p-6">
-        <div className="flex w-full flex-col gap-4 md:gap-6">
-          <h1>Turmas</h1>
-          <div className="flex flex-col gap-2 md:gap-4">
-            {isLoading ? <></> : <TurmaDataTable columns={newTurmasColumns} data={turmas} />}
-          </div>
+    <div className="flex flex-col gap-12">
+      <header className="inline-flex items-center gap-4 bg-zinc-950 px-4 py-16 text-white md:px-12">
+        <div className="inline-flex size-11 items-center justify-center rounded-lg bg-indigo-100 md:size-12">
+          <UsersIcon className="size-5 min-w-5 text-indigo-400 md:size-6" />
         </div>
-      </Card>
+        <div className="flex flex-col gap-1">
+          <h1 className="text-lg font-bold md:text-2xl">Turmas</h1>
+          <p className="text-sm text-zinc-400">Tenha acesso aos controle de turmas.</p>
+        </div>
+      </header>
+      <div className="flex flex-col gap-2 px-12 md:gap-4">
+        {isLoading ? <div></div> : <TurmaDataTable columns={newTurmasColumns} data={turmas} />}
+      </div>
     </div>
   );
 };
