@@ -53,9 +53,7 @@ export const AddAlunosModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
         <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-extrabold text-slate-900 md:text-5xl">
-            Adicionar Alunos
-          </DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-zinc-900">Adicionar Alunos</DialogTitle>
         </DialogHeader>
         {jsonValue ? (
           <div className="flex flex-col gap-2 p-1">

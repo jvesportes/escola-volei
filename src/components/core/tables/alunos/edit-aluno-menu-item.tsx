@@ -22,7 +22,7 @@ export const EditAlunoMenuItem = ({ student }: Props) => {
       }}
       className="gap-2"
     >
-      Editar <Edit className="size-4 text-slate-500" />{' '}
+      Editar <Edit className="size-4 text-zinc-500" />{' '}
     </DropdownMenuItem>
   );
 };

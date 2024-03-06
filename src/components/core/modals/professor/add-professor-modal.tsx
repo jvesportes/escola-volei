@@ -92,7 +92,7 @@ export const AddProfessorModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
         <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-extrabold text-slate-900 md:text-5xl">
+          <DialogTitle className="text-2xl font-extrabold text-zinc-900 md:text-5xl">
             Adicionar Professor
           </DialogTitle>
           {/* <DialogDescription>Adicione um novo professor.</DialogDescription> */}

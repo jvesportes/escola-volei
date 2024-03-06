@@ -15,7 +15,7 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import csvDownload from 'json-to-csv-export';
-import { Download, Settings, UserPlus } from 'lucide-react';
+import { DownloadIcon, SearchIcon, SettingsIcon, UserPlus } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';
 import {
@@ -92,28 +92,29 @@ export function ProfessoresDataTable<TData extends Teacher, TValue>({
   return (
     <div>
       <div className="flex w-full flex-row items-center justify-between gap-2 pb-4">
-        <div className="flex flex-row items-center">
+        <div className="relative">
+          <SearchIcon className="absolute inset-y-2.5 left-3 size-5 text-zinc-400" />
           <Input
             placeholder="Pesquisar por nome"
             value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
-            className="max-w-sm"
+            className="max-w-sm pl-10"
           />
         </div>
-        <div className="flex flex-row items-center gap-2">
+        <div className="inline-flex items-center gap-2">
           <Button
-            size={'sm'}
+            size="sm"
             onClick={() => {
               onOpen('addProfessor');
             }}
           >
+            <UserPlus className="size-4 md:mr-1" />
             <span className="hidden md:flex">Adicionar Professor</span>
-            <UserPlus className="size-5 text-white md:hidden" />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                <Settings className="size-4" />
+              <Button variant="outline">
+                <SettingsIcon className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -134,9 +135,9 @@ export function ProfessoresDataTable<TData extends Teacher, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="secondary" onClick={downloadCSV}>
+          <Button variant="outline" onClick={downloadCSV}>
+            <DownloadIcon className="size-4 md:mr-1" />
             <span className="hidden md:flex">Exportar</span>
-            <Download className="size-5 text-black md:hidden" />
           </Button>
         </div>
       </div>

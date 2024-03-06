@@ -16,7 +16,7 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import csvDownload from 'json-to-csv-export';
-import { Download, Settings, Users } from 'lucide-react';
+import { Download, SearchIcon, Settings, Users } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';
 import {
@@ -36,8 +36,8 @@ import {
 } from '@/components/shared/ui/table';
 
 import { useModal } from '@/hooks/use-modal-store';
+import useAuthentication from '@/hooks/useAuthentication';
 
-import { hasRoleAccess } from '@/utils';
 import { ClassType, Teacher } from '@/utils/types';
 
 interface DataTableProps<TData, TValue> {
@@ -73,6 +73,7 @@ export function TurmaDataTable<TData extends ClassType, TValue>({
     },
   });
   const { onOpen } = useModal();
+  const { isAdmin } = useAuthentication();
   const router = useRouter();
 
   function downloadCSV() {
@@ -107,16 +108,17 @@ export function TurmaDataTable<TData extends ClassType, TValue>({
   return (
     <div>
       <div className="flex w-full flex-row items-center justify-between gap-2 pb-4">
-        <div className="flex flex-row items-center">
+        <div className="relative">
+          <SearchIcon className="absolute inset-y-2.5 left-3 size-5 text-zinc-400" />
           <Input
             placeholder="Pesquisar por nome"
             value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('nome')?.setFilterValue(event.target.value)}
-            className="max-w-sm"
+            className="max-w-sm pl-10"
           />
         </div>
         <div className="flex flex-row items-center gap-2">
-          {hasRoleAccess() && (
+          {isAdmin && (
             <Button
               size={'sm'}
               onClick={() => {

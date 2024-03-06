@@ -15,7 +15,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { ArrowLeft, Settings, UserPlus } from 'lucide-react';
+import { ArrowLeft, SearchIcon, Settings, UserPlus } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';
 import {
@@ -35,8 +35,7 @@ import {
 } from '@/components/shared/ui/table';
 
 import { useModal } from '@/hooks/use-modal-store';
-
-import { hasRoleAccess } from '@/utils';
+import useAuthentication from '@/hooks/useAuthentication';
 
 interface DataTableProps<TData, TValue, ClassType> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +52,7 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const { isAdmin } = useAuthentication();
 
   const table = useReactTable({
     data,
@@ -78,12 +78,13 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
   return (
     <div>
       <div className="flex w-full flex-row items-center justify-between gap-2 pb-4">
-        <div className="flex flex-row items-center">
+        <div className="relative">
+          <SearchIcon className="absolute inset-y-2.5 left-3 size-5 text-zinc-400" />
           <Input
             placeholder="Pesquisar por nome"
             value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('nome')?.setFilterValue(event.target.value)}
-            className="max-w-sm"
+            className="max-w-sm pl-10"
           />
         </div>
         <div className="flex flex-row items-center gap-2">
@@ -98,7 +99,7 @@ export function SingleTurmaDataTable<TData, TValue, ClassType>({
             <ArrowLeft className="size-5 text-slate-900" />
             <span className="hidden md:flex">Voltar</span>
           </Button>
-          {hasRoleAccess() && (
+          {isAdmin && (
             <Button
               size={'sm'}
               onClick={() => {

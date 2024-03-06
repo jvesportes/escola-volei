@@ -95,9 +95,7 @@ export const EditProfessorModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
         <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-extrabold text-slate-900 md:text-5xl">
-            Editar Professor
-          </DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-zinc-900">Editar Professor</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

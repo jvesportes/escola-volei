@@ -15,7 +15,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { Settings } from 'lucide-react';
+import { SearchIcon, Settings } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';
 import {
@@ -74,12 +74,13 @@ export function ListaEsperaDataTable<TData, TValue>({
   return (
     <div>
       <div className="flex w-full flex-row items-center justify-between gap-2 pb-4">
-        <div className="flex flex-row items-center">
+        <div className="relative">
+          <SearchIcon className="absolute inset-y-2.5 left-3 size-5 text-zinc-400" />
           <Input
             placeholder="Pesquisar por nome"
             value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
             onChange={(event) => table.getColumn('nome')?.setFilterValue(event.target.value)}
-            className="max-w-sm"
+            className="max-w-sm pl-10"
           />
         </div>
         <div className="flex flex-row items-center gap-2">

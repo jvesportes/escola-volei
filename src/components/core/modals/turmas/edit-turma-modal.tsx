@@ -99,7 +99,7 @@ export const EditTurmaModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
         <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-extrabold text-slate-900 md:text-5xl">
+          <DialogTitle className="text-2xl font-extrabold text-zinc-900 md:text-5xl">
             Editar Turma
           </DialogTitle>
         </DialogHeader>
@@ -140,7 +140,7 @@ export const EditTurmaModal = () => {
                               <SelectTrigger>
                                 <SelectValue
                                   placeholder="Selecione um professor"
-                                  className="text-slate-500"
+                                  className="text-zinc-500"
                                 />
                               </SelectTrigger>
                               <SelectContent>
@@ -192,7 +192,7 @@ export const EditTurmaModal = () => {
                             <SelectTrigger>
                               <SelectValue
                                 placeholder="Selecione uma Unidade"
-                                className="text-slate-500"
+                                className="text-zinc-500"
                               />
                             </SelectTrigger>
                             <SelectContent>

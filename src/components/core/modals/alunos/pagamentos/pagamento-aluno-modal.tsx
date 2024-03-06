@@ -90,7 +90,7 @@ export const PagamentoAlunoModal = () => {
       <DialogContent className="no-scrollbar w-[95%] overflow-scroll rounded-lg bg-white p-4 md:w-[80%] md:p-6">
         <div className="box-border flex flex-col md:w-full">
           <DialogHeader className="w-full items-center justify-center py-4 md:py-6">
-            <DialogTitle className="text-2xl font-extrabold text-slate-900 md:text-5xl">
+            <DialogTitle className="text-2xl font-bold text-zinc-900">
               Informações De Contratos
             </DialogTitle>
           </DialogHeader>
@@ -111,7 +111,7 @@ export const PagamentoAlunoModal = () => {
               <div className="flex flex-col gap-4 md:gap-6">
                 <div className="flex flex-row items-center gap-2">
                   <h3>Adicionar Contrato</h3>
-                  <span className="text-xs font-semibold uppercase text-slate-900">OPCIONAL</span>
+                  <span className="text-xs font-semibold uppercase text-zinc-900">OPCIONAL</span>
                 </div>
                 <div className="grid grid-cols-[repeat(1,1fr)] grid-rows-[repeat(2,1fr)] gap-2 md:grid-cols-[repeat(2,1fr)] md:gap-x-8 md:gap-y-4">
                   <div className="grid w-full  items-center gap-1.5">
@@ -169,7 +169,7 @@ export const PagamentoAlunoModal = () => {
                               <SelectTrigger>
                                 <SelectValue
                                   placeholder="Selecione um plano"
-                                  className="text-slate-500"
+                                  className="text-zinc-500"
                                 />
                               </SelectTrigger>
                               <SelectContent>
