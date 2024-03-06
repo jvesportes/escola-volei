@@ -16,7 +16,7 @@ export const FileUpload = ({ setJsonValue, setIsLoading, isLoading }: FileUpload
     <div className="flex flex-col items-center justify-center space-y-2">
       <label
         htmlFor="file"
-        className="flex cursor-pointer items-center justify-center rounded-lg bg-slate-100 p-2 text-slate-900"
+        className="flex cursor-pointer items-center justify-center rounded-lg bg-zinc-100 p-2 text-zinc-900"
       >
         <input
           disabled={isLoading}
