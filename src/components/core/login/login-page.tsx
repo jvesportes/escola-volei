@@ -101,7 +101,7 @@ export const LoginPage = () => {
             />
           </div>
         </div>
-        <Button className="group w-full" onClick={handleSignIn} disabled={isLoading}>
+        <Button className="group w-full max-w-sm" onClick={handleSignIn} disabled={isLoading}>
           {isLoading ? 'Carregando...' : 'Entrar'}
           <ChevronRight className="group-hover:tranzinc-x-2 ml-1 size-5 transition-all duration-500" />
         </Button>
