@@ -8,7 +8,7 @@ import { GeistSans } from 'geist/font/sans';
 
 import { ModalProvider } from '@/components/providers/modal-provider';
 import MultiContextProvider from '@/components/providers/MultiContextProvider';
-import { Toaster } from '@/components/shared/ui/toaster';
+import { Toaster } from '@/components/shared/ui/sonner';
 
 import { AuthenticationProvider } from '@/hooks/useAuthentication';
 
@@ -23,9 +23,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={cn(GeistSans.className, 'scroll-smooth')}>
-        <ModalProvider />
-        <Toaster />
-        <MultiContextProvider providers={providers}>{children}</MultiContextProvider>
+        <Toaster richColors />
+        <MultiContextProvider providers={providers}>
+          {children}
+          <ModalProvider />
+        </MultiContextProvider>
       </body>
     </html>
   );

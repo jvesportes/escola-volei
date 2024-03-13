@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { adminMenuPaths } from '@/constants/menuPaths';
+import { adminMenuPaths, IMenu, teacherMenuPaths } from '@/constants/menuPaths';
 import LogoHorizontal from '@assets/images/logo-horizontal.svg';
 import LogoIcon from '@assets/images/logo-icon.svg';
 import { ChevronRight, LogOut } from 'lucide-react';
@@ -30,6 +30,12 @@ export const NavigationSidebar = () => {
   const { onOpen: openModalLogout } = useModal();
   const { isAdmin } = useAuthentication();
   const path = usePathname();
+
+  let menuPaths: IMenu[] = teacherMenuPaths;
+
+  if (isAdmin) {
+    menuPaths = adminMenuPaths;
+  }
 
   return (
     <aside
@@ -68,42 +74,41 @@ export const NavigationSidebar = () => {
             />
           </Button>
 
-          {isAdmin &&
-            adminMenuPaths.map((item) => (
-              <Tooltip key={item.label} disableHoverableContent={isOpen}>
-                <TooltipTrigger>
-                  <Link href={item.path} className="w-full">
-                    <Button
-                      size={isOpen ? 'default' : 'icon'}
-                      className={cn(
-                        'inline-flex w-full gap-4 border border-zinc-900/50 hover:bg-zinc-900/50',
-                        {
-                          'justify-start': isOpen,
-                          'justify-center': !isOpen,
-                          'text-white bg-zinc-900/50 font-semibold': checkIsActive(
-                            item.path,
-                            path,
-                            true,
-                          ),
-                          'text-zinc-400 font-medium': !checkIsActive(item.path, path, true),
-                        },
-                      )}
-                    >
-                      <item.icon
-                        className={cn('size-5', {
-                          'text-orange-500': checkIsActive(item.path, path, true),
-                          'text-white': !checkIsActive(item.path, path, true),
-                        })}
-                      />
-                      {isOpen && item.label}
-                    </Button>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">
-                  <p>{item.label}</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
+          {menuPaths.map((item) => (
+            <Tooltip key={item.label} disableHoverableContent={isOpen}>
+              <TooltipTrigger>
+                <Link href={item.path} className="w-full">
+                  <Button
+                    size={isOpen ? 'default' : 'icon'}
+                    className={cn(
+                      'inline-flex w-full gap-4 border border-zinc-900/50 hover:bg-zinc-900/50',
+                      {
+                        'justify-start': isOpen,
+                        'justify-center': !isOpen,
+                        'text-white bg-zinc-900/50 font-semibold': checkIsActive(
+                          item.path,
+                          path,
+                          true,
+                        ),
+                        'text-zinc-400 font-medium': !checkIsActive(item.path, path, true),
+                      },
+                    )}
+                  >
+                    <item.icon
+                      className={cn('size-5', {
+                        'text-orange-500': checkIsActive(item.path, path, true),
+                        'text-white': !checkIsActive(item.path, path, true),
+                      })}
+                    />
+                    {isOpen && item.label}
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>{item.label}</p>
+              </TooltipContent>
+            </Tooltip>
+          ))}
         </nav>
         <div className="flex w-full flex-col gap-4">
           <Separator className="bg-zinc-900" />

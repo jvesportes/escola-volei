@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 
 import { NavigationSidebar } from '@/components/layout/SideBar';
 import { NavigationTabbar } from '@/components/layout/TabBar';
@@ -12,15 +12,6 @@ import { cn } from '@/lib/utils';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isOpen } = useSidebar();
-  const [isMounted, setIsMounted] = useState(false);
-  if (typeof window === 'undefined') return null;
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
 
   return (
     <Fragment>

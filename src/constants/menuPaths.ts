@@ -5,7 +5,7 @@ interface ISubItem {
   path: string;
 }
 
-interface IMenu {
+export interface IMenu {
   icon: LucideIcon;
   label: string;
   path: string;
@@ -50,11 +50,6 @@ export const teacherMenuPaths: IMenu[] = [
     icon: UsersIcon,
     label: 'Turmas',
     path: '/dashboard/turmas',
-  },
-  {
-    icon: GraduationCapIcon,
-    label: 'Professores',
-    path: '/dashboard/professores',
   },
 ];
 

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { lightFormat } from 'date-fns';
@@ -45,17 +44,8 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   const router = useRouter();
   if (!hasUser) router.push('/');
 
-  const [isMounted, setIsMounted] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
-  const user = {};
   const newTurmaColumns = [...turmaColumns];
   newTurmaColumns.push({
     accessorKey: 'presenca.presencas',

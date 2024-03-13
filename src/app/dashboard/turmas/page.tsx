@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useClasses } from '@/hooks';
@@ -24,18 +23,11 @@ import useAuthentication from '@/hooks/useAuthentication';
 import { ClassType } from '@/utils/types';
 
 const TurmasPage = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const { hasUser, isAdmin } = useAuthentication();
   const router = useRouter();
   if (!hasUser) router.push('/');
 
   const { data: turmas, isLoading } = useClasses();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) return null;
 
   const newTurmasColumns = [...turmasColumns];
 

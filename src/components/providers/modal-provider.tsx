@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { AddAlunoModal } from '../core/modals/alunos/add-aluno-modal';
 import { AddAlunosModal } from '../core/modals/alunos/add-alunos-modal';
 import { EditAlunoModal } from '../core/modals/alunos/edit-aluno-modal';
@@ -22,16 +20,6 @@ import { ExcluirAlunoListaEsperaModal } from '../core/modals/turmas/turma/lista-
 import { ListaEsperaModal } from '../core/modals/turmas/turma/lista-espera/lista-espera-modal';
 
 export const ModalProvider = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return null;
-  }
-
   return (
     <>
       <AddAlunoModal />
