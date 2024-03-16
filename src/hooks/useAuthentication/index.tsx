@@ -23,9 +23,13 @@ export const AuthenticationProvider = ({ children }: AuthenticationProviderProps
   const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
 
+  useEffect(() => {}, [router]);
+
   useEffect(() => {
     setUser(GetUser());
   }, []);
+
+  if (typeof window === 'undefined') return null;
 
   const hasUser = user ? Object.keys(user).length > 0 : false;
   const isAdmin = user?.user_metadata?.tipo === 'admin';
