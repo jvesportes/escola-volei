@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { adminMenuPaths, IMenu, teacherMenuPaths } from '@/constants/menuPaths';
+import { LogOut } from 'lucide-react';
 
+import { useModal } from '@/hooks/use-modal-store';
 import useAuthentication from '@/hooks/useAuthentication';
 
 import { cn } from '@/lib/utils';
@@ -14,6 +16,7 @@ import { Button } from '../shared/ui/button';
 
 export const NavigationTabbar = () => {
   const path = usePathname();
+  const { onOpen: openModalLogout } = useModal();
   const { isAdmin } = useAuthentication();
 
   let menuPaths: IMenu[] = teacherMenuPaths;
@@ -49,6 +52,16 @@ export const NavigationTabbar = () => {
           </Button>
         </Link>
       ))}
+      <Button
+        size="icon"
+        className={cn('flex gap-2 size-16 w-full p-3 flex-col items-center h-full')}
+        onClick={() => {
+          openModalLogout('logout');
+        }}
+      >
+        <LogOut className="size-5" />
+        <span className={cn('text-xs text-zinc-400 font-medium')}>Sair da conta</span>
+      </Button>
     </nav>
   );
 };
