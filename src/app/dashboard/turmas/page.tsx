@@ -68,7 +68,7 @@ const TurmasPage = () => {
           <p className="text-sm text-zinc-400">Tenha acesso aos controle de turmas.</p>
         </div>
       </header>
-      <div className="flex flex-col gap-2 px-12 md:gap-4">
+      <div className="flex flex-col gap-2 px-4 md:gap-4">
         {isLoading ? <div></div> : <TurmaDataTable columns={newTurmasColumns} data={turmas} />}
       </div>
     </div>

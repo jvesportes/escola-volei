@@ -121,13 +121,13 @@ function MenuOptions() {
         whileInView="show"
         viewport={{ once: true }}
       >
+        <MenuOption icon={UsersIcon} href="/dashboard/turmas" color="indigo">
+          Turmas
+        </MenuOption>
         {isAdmin && (
           <Fragment>
             <MenuOption icon={UserIcon} href="/dashboard/alunos" color="orange">
               Alunos
-            </MenuOption>
-            <MenuOption icon={UsersIcon} href="/dashboard/turmas" color="indigo">
-              Turmas
             </MenuOption>
             <MenuOption icon={GraduationCapIcon} href="/dashboard/professores" color="emerald">
               Professores
