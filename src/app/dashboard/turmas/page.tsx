@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useClasses } from '@/hooks';
 import { MoreHorizontal, UsersIcon } from 'lucide-react';
 
-import { ExcluirTurmaMenuItem } from '@/components/core/tables/turmas/delete-turma-menu-item';
-import { EditTurmaMenuItem } from '@/components/core/tables/turmas/edit-turma-menu-item';
-import { turmasColumns } from '@/components/core/tables/turmas/turmas-columns';
+import { ExcluirTurmaMenuItem } from '@/components/core/tables/turmas/parts/delete-turma-menu-item';
+import { EditTurmaMenuItem } from '@/components/core/tables/turmas/parts/edit-turma-menu-item';
+import { turmasColumns } from '@/components/core/tables/turmas/parts/turmas-columns';
 import { TurmaDataTable } from '@/components/core/tables/turmas/turmas-data-table';
 import { Button } from '@/components/shared/ui/button';
 import {

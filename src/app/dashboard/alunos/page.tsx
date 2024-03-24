@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 
 import { UserIcon } from 'lucide-react';
 
-import { columns } from '@/components/core/tables/alunos/columns';
 import { DataTable } from '@/components/core/tables/alunos/data-table';
+import { columns } from '@/components/core/tables/alunos/parts/columns';
 
 import { useStudents } from '@/hooks/student/useStudents';
 import useAuthentication from '@/hooks/useAuthentication';

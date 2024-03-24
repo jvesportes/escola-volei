@@ -14,9 +14,9 @@ import {
 
 import { Payment, Student } from '@/utils/types';
 
+import { PagamentoAlunoButton } from '../pagamentos/parts/pagamentos-aluno-menu-item';
 import { ExcluirAlunoMenuItem } from './delete-aluno-menu-item';
 import { EditAlunoMenuItem } from './edit-aluno-menu-item';
-import { PagamentoAlunoButton } from './pagamentos-aluno-menu-item';
 
 export const columns: ColumnDef<Student>[] = [
   {

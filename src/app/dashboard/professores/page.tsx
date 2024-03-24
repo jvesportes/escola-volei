@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { GraduationCapIcon } from 'lucide-react';
 
-import { professoresColumns } from '@/components/core/tables/professores/professores-columns';
+import { professoresColumns } from '@/components/core/tables/professores/parts/professores-columns';
 import { ProfessoresDataTable } from '@/components/core/tables/professores/professores-data-table';
 
 import useAuthentication from '@/hooks/useAuthentication';

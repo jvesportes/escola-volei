@@ -10,8 +10,8 @@ import { CalendarIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { pagamentosColumns } from '@/components/core/tables/alunos/pagamentos/pagamentos-columns';
 import { PagamentosDataTable } from '@/components/core/tables/alunos/pagamentos/pagamentos-data-table';
+import { pagamentosColumns } from '@/components/core/tables/alunos/pagamentos/parts/pagamentos-columns';
 import { Button } from '@/components/shared/ui/button';
 import { Calendar } from '@/components/shared/ui/calendar';
 import {
@@ -87,7 +87,7 @@ export const PagamentoAlunoModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="no-scrollbar w-[95%] overflow-scroll rounded-lg bg-white p-4 md:w-[80%] md:p-6">
+      <DialogContent className="no-scrollbar w-[95%] overflow-scroll rounded-lg bg-white p-4 md:w-4/5 md:p-6">
         <div className="box-border flex flex-col md:w-full">
           <DialogHeader className="w-full items-center justify-center py-4 md:py-6">
             <DialogTitle className="text-2xl font-bold text-zinc-900">
