@@ -80,19 +80,16 @@ export const NavigationSidebar = () => {
                 <Link href={item.path} className="w-full">
                   <Button
                     size={isOpen ? 'default' : 'icon'}
-                    className={cn(
-                      'inline-flex w-full gap-4 border border-zinc-900/50 hover:bg-zinc-900/50',
-                      {
-                        'justify-start': isOpen,
-                        'justify-center': !isOpen,
-                        'text-white bg-zinc-900/50 font-semibold': checkIsActive(
-                          item.path,
-                          path,
-                          true,
-                        ),
-                        'text-zinc-400 font-medium': !checkIsActive(item.path, path, true),
-                      },
-                    )}
+                    className={cn('inline-flex w-full gap-4  hover:bg-zinc-900/50', {
+                      'justify-start': isOpen,
+                      'justify-center': !isOpen,
+                      'text-white bg-zinc-900/50 font-semibold': checkIsActive(
+                        item.path,
+                        path,
+                        true,
+                      ),
+                      'text-zinc-400 font-medium': !checkIsActive(item.path, path, true),
+                    })}
                   >
                     <item.icon
                       className={cn('size-5', {

@@ -11,7 +11,7 @@ export function checkIsActive(pathname: string, url: string, exact: boolean = fa
     return true;
   }
 
-  if (pathname !== '/' && url.includes(pathname) && exact) {
+  if (pathname !== '/' && url.includes(pathname) && !exact) {
     return true;
   }
 
