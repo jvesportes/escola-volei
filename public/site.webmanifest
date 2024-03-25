@@ -1,5 +1,5 @@
 {
-  "name": "JV Esports",
+  "name": "JV Esportes",
   "short_name": "JVEsportes",
   "icons": [
     {
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#FF7031",
   "background_color": "#ffffff",
   "display": "standalone"
 }
