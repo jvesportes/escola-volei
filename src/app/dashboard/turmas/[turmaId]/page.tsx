@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 import { lightFormat } from 'date-fns';
 import { FileText, MoreHorizontal } from 'lucide-react';
 
-import { ExcluirAlunoTurmaMenuItem } from '@/components/core/tables/turmas/turma/delete-turma-aluno-menu-item';
-import { HistoricoAlunoTurmaMenuItem } from '@/components/core/tables/turmas/turma/historico-turma-aluno-menu-item';
-import { turmaColumns } from '@/components/core/tables/turmas/turma/turma-columns';
-import { SingleTurmaDataTable } from '@/components/core/tables/turmas/turma/turma-data-table';
+import { ExcluirAlunoTurmaMenuItem } from '@/components/core/tables/turma/delete-turma-aluno-menu-item';
+import { HistoricoAlunoTurmaMenuItem } from '@/components/core/tables/turma/historico-turma-aluno-menu-item';
+import { turmaColumns } from '@/components/core/tables/turma/turma-columns';
+import { SingleTurmaDataTable } from '@/components/core/tables/turma/turma-data-table';
 import { Button } from '@/components/shared/ui/button';
 import { Card } from '@/components/shared/ui/card';
 import { Checkbox } from '@/components/shared/ui/checkbox';
@@ -40,7 +40,9 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
   const { turmaId } = params;
   const { onOpen } = useModal();
   const { hasUser, isAdmin } = useAuthentication();
+
   const { data: turma, isLoading } = useClass(turmaId);
+
   const router = useRouter();
   if (!hasUser) router.push('/');
 
@@ -99,10 +101,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       header: 'Ações',
       cell: ({ row }) => {
         const aluno = row.original;
-        const { data: presences, isLoading: isPresencesLoading } = usePresences(
-          turma?.id!,
-          aluno.id!,
-        );
+        const { data: presences } = usePresences(turma?.id!, aluno.id);
 
         return (
           <DropdownMenu>
@@ -129,10 +128,7 @@ const TurmaPage = ({ params }: TurmaPageProps) => {
       header: 'Ações',
       cell: ({ row }) => {
         const aluno = row.original;
-        const { data: presences, isLoading: isPresencesLoading } = usePresences(
-          turma?.id!,
-          aluno.id!,
-        );
+        const { data: presences } = usePresences(turma?.id!, aluno.id);
 
         return (
           <DropdownMenu>

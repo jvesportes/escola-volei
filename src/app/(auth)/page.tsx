@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { supabase } from '@/lib';
+import LogoIcon from '@assets/images/logo/light/logo-icon.svg';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronRight, EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -65,13 +66,9 @@ export default function LoginPage() {
           className={`block h-48 w-full bg-zinc-950 bg-[url('/assets/images/pattern.png')] bg-cover md:hidden`}
         />
         <div className="flex flex-col items-center gap-6">
-          <Image
-            src="/logo.png"
-            className="flex rounded-full border border-zinc-200"
-            width={100}
-            height={100}
-            alt="logo"
-          />
+          <div className="flex size-24 rounded-full border border-zinc-100 p-6">
+            <Image src={LogoIcon} width={72} height={72} alt="JV Esportes" />
+          </div>
           <div className="flex flex-col gap-2 text-center ">
             <h1 className="text-lg font-bold md:text-xl">Acesso a conta</h1>
             <p className="text-sm text-zinc-600 md:text-base">
@@ -120,9 +117,9 @@ export default function LoginPage() {
                         onClick={() => setPasswordVisibility(!passwordVisibility)}
                       >
                         {passwordVisibility ? (
-                          <EyeOffIcon className="size-5 text-slate-500" />
+                          <EyeOffIcon className="size-5 text-zinc-500" />
                         ) : (
-                          <EyeIcon className="size-5 text-slate-500" />
+                          <EyeIcon className="size-5 text-zinc-500" />
                         )}
                       </Button>
                     </div>

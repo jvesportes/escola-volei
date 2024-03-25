@@ -8,8 +8,8 @@ import { formatToCPF, formatToPhone, isCPF, isPhone } from 'brazilian-values';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { ListaEsperaColumns } from '@/components/core/tables/turmas/turma/lista-espera/lista-espera-columns';
-import { ListaEsperaDataTable } from '@/components/core/tables/turmas/turma/lista-espera/lista-espera-data-table';
+import { ListaEsperaColumns } from '@/components/core/tables/turma/lista-espera/lista-espera-columns';
+import { ListaEsperaDataTable } from '@/components/core/tables/turma/lista-espera/lista-espera-data-table';
 import { Button } from '@/components/shared/ui/button';
 import {
   Dialog,
@@ -86,7 +86,7 @@ export const ListaEsperaModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="no-scrollbar w-[95%] overflow-scroll rounded-lg bg-white p-4 md:w-[80%] md:p-6">
+      <DialogContent className="no-scrollbar w-[95%] overflow-scroll rounded-lg bg-white p-4 md:w-4/5 md:p-6">
         <DialogHeader className="items-center justify-center py-4 md:py-6">
           <DialogTitle className="text-2xl font-bold text-zinc-900">Lista de Espera</DialogTitle>
         </DialogHeader>

@@ -110,8 +110,8 @@ export const AddAlunoModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
-        <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-bold text-zinc-900">Adicionar Aluno</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>Adicionar Aluno</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -252,7 +252,7 @@ export const AddAlunoModal = () => {
                   />
                 </div> */}
               </div>
-              <Separator className="my-2 md:my-8" />
+              <Separator className="my-2" />
               <div className="flex flex-col gap-4 md:gap-6">
                 <div className="flex flex-row items-center gap-2">
                   <h3>Responsável</h3>

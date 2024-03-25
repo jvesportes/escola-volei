@@ -14,8 +14,10 @@ const ProfessoresPage = () => {
   const { data, isLoading } = useProfessor();
   const { isAdmin, hasUser } = useAuthentication();
   const router = useRouter();
+
   if (!hasUser) router.push('/');
   if (!isAdmin) router.push('/dashboard');
+
   if (isAdmin)
     return (
       <div className="flex flex-col gap-12">

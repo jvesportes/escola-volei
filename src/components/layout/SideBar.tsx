@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { adminMenuPaths, IMenu, teacherMenuPaths } from '@/constants/menuPaths';
-import LogoHorizontal from '@assets/images/logo-horizontal.svg';
-import LogoIcon from '@assets/images/logo-icon.svg';
+import LogoHorizontal from '@assets/images/logo/dark/logo-horizontal.svg';
+import LogoIcon from '@assets/images/logo/dark/logo-icon.svg';
 import { ChevronRight, LogOut } from 'lucide-react';
 
 import { Button } from '@/components/shared/ui/button';

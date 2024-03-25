@@ -87,8 +87,8 @@ export const AddTurmaModal = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="no-scrollbar overflow-scroll rounded-lg bg-white p-4 md:p-6">
-        <DialogHeader className="items-center justify-center py-4 md:py-6">
-          <DialogTitle className="text-2xl font-bold text-zinc-900">Adicionar Turma</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>Adicionar Turma</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
