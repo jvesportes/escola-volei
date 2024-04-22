@@ -23,7 +23,6 @@ export const AddAlunosModal = () => {
   const { addStudent } = useAlunosStore();
 
   async function onSubmit() {
-    console.error(jsonValue);
     try {
       setIsLoading(true);
       const result = await api.student.addStudentsCSV(jsonValue as CSVtoJson[]);

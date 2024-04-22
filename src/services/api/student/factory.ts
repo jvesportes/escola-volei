@@ -1,6 +1,5 @@
 import { supabase } from '@/lib';
 
-import { Database } from '@/lib/database.types';
 import { CSVtoJson, Payment, Student as StudentType } from '@/utils/types';
 
 import * as Student from './type';
@@ -153,7 +152,7 @@ function StudentFactory() {
               responsavel: {
                 cpf: aluno.cpfResponsavel as string,
                 email: aluno.emailResponsavel,
-                nome: aluno.nomeResponsavel as string,
+                nome: (aluno.nomeResponsavel as string) || aluno?.nomResponsavel,
                 telefone: aluno.telefoneResponsavel,
               },
             }
@@ -165,6 +164,7 @@ function StudentFactory() {
               telefone: aluno.telefone as string,
               tem_responsavel: false,
             };
+
         const student = await this.create(newStudent);
 
         return student;
