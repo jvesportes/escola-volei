@@ -1,5 +1,6 @@
 import { supabase } from '@/lib';
 
+import { Database } from '@/lib/database.types';
 import { CSVtoJson, Payment, Student as StudentType } from '@/utils/types';
 
 import * as Student from './type';
