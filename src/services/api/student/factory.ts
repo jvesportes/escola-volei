@@ -153,7 +153,7 @@ function StudentFactory() {
               responsavel: {
                 cpf: aluno.cpfResponsavel as string,
                 email: aluno.emailResponsavel,
-                nome: (aluno.nomeResponsavel as string) || aluno?.nomResponsavel,
+                nome: aluno.nomeResponsavel as string,
                 telefone: aluno.telefoneResponsavel,
               },
             }
