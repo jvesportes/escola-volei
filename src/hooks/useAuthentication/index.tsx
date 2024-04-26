@@ -23,16 +23,22 @@ export const AuthenticationProvider = ({ children }: AuthenticationProviderProps
   const [user, setUser] = useState<IUser | null>(null);
   const router = useRouter();
 
-  useEffect(() => {}, [router]);
+  const hasUser = user ? Object.keys(user).length > 0 : false;
+  const isAdmin = user?.user_metadata?.tipo === 'admin';
+
+  useEffect(() => {
+    if (hasUser) {
+      router.push('/dashboard');
+    } else {
+      router.push('/');
+    }
+  }, [hasUser, router]);
 
   useEffect(() => {
     setUser(GetUser());
   }, []);
 
   if (typeof window === 'undefined') return null;
-
-  const hasUser = user ? Object.keys(user).length > 0 : false;
-  const isAdmin = user?.user_metadata?.tipo === 'admin';
 
   function handleLogin(data: AuthTokenResponsePassword) {
     localStorage.setItem('@user', JSON.stringify(data.data.user));
@@ -44,12 +50,6 @@ export const AuthenticationProvider = ({ children }: AuthenticationProviderProps
     supabase.auth.signOut();
     localStorage.removeItem('@user');
     setUser(null);
-    router.push('/');
-  }
-
-  if (hasUser) {
-    router.push('/dashboard');
-  } else {
     router.push('/');
   }
 

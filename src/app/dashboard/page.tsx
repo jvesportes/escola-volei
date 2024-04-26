@@ -52,7 +52,7 @@ const DashboardPage = () => {
                 variants={slideUp}
               >
                 <Image
-                  src={'/professores1.png'}
+                  src={'/assets/images/professores1.png'}
                   fill
                   className=" rounded-lg"
                   alt="Imagens de torneios."
@@ -63,7 +63,7 @@ const DashboardPage = () => {
                 variants={slideUp}
               >
                 <Image
-                  src={'/torneio.png'}
+                  src={'/assets/images/torneio.png'}
                   fill
                   className="rounded-lg"
                   alt="Imagens de torneios."
@@ -74,7 +74,7 @@ const DashboardPage = () => {
                 variants={slideUp}
               >
                 <Image
-                  src={'/torneio2.png'}
+                  src={'/assets/images/torneio2.png'}
                   fill
                   className="rounded-lg"
                   alt="Imagens de torneios."
