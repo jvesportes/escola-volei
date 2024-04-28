@@ -3,7 +3,6 @@
 import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { ourValues } from '@/constants/ourValues';
 import HiAsset from '@assets/images/hi.gif';
@@ -23,70 +22,62 @@ import { cn } from '@/lib/utils';
 import { slideUp } from '@/utils/animations';
 
 const DashboardPage = () => {
-  const router = useRouter();
-  const { hasUser } = useAuthentication();
-
-  if (!hasUser) router.push('/');
-
-  if (hasUser)
-    return (
-      <motion.div className="flex size-full flex-col">
-        <MenuOptions />
-        <div className="relative -top-32 flex flex-col gap-12 px-4 md:px-12">
-          <OurValues />
-          <motion.section
-            id="thank-you"
-            className="flex w-full flex-col gap-4 md:gap-6"
-            variants={slideUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            <motion.div className="inline-flex items-center gap-2" variants={slideUp}>
-              <HeartHandshakeIcon className="size-5" />
-              <h2 className="text-2xl font-bold">Obrigado Por Fazer Parte!</h2>
+  return (
+    <motion.div className="flex size-full flex-col">
+      <MenuOptions />
+      <div className="relative -top-32 flex flex-col gap-12 px-4 md:px-12">
+        <OurValues />
+        <motion.section
+          id="thank-you"
+          className="flex w-full flex-col gap-4 md:gap-6"
+          variants={slideUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          <motion.div className="inline-flex items-center gap-2" variants={slideUp}>
+            <HeartHandshakeIcon className="size-5" />
+            <h2 className="text-2xl font-bold">Obrigado Por Fazer Parte!</h2>
+          </motion.div>
+          <div className="no-scrollbar flex flex-row gap-8 overflow-x-scroll md:gap-6">
+            <motion.div
+              className="relative aspect-square min-h-[280px] w-full rounded-lg"
+              variants={slideUp}
+            >
+              <Image
+                src={'/assets/images/professores1.png'}
+                fill
+                className=" rounded-lg"
+                alt="Imagens de torneios."
+              />
             </motion.div>
-            <div className="no-scrollbar flex flex-row gap-8 overflow-x-scroll md:gap-6">
-              <motion.div
-                className="relative aspect-square min-h-[280px] w-full rounded-lg"
-                variants={slideUp}
-              >
-                <Image
-                  src={'/assets/images/professores1.png'}
-                  fill
-                  className=" rounded-lg"
-                  alt="Imagens de torneios."
-                />
-              </motion.div>
-              <motion.div
-                className="relative aspect-square min-h-[280px] w-full rounded-lg"
-                variants={slideUp}
-              >
-                <Image
-                  src={'/assets/images/torneio.png'}
-                  fill
-                  className="rounded-lg"
-                  alt="Imagens de torneios."
-                />
-              </motion.div>
-              <motion.div
-                className="relative aspect-square min-h-[280px] w-full rounded-lg"
-                variants={slideUp}
-              >
-                <Image
-                  src={'/assets/images/torneio2.png'}
-                  fill
-                  className="rounded-lg"
-                  alt="Imagens de torneios."
-                />
-              </motion.div>
-            </div>
-          </motion.section>
-        </div>
-      </motion.div>
-    );
-
-  return <></>;
+            <motion.div
+              className="relative aspect-square min-h-[280px] w-full rounded-lg"
+              variants={slideUp}
+            >
+              <Image
+                src={'/assets/images/torneio.png'}
+                fill
+                className="rounded-lg"
+                alt="Imagens de torneios."
+              />
+            </motion.div>
+            <motion.div
+              className="relative aspect-square min-h-[280px] w-full rounded-lg"
+              variants={slideUp}
+            >
+              <Image
+                src={'/assets/images/torneio2.png'}
+                fill
+                className="rounded-lg"
+                alt="Imagens de torneios."
+              />
+            </motion.div>
+          </div>
+        </motion.section>
+      </div>
+    </motion.div>
+  );
 };
 
 export default DashboardPage;

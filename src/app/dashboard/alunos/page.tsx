@@ -17,8 +17,8 @@ const AlunosPage = () => {
   const { students } = useAlunosStore();
   const router = useRouter();
 
-  if (!hasUser) router.push('/');
-  if (!isAdmin) router.push('/dashboard');
+  // if (!hasUser) router.push('/');
+  // if (!isAdmin) router.push('/dashboard');
 
   if (isAdmin)
     return (

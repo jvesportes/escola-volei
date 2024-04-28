@@ -2,7 +2,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthTokenResponsePassword } from '@supabase/supabase-js';
@@ -10,7 +10,7 @@ import { AuthTokenResponsePassword } from '@supabase/supabase-js';
 import { IUser } from '@/services/entities/user/model';
 
 import { Database } from '@/lib/database.types';
-import { GetUser } from '@/utils/getUser';
+import { getUser } from '@/utils/getUser';
 
 import { AuthenticationContextType, AuthenticationProviderProps } from './interface';
 
@@ -20,29 +20,31 @@ export const AuthenticationContext = createContext<AuthenticationContextType | u
 
 export const AuthenticationProvider = ({ children }: AuthenticationProviderProps) => {
   const supabase = createClientComponentClient<Database>();
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<IUser | null>(getUser);
   const router = useRouter();
+  const pathName = usePathname();
 
   const hasUser = user ? Object.keys(user).length > 0 : false;
   const isAdmin = user?.user_metadata?.tipo === 'admin';
 
-  useEffect(() => {
-    if (hasUser) {
-      router.push('/dashboard');
-    } else {
-      router.push('/');
-    }
-  }, [hasUser, router]);
-
-  useEffect(() => {
-    setUser(GetUser());
-  }, []);
-
   if (typeof window === 'undefined') return null;
+
+  useEffect(() => {
+    if (!user) {
+      router.replace('/');
+
+      return;
+    }
+    if (!pathName.includes('/dashboard')) {
+      router.replace('/dashboard');
+
+      return;
+    }
+  }, [pathName, router, user]);
 
   function handleLogin(data: AuthTokenResponsePassword) {
     localStorage.setItem('@user', JSON.stringify(data.data.user));
-    setUser(GetUser());
+    setUser(getUser());
     router.push('/dashboard');
   }
 
@@ -50,7 +52,7 @@ export const AuthenticationProvider = ({ children }: AuthenticationProviderProps
     supabase.auth.signOut();
     localStorage.removeItem('@user');
     setUser(null);
-    router.push('/');
+    router.replace('/');
   }
 
   const contextValue = {

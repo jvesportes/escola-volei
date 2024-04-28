@@ -78,7 +78,6 @@ export function TurmaDataTable<TData extends ClassType, TValue>({
 
   function downloadCSV() {
     const getLocal = (local: string) => {
-      console.error('LOCALLLL ---> ', local);
       switch (local) {
         case 'asanorte':
           return 'Asa Norte';
@@ -185,7 +184,6 @@ export function TurmaDataTable<TData extends ClassType, TValue>({
                   className="cursor-pointer"
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  {/* {cell.column.columnDef.id === 'actions' ? null : ()} */}
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <>
