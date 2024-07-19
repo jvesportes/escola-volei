@@ -1,13 +1,18 @@
-import { supabase } from '@/lib';
+import { createClient } from '@supabase/supabase-js';
 
 import { Teacher as TeacherType } from '@/utils/types';
 
 import * as Teacher from './type';
 
 function TeacherFactory() {
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY!,
+  );
+
   return {
     async create(data: Teacher.CreateTeacher) {
-      let result = await supabase.auth.admin.createUser({
+      let result = await supabaseAdmin.auth.admin.createUser({
         email: data.email,
         password: data.password,
         email_confirm: true,
@@ -44,24 +49,24 @@ function TeacherFactory() {
         },
       };
       if (data.password) dataToSend = { ...dataToSend, password: data.password };
-      let result = await supabase.auth.admin.updateUserById(id, dataToSend);
+      let result = await supabaseAdmin.auth.admin.updateUserById(id, dataToSend);
 
       return result;
     },
     async delete(id: string) {
-      let result = await supabase.auth.admin.deleteUser(id);
+      let result = await supabaseAdmin.auth.admin.deleteUser(id);
 
       return result;
     },
     async get(id: string) {
-      const result = await supabase.from('perfis').select();
+      const result = await supabaseAdmin.from('perfis').select();
       // .eq('id', id)
       // .eq('tipo', 'professor')
 
       return result.data;
     },
     async list() {
-      let { data, error } = await supabase.auth.admin.listUsers();
+      let { data, error } = await supabaseAdmin.auth.admin.listUsers();
       const mappedData = data.users
         .map((user) => {
           return {
